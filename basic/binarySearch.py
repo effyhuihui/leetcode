@@ -10,18 +10,18 @@ Catch:
    and end are big, adding them together will cause overflow.
 '''
 def binarySearch(num, res):
-	n = len(num)
-	start ,end = 0, n-1	
-	while start < end:
-		k = (end-start)//2 + start
-		cur = num[k]
-		if cur == res:
-			return True
-		elif cur > res:
-			end = k - 1
-		else:
-			start = k + 1
-	return False
+    n = len(num)
+    start ,end = 0, n-1
+    while start <= end:
+        mid = (end-start)//2 + start
+        cur = num[mid]
+        if cur == res:
+            return True
+        elif cur > res:
+            end = mid - 1
+        else:
+            start = mid + 1
+    return False
 
-r = binarySearch([0,2,7,8],5)
+r = binarySearch([0,2,7,8],-1)
 print r

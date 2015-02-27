@@ -16,7 +16,7 @@ def re(n, num):
 		n = re(n+1, num//26)
 	return n
 
-print re(0,52)
+print re(0,17576)
 
 
 
