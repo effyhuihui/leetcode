@@ -11,6 +11,14 @@ Suppose a sorted array is rotated at some pivot unknown to you beforehand.
 Find the minimum element.
 
 The array may contain duplicates.
+
+Catch: Duplicateion changes everything, it makes the time complexcity to be Liner
+in the worst case.
+
+Try to think of these cases:
+[1,1,1,1,1,0], [0,1,1,1,1,1], [1,1,1,1,1]
+[3,1,3]
+[2,2,0,0,1,1]
 '''
 class Solution:
     # @param num, a list of integer
@@ -19,22 +27,23 @@ class Solution:
         n = len(num)
         start = 0
         end = n-1
-        mi = num[0]
+        mini = num[start]
         while start <= end:
             mid = (start+end)/2
-            print num[start], num[mid], num[end]
+            if num[mid] < mini:
+                mini = num[mid]
             if num[mid] < num[end]:
                 '''
                 right side is with right increasing order
                 '''
-                mi = min(mi,num[mid])
                 end = mid - 1
             elif num[mid] > num[end]:
-                mi = min(mi, num[mid])
                 start = mid + 1
             else:
-                start += 1
-            print start,end
+                end -= 1
+                if num[mid] == num[start]:
+                    start += 1
+        return mini
 a = Solution()
-print a.findMin([3,1])
+print a.findMin([])
 
