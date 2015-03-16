@@ -5,8 +5,8 @@ Catch:
    [0,2,7,8] to search 5, because start and end will approach to be neighbors, meaning in the very 
    last step, end and start will only be 1 index away, so k = (end-start)//2+start = start, in the case
    for cur < res, start = k = start, this will cause a infinite loop
-   (TO CHECK WHETER WILL THERE BE INFINITE LOOP, CHECK IF THERE ANY STEP THAT COULD CAUSE A FIX POINT) 
-2. k = (end-start)//2 + start is equivalent to (end+start)//2, however, this is safer, becasue when start 
+   (TO CHECK WHETHER WILL THERE BE INFINITE LOOP, CHECK IF THERE ANY STEP THAT COULD CAUSE A FIX POINT)
+2. k = (end-start)//2 + start is equivalent to (end+start)//2, however, this is safer, because when start
    and end are big, adding them together will cause overflow.
 '''
 def binarySearch(num, res):

@@ -18,14 +18,43 @@ return its zigzag level order traversal as:
 ]
 '''
 # Definition for a  binary tree node
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode:
+     def __init__(self, x):
+         self.val = x
+         self.left = None
+         self.right = None
 
 class Solution:
     # @param root, a tree node
     # @return a list of lists of integers
     def zigzagLevelOrder(self, root):
-        pass
+        stack = []
+        res = []
+        if not root:
+            return stack
+        stack.append(root)
+        res.append([root])
+        while res[-1]:
+            res.append([])
+            for i in res[-1]:
+                while i:
+                    if i.left:
+                        stack.append(i.left)
+                    if i.right:
+                        stack.append(i.right)
+            while stack:
+                res[-1].append(stack.pop())
+        return res
+
+a = TreeNode(3)
+b = TreeNode(9)
+c = TreeNode(20)
+d = TreeNode(15)
+e = TreeNode(7)
+
+a.left = b
+a.right = c
+b.left = d
+b.right = e
+x = Solution()
+print x.zigzagLevelOrder(a)
