@@ -34,10 +34,8 @@ class Solution:
         end = n-1
         while start <= end:
             mid = (end+start)/2
-            left_index = mid -1
-            if left_index < 0: left_index = start
-            right_index = mid+1
-            if right_index >=n: right_index = end
+            left_index = max(0,mid -1)
+            right_index = min(mid+1,n-1)
             left = num[mid] - num[left_index]
             right = num[mid] - num[right_index]
             if left > 0 and right > 0:
