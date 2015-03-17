@@ -15,6 +15,7 @@ class Solution:
     if there is duplicates, only results in one more condition than non-duplicated
     rotated array to deal with,  that is :
     if A[mid] == A[end] (or A[mid] == A[start]), end-=1 (or start += 1)
+    worst case time complexity could be linear
     '''
     def search(self, A, target):
         start = 0
@@ -40,6 +41,8 @@ class Solution:
                 else:
                     start = mid + 1
             else:
+                ## if mid -- end, then we don't know which side are rotated,
+                ## we can only move end/start one forward.
                 end -= 1
         return False
 
