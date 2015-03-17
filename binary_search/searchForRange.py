@@ -18,16 +18,15 @@ class Solution:
         n = len(A)
         start = 0
         end = n - 1
-        found = False
-        while start <= end and not found:
-            mid = (start + end)/2
+        while start <= end:
+            mid = (start+end)/2
             if A[mid] == target:
-                found = True
+                break
             elif A[mid] < target:
                 start = mid + 1
             else:
                 end = mid - 1
-        if not found:
+        if start > end:
             return [-1,-1]
         else:
             start = end = mid
