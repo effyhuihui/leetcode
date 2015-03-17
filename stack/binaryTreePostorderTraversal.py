@@ -21,7 +21,7 @@ class TreeNode:
          self.right = None
 
 '''
-这个方法会改变树的形状，因为在途中要set left right为None
+这个方法会改变树的形状，因为在途中要set left/right为None
 '''
 class Solution:
     # @param root, a tree node
