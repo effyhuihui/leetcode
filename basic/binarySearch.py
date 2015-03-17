@@ -10,6 +10,10 @@ Catch:
    and end are big, adding them together will cause overflow.
 '''
 def binarySearch(num, res):
+    '''
+    Binary Search has no constrains. It allows the array of numbers to have
+    duplicates.
+    '''
     n = len(num)
     start ,end = 0, n-1
     while start <= end:
@@ -23,5 +27,5 @@ def binarySearch(num, res):
             start = mid + 1
     return False
 
-r = binarySearch([0,2,7,8],-1)
+r = binarySearch([0,0,0,0,2,7,8],2)
 print r
