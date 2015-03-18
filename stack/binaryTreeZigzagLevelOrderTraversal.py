@@ -27,6 +27,7 @@ class TreeNode:
 class Solution:
     # @param root, a tree node
     # @return a list of lists of integers
+
     def zigzagLevelOrder(self, root):
         stack = []
         res = []
