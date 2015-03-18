@@ -13,9 +13,11 @@ Given binary tree {3,9,20,#,#,15,7},
 return its zigzag level order traversal as:
 [
   [3],
-  [9,20],
+  [20,9],
   [15,7]
 ]
+
+注意哦，在奇数level上得节点要翻转过来存入数组，level 1 不是9，20，而是20，9
 '''
 # Definition for a  binary tree node
 class TreeNode:
@@ -23,29 +25,43 @@ class TreeNode:
          self.val = x
          self.left = None
          self.right = None
-
+'''
+Below is the solution using stack
+'''
 class Solution:
     # @param root, a tree node
     # @return a list of lists of integers
-
     def zigzagLevelOrder(self, root):
-        stack = []
-        res = []
+        s1 = []
+        s2 = []
+        result = []
+        level = 0
         if not root:
-            return stack
-        stack.append(root)
-        res.append([root])
-        while res[-1]:
-            res.append([])
-            for i in res[-1]:
-                while i:
-                    if i.left:
-                        stack.append(i.left)
-                    if i.right:
-                        stack.append(i.right)
-            while stack:
-                res[-1].append(stack.pop())
-        return res
+            return result
+        s1.append(root)
+        ## if level is odd
+        while s1 or s2:
+            result.append([])
+            if level%2:
+                while s2:
+                    cur = s2.pop()
+                    result[-1].append(cur.val)
+                    if cur.right:
+                        s1.append(cur.right)
+                    if cur.left:
+                        s1.append(cur.left)
+            else:
+                while s1:
+                    cur = s1.pop()
+                    result[-1].append(cur.val)
+                    if cur.left:
+                        s2.append(cur.left)
+                    if cur.right:
+                        s2.append(cur.right)
+            level += 1
+        return result
+
+
 
 a = TreeNode(3)
 b = TreeNode(9)
@@ -57,5 +73,5 @@ a.left = b
 a.right = c
 b.left = d
 b.right = e
-x = Solution()
+x = Solution2()
 print x.zigzagLevelOrder(a)
