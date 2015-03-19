@@ -47,7 +47,7 @@ class Solution1:
         return max_sqft
 
 '''
-最优的解法，思路跟Longest Valid Parentheses比较类似，我们create一个stack， stack里面存的是heights的index，
+最优的解法，我们create一个stack， stack里面存的是heights的index，
 这个stack从下向上的index对应的高度是依次递增的（当然index本身也是递增的），
 pop stack里的元素直到cur height大于stack的top。
 为什么要pop呢，其实就是看在cur height之前，所能达到的最大高度以及这个最大高度跨越了多少范围，可以算出局部最优。
