@@ -101,8 +101,13 @@ WHERE Emp2.Salary > 450)
 In the above case, when Emp1.Salary = 450, the where clause in the outer query satisfies.
 Note that if the max() method is not used, then it will give an error of "subquery returns more than 1 row"
 
+!!!!!
 This is because if where clause is used like this "where x = ", it only expects one value, can not be equal to
-multiple values.!!!!!!!
+multiple values.
+If you actually want more than one result, restructure it like this:
+
+           where disease_id IN (subquery returning multiple rows...)
+!!!!!!!
 Note that Emp1 and Emp2 are both aliases for the same table – Employee. 
 Emp2 is only being used in the subquery to compare all the salary values to the current s
 alary value chosen in Emp1. This allows us to find the number of salary entries (the count) 
