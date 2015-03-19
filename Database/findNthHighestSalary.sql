@@ -5,7 +5,7 @@ This SQL to find the Nth highest salary should work in
 SQL Server, MySQL, DB2, Oracle, Teradata, and almost any other RDBMS:
 '''
 
-SELECT * /*This is the outer query part */
+SELECT max(Emp1.Salary) /*the max() is to prevent from multiple return entries, see examples below*/
 FROM Employee Emp1
 WHERE (N-1) = ( /* Subquery starts here */
 SELECT COUNT(DISTINCT(Emp2.Salary))
@@ -47,6 +47,7 @@ Employee ID	| Salary
 	3		|  200
 	4		|  800
 	7		|  450
+	8       |  450
 The first thing that the query above does is process the very first row of the Employee table, 
 which has an alias of Emp1.
 
@@ -54,7 +55,7 @@ The salary in the first row of the Employee table is 200. Because the subquery i
 the outer query through the alias Emp1, it means that when the first row is processed, the query 
 will essentially look like this – note that all we did is replace Emp1.Salary with the value of 200:
 '''
-SELECT *
+SELECT max(Salary)
 FROM Employee Emp1
 WHERE (1) = (
 SELECT COUNT(DISTINCT(Emp2.Salary))
@@ -74,7 +75,7 @@ In the above case the count in the subquery is 2.
 So, what happens next? Well, the SQL processor will move on to the next row which is 800, 
 and the resulting query looks like this:'''
 
-SELECT *
+SELECT max(Emp1.Salary)
 FROM Employee Emp1
 WHERE (1) = (
 SELECT COUNT(DISTINCT(Emp2.Salary))
@@ -86,8 +87,22 @@ WHERE Emp2.Salary > 800)
 Clearly it returns 0 in the above case.
 
 Since there are no salaries greater than 800, the query will move on to the last row and 
-will of course find the answer as 450. This is because 800 is greater than 450, and the count will be 1. 
+will of course find the answer as 450. This is because 800 is greater than 450, and the count will be 1.
+like below'''
 
+SELECT max(Emp1.Salary)
+FROM Employee Emp1
+WHERE (1) = (
+SELECT COUNT(DISTINCT(Emp2.Salary))
+FROM Employee Emp2
+WHERE Emp2.Salary > 450)
+
+'''
+In the above case, when Emp1.Salary = 450, the where clause in the outer query satisfies.
+Note that if the max() method is not used, then it will give an error of "subquery returns more than 1 row"
+
+This is because if where clause is used like this "where x = ", it only expects one value, can not be equal to
+multiple values.!!!!!!!
 Note that Emp1 and Emp2 are both aliases for the same table – Employee. 
 Emp2 is only being used in the subquery to compare all the salary values to the current s
 alary value chosen in Emp1. This allows us to find the number of salary entries (the count) 
