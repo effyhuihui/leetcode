@@ -13,17 +13,14 @@ def deleteDuplicates(head):
 	'''
 	if not head:
 		return head
-	node = head.next
-	pre_value = head.val
-	pre_node = head
-	while node:
-		if node.val == pre_value:
-			node = node.next
-			pre_node.next = node
+	prev = head
+	cur = head.next
+	while cur:
+		if prev.val == cur.val:
+			prev.next = cur.next
 		else:
-			pre_node = node
-			pre_value = node.val
-			node = node.next
+			prev = cur
+		cur = prev.next
 	return head
 
 a = LinkedList(1)
