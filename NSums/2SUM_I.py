@@ -16,11 +16,11 @@ only one pair is valid
 
 Thought:
 Way 1. use a hash, the key will be the value of the array element, the value will be the 
-	   index of the array element O(N)
-Way 2. MergeSort first N*O(logN), and then: 
+	   index of the array element O(N)  -- Inverted Index
+Way 2. Sort first N*O(logN), and then:
 		2.1 either do a binary search, 
 		2,2 or do a 'look back and forth', 'back and forth' means 两头看：）， 
-	但是mergeSort有一个问题，因为题中要求的是return原array的index，所以在sort的时候需要maitain原来的index
+	但是Sort有一个问题，因为题中要求的是return原array的index，所以在sort的时候需要maintain原来的index
 
 P.S MergeSort() 参见mergesort.py, binarysearch 参见binarysearch.py
 '''
