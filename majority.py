@@ -8,7 +8,7 @@ in the array.
 '''
 def majorityElement(num):
 	d = {}
-	# res stores a tuple (actual value, times appeared)
+	# res stores a tuple (actual value, times appeared), to maintain the current majority element
 	res = (None, 0)
 	for i in num:
 		d[i] = d.get(i, 0) + 1
