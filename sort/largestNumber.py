@@ -39,31 +39,12 @@ class Solution_bad:
         compare a and b
         :return: True if a < b, False if a > b
         '''
-        i, j = 0, 0
-        a, b = str(a), str(b)
-        p, q = len(a), len(b)
-        while i < p and j < q:
-            if a[i] > b[j]:
-                return False
-            elif a[i] < b[j]:
-                return True
-            else:
-                i += 1
-                j += 1
-        if i < p:
-            if a[i] > b[0]:
-                return False
-            else:
-                if int(''.join([a,b])) - int(''.join([b,a])):
-                    return False
-                return True
-        if j < q:
-            if b[j] > a[0]:
-                return True
-            else:
-                if int(''.join([a,b])) - int(''.join([b,a])):
-                    return False
-                return True
+        pre = int(''.join([str(a),str(b)]))
+        post = int(''.join([str(b),str(a)]))
+        if pre-post >= 0:
+            return False
+        else:
+            return True
 
     def largestNumber(self, num):
         res = self.sort(num)
@@ -94,6 +75,5 @@ class Solution:
         else:
             return 1
 
-a = Solution()
-print a.compare(1,2)
-print a.largestNumber([3,34])
+a = Solution_bad()
+print a.largestNumber([121,12])
