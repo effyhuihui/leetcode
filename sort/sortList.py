@@ -1,6 +1,9 @@
 __author__ = 'effy'
 '''
 Sort a linked list in O(n log n) time using constant space complexity.
+
+One take away from the problem is that: if you want to use fast runner technique for linked list
+slow and fast should start differently!!!
 '''
 class ListNode:
      def __init__(self, x):
@@ -11,6 +14,7 @@ class Solution:
     # @param head, a ListNode
     # @return a ListNode
     def sortList(self, head):
+        ## by excluding the special cases. slow and fast should start differently
         if  head == None or head.next == None:
             return head
         slow, fast = head, head.next.next
