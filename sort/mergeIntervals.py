@@ -17,16 +17,14 @@ class Solution:
     # @param intervals, a list of Interval
     # @return a list of Interval
     def merge(self, intervals):
-        sortStart = intervals
-        sortStart.sort(key=lambda x:x.start)
-        n = len(sortStart)
+        new = sorted(intervals,key=lambda x:x.start)
+        n = len(new)
         if n <= 1:
             return intervals
-        i = 0
         merged= []
         cur = intervals[0]
         for i in range(1,n):
-            next = sortStart[i]
+            next = new[i]
             if cur.end >= next.start:
                 cur = Interval(cur.start, max(next.end, cur.end))
             else:
@@ -38,6 +36,24 @@ class Solution:
                 cur = next
         merged.append(cur)
         return merged
+
+
+class Solution2:
+    # @param intervals, a list of Interval
+    # @return a list of Interval
+    def merge(self, intervals):
+        new = sorted(intervals,key=lambda x:x.start)
+        res = []
+        cur = 0
+        n = len(new)
+        while cur<n:
+            merge = new[cur]
+            while cur<n-1 and merge.end >= new[cur+1].start:
+                merge = Interval(merge.start, max(new[cur+1].end,merge.end))
+                cur += 1
+            res.append(merge)
+            cur+=1
+        return res
 
 a = Interval(1,4)
 b = Interval(0,2)
