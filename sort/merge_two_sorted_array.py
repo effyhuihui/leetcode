@@ -22,7 +22,9 @@ def merge(A, m, B, n):
 	1. 这里所有带有“current”的变量都是需要maintain的。
 	2. 其实就是不停的在replace A数组的第N个元素，直到其中一个数组终结。
 	'''
+	# compare from the end element of the two arraies
 	pos_b, pos_a = n, m
+	## cur starts at the end of the future sorted array
 	cur = m+n- 1
 	while pos_b and pos_a:
 		if A[pos_a-1] >= B[pos_b-1]:
