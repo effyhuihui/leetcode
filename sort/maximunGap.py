@@ -11,6 +11,7 @@ You may assume all elements in the array are non-negative integers and fit in th
 
 
 Thought :
+http://bookshadow.com/weblog/2014/12/14/leetcode-maximum-gap/
 Bucket sort
 解题思路：
 基数排序（radix sort）/桶排序（bucket sort）
