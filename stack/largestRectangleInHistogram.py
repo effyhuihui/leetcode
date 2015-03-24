@@ -47,6 +47,7 @@ class Solution1:
         return max_sqft
 
 '''
+http://www.cnblogs.com/zuoyuan/p/3783993.html
 最优的解法，我们create一个stack， stack里面存的是heights的index，
 这个stack从下向上的index对应的高度是依次递增的（当然index本身也是递增的），
 pop stack里的元素直到cur height大于stack的top。
@@ -56,10 +57,48 @@ pop stack里的元素直到cur height大于stack的top。
 class Solution2:
     # @param height, a list of integer
     # @return an integer
+    # @good solution!
     def largestRectangleArea(self, height):
-        n = len(height)
-        max_sqft = 0
+        maxArea = 0
+        stackHeight = []
+        stackIndex = []
+        for i in range(len(height)):
+            if stackHeight == [] or height[i] > stackHeight[len(stackHeight)-1]:
+                stackHeight.append(height[i]); stackIndex.append(i)
+            elif height[i] < stackHeight[len(stackHeight)-1]:
+                lastIndex = 0
+                while stackHeight and height[i] < stackHeight[len(stackHeight)-1]:
+                    lastIndex = stackIndex.pop()
+                    tempArea = stackHeight.pop() * (i-lastIndex)
+                    if maxArea < tempArea: maxArea = tempArea
+                stackHeight.append(height[i]); stackIndex.append(lastIndex)
+        while stackHeight:
+            tempArea = stackHeight.pop() * (len(height) - stackIndex.pop())
+            if tempArea > maxArea:
+                maxArea = tempArea
+        return maxArea
 
+
+class Solution3:
+    # @param height, a list of integer
+    # @return an integer
+    # @good solution!
+    def largestRectangleArea(self, height):
+        stack=[]; i=0; area=0
+        while i<len(height):
+            if stack==[] or height[i]>height[stack[len(stack)-1]]:
+                stack.append(i)
+            else:
+                curr=stack.pop()
+                width=i if stack==[] else i-stack[len(stack)-1]-1
+                area=max(area,width*height[curr])
+                i-=1
+            i+=1
+        while stack!=[]:
+            curr=stack.pop()
+            width=i if stack==[] else len(height)-stack[len(stack)-1]-1
+            area=max(area,width*height[curr])
+        return area
 
 a = Solution1()
 print a.largestRectangleArea([2,1,5,6,2,3])
