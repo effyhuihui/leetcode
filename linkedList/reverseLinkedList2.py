@@ -26,12 +26,14 @@ class Solution:
     def reverseBetween(self, head, m, n):
         dummy = ListNode(0)
         dummy.next = head
-        ## find the node that is after the last node needed reverse and the one before reverse
+        ## find the node "end" that is after the last node needed reverse and "prev" that is before reverse
         prev, end = dummy, dummy
         for i in range(m-1):
             prev = prev.next
         for i in range(n+1):
             end = end.next
+
+        ## refer to reverseSinglyLinkedList.py in basic
         last = end
         current = prev.next
         ## break the linked list between prev to the next
