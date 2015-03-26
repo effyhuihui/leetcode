@@ -48,7 +48,7 @@ class Solution:
 
     def reorderList(self, head):
         if not head or not head.next:
-            return 
+            return
         slow ,fast = head, head.next
         while fast:
             fast = fast.next
