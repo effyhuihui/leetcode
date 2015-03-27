@@ -46,8 +46,11 @@ class Solution_TLE:
         res_index = []
         for key in lookup.keys():
             left = target - key
+            ## if there is a pair in lookup
             if left in lookup.keys():
+                ## add all combinations from left and target, excluding those have duplicates
                 res_index += [ tuple(sorted(i+j)) for i in lookup[key] for j in lookup[left] if len(set(i+j)) == 4]
+                ## and remove same fours
                 res_index = list(set(res_index))
         res = []
         for tup in res_index:
@@ -72,5 +75,5 @@ class Solution_other_ppl:
                         if k[0] > j: res.add((new_num[i],new_num[j],new_num[k[0]],new_num[k[1]]))
         return [list(i) for i in res]
 
-x = Solution()
+x = Solution_TLE()
 print x.fourSum([1, 0, -1, 0, -2, 2],0)
