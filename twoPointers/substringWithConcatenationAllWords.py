@@ -35,13 +35,13 @@ class Solution:
         res = []
         l = len(L[0])
         i = 0
+        start = 0
+        count = len(L)
+        occurance_map = {}
         while i < len(S):
-            start = i
             cur = S[i:i+l]
-            occurance_map = {}
             print "start as", start
-            count = len(L)
-                ## if cur is a word in L and has not appeared since start index
+            ## if cur is a word in L and has not appeared since start index
             while i < len(S) and cur in appeared.keys():
                 print cur
                 occurance_map[cur] = occurance_map.get(cur,0)+1
@@ -56,12 +56,15 @@ class Solution:
                 else:
                     break
                 cur = S[i:i+l]
-            print "start ends",start
+            print "start ends",start, "i ends", i
             if start == i:
+                start += 1
                 i += 1
-            print "i",i
-
-
+            else:
+                print start, i
+                start += l
+                occurance_map[S[start:start+l]] -= 1
+                count += 1
         return res
 
 
@@ -97,7 +100,7 @@ class Solution2:
 
 
 x = Solution()
-print x.findSubstring("aaa", ["a","a"])
+print x.findSubstring("aaaaaaaa", ["aa","aa","aa"])
 
 
 

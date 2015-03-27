@@ -35,7 +35,7 @@ way 2: Moore voting --> applies to finding the element that appears more than ha
 最终留下的候选众数candidate即为最终答案。
 
 以上算法时间复杂度为O(n)，空间复杂度为O(1)
-
+http://blog.csdn.net/joylnwang/article/details/7081575
 '''
 def majorityElement(num):
     majority, count = None, 0
