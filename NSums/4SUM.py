@@ -26,8 +26,11 @@ The solution set must not contain duplicate quadruplets.
 
 这样就可以检查target-key这个值在不在dict的key值中，如果target-key在dict中并且下标符合要求，那么就找到了这样的一组解。由于需要去重，
 这里选用set()类型的数据结构，即无序无重复元素集。最后将每个找出来的解(set()类型)转换成list类型输出即可。
+
+
+http://www.cnblogs.com/zuoyuan/p/3699384.html
 '''
-class Solution:
+class Solution_TLE:
     # @return a list of lists of length 4, [[val1,val2,val3,val4]]
     def fourSum(self, num, target):
         new_num = sorted(num)
@@ -38,6 +41,8 @@ class Solution:
             for j in range(i+1,l):
                 val = new_num[i]+new_num[j]
                 lookup[val] = lookup.get(val, []) + [(i,j)]
+        ## up until here they are the same
+        ## below the set operation may cause the time limit exceeded.
         res_index = []
         for key in lookup.keys():
             left = target - key
