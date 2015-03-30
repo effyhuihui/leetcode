@@ -12,6 +12,12 @@ Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
 Return:
 ["AAAAACCCCC", "CCCCCAAAAA"].
 '''
+
+
+'''
+Both solutions pass.
+First is mine
+'''
 class Solution:
     # @param s, a string
     # @return a list of strings
@@ -21,10 +27,14 @@ class Solution:
         res = []
         for i in range(l-9):
             cur = s [i:i+10]
-            if cur in occurs.keys():
+            occured_and_appended = occurs.get(cur,0)
+            if occured_and_appended == 1:
                 res.append(cur)
+                occurs[cur] += 1
+            elif occured_and_appended == 0:
+                occurs[cur] = 1
             else:
-                occurs[cur] = True
+                occurs[cur] += 1
         return res
 
 class Solution2:
