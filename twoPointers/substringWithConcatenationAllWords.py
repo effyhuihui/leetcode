@@ -38,7 +38,7 @@ class Solution:
         start = 0
         count = len(L)
         occurance_map = {}
-        while i < len(S):
+        while i < len(S)-l*count+1:
             cur = S[i:i+l]
             print "start as", start
             ## if cur is a word in L and has not appeared since start index
@@ -76,12 +76,11 @@ class Solution2:
         words={}
         wordNum=len(L)
         for i in L:
-            if i not in words:
-                words[i]=1
-            else:
-                words[i]+=1
+            words[i] = words.get(i,0)+1
         wordLen=len(L[0])
         res=[]
+        ## for i in range 0 to the last possible index, which is the len(s) - total len of all words
+        ## equals to len(S) - wordLen*wordNum+1
         for i in range(len(S)+1-wordLen*wordNum):
             curr={}
             count=0
@@ -99,8 +98,8 @@ class Solution2:
         return res
 
 
-x = Solution()
-print x.findSubstring("aaaaaaaa", ["aa","aa","aa"])
+x = Solution2()
+print x.findSubstring("barfoothefoobarman", ["bar","foo"])
 
 
 
