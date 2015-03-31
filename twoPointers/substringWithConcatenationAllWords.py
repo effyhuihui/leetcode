@@ -97,8 +97,39 @@ class Solution2:
             if count==wordNum: res.append(i)
         return res
 
+class Solution3:
+    def findSubstring(self, S, L):
+        n, l = len(L),len(L[0])
+        words = {}
+        for i in L:
+            words[i] = words.get(i,0)+1
+        res = []
+        for i in range(l):
+            curr = {}
+            count = 0
+            print "offset",i
+            for j in range(i,l,len(S)-n*l+1):
+                print j, l,len(S)-n*l+1
+                cur = S[j:j+l]
+                print cur
+                while cur in words and count < n:
+                    if curr.get(cur,0) < words[cur]:
+                        curr[cur] = curr.get(cur,0)+1
+                        count += 1
+                    else:
+                        break
+                    cur = S[j+count*l:j+count*l+l]
+                if count == n:
+                    res.append(j)
+                if S[j:j+l] in words:
+                    count -=1
+                    curr[S[j:j+l]] -= 1
+                print "another round"
+        return res
 
-x = Solution2()
+
+
+x = Solution3()
 print x.findSubstring("barfoothefoobarman", ["bar","foo"])
 
 
