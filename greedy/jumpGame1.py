@@ -14,29 +14,6 @@ A = [2,3,1,1,4], return true.
 A = [3,2,1,0,4], return false.
 '''
 
-class Solution:
-    # @param A, a list of integers
-    # @return a boolean
-    def canJump(self, A):
-        l = len(A)
-        cur = 0
-        while cur < l-1:
-            if A[cur] == 0:
-                return False
-            elif cur+A[cur] >= l-1:
-                return True
-            next_max_step =0
-            print cur+1, cur+A[cur]+1
-            for i in range(cur+1,min(l-1,cur+A[cur]+1)):
-                if A[i] >= next_max_step:
-                    next_max_step = A[i]
-                    cur = i
-            print cur
-        if cur >= l-1:
-            return True
-        else:
-            return False
-
 class Solution_greedy1:
     # @param A, a list of integers
     # @return a boolean
@@ -50,18 +27,23 @@ class Solution_greedy1:
                 return False
         return True
 
-
+'''
+用一个变量记录最大可到达的位置, 每次在这个位置之前找。
+'''
 class Solution_greedy2:
     # @param A, a list of integers
     # @return a boolean
     def canJump(self, A):
         l = len(A)
         canReach = 0
-        for i in xrange(l):
+        for i in range(l):
+            # if i > canReach, meaning it is impossible to reach from the beginning to
+            # the current i, definitely can not jump
             if i <= canReach:
+                #canReach = max of( previous max reach index, current reachable index)
                 canReach = max(canReach, i + A[i])
                 if canReach >= l - 1:
                     return True
         return False
-x = Solution()
+x = Solution_greedy2()
 print x.canJump([1,0,2])
