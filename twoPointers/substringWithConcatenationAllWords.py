@@ -80,6 +80,11 @@ class Solution_effy:
                 if S[j:j+l] in curr:
                     count -=1
                     curr[S[j:j+l]] -= 1
+                ## remove the next cur from curr dict:
+                ## there is something worth noticing here:
+                ## if S[j+l: j+2*l] in words, then it must been proccessed in the while loop
+                ## and get recorded in the curr dict already, need to be removed, if it is not
+                ## then the following if statement will be skipped anyway.
                 if S[j+l:j+l*2] in curr:
                     count -= 1
                     curr[S[j+l:j+l*2]] -= 1
