@@ -18,10 +18,11 @@ class Solution:
         ## both are None
         if not p and not q:
             return True
-        if p != None and q != None:
-            return (p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right))
-        else:
-            return False
+        ## continue check only when the current value is the same
+        if p and q and p.val == q.val:
+            ## check the left and right recursively
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        return False
 a,b = TreeNode(1),TreeNode(1)
 a.left = b
 c,d, = TreeNode(1),TreeNode(1)
