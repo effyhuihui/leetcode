@@ -1,1 +1,43 @@
 https://www.topcoder.com/community/data-science/data-science-tutorials/introduction-to-graphs-and-their-data-structures-section-2/
+
+Now to solve an actual problem using our search! The depth first search is well geared towards problems where we want to
+find any solution to the problem (not necessarily the shortest path), or to visit all of the nodes in the graph.
+
+
+This concept maps extremely well to a Depth First search. The basic concept is to visit a node,
+then push all of the nodes to be visited onto the stack.
+To find the next node to visit we simply pop a node of the stack,
+and then push all the nodes connected to that one onto the stack as well
+and we continue doing this until all nodes are visited.
+It is a key property of the Depth First search that we not visit the same node more than once,
+otherwise it is quite possible that we will recurse infinitely. We do this by marking the node as we visit it.
+
+
+So the basic structure will look something like this:
+
+dfs(node start) {
+ stack<node> s;
+ s.push(start);
+ while (s.empty() == false) {
+  top = s.top();
+  s.pop();
+
+  if (top is not marked as visited) {
+   check for termination condition (have we reached the node we want to?)
+
+   mark top as visited;
+   add all of top's neighbors to the stack.
+  }
+ }
+}
+
+Alternatively we can define the function recursively as follows:
+
+dfs(node current) {
+ mark current as visited;
+ visit all of current's unvisited neighbors by calling dfs(neighbor)
+}
+
+Notes:
+Dealing with grids as graphs is a very powerful technique, and in this case makes the problem quite easy.
+(a graph where each node has 4 connections, one each to the node above, left, right and below)
