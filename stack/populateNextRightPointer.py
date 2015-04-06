@@ -52,10 +52,12 @@ class Solution:
             ## first right and then left
             while parent:
                 cur = parent.pop()
-                children.append(cur.right)
-                children.append(cur.left)
+                if cur.right:
+                    children.append(cur.right)
+                if cur.left:
+                    children.append(cur.left)
             ## inside children are nodes in the same level from right to left
-            ## pop each node and pointing to its left neighnor in children stack
+            ## pop each node and pointing to its left neighbor in children stack
             ## note that the last popped node will bethe right most node in the same
             ## level, so its next will always be None
             ## And add that not-None node back to parent stack to go one level down
