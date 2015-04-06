@@ -1,3 +1,4 @@
+__author__ = 'effy'
 # -*- coding: utf-8 -*-
 __author__ = 'effy'
 '''
@@ -28,8 +29,8 @@ After calling your function, the tree should look like:
          1 -> NULL
        /  \
       2 -> 3 -> NULL
-     / \  / \
-    4->5->6->7 -> NULL
+     /      \
+    4------->7 -> NULL
 '''
 class TreeLinkNode:
      def __init__(self, x):
@@ -52,8 +53,11 @@ class Solution:
             ## first right and then left
             while parent:
                 cur = parent.pop()
-                children.append(cur.right)
-                children.append(cur.left)
+                ## only difference from populate next right pointer 1
+                if cur.right:
+                    children.append(cur.right)
+                if cur.left:
+                    children.append(cur.left)
             ## inside children are nodes in the same level from right to left
             ## pop each node and pointing to its left neighbor in children stack
             ## note that the last popped node will bethe right most node in the same
