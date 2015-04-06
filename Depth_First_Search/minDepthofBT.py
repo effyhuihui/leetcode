@@ -40,6 +40,9 @@ class Solution_recursive:
     def minDepth(self, root):
         if root == None:
             return 0
+        ## 因为如果只有右子树，或者左子树的话说明还没有到此完结，此时还不是leaf，还需要再向下找，
+        ## 要是这时候直接说min( self.minDepth( root.left ), self.minDepth( root.right ) ) + 1
+        ## 的话会return当前的深度，这是错误的。
         if root.left == None and root.right != None:
             return self.minDepth( root.right ) + 1
         if root.left != None and root.right == None:
