@@ -20,7 +20,7 @@ class TreeNode:
          self.left = None
          self.right = None
 
-class Solution:
+class Solution_recursive:
     # @param root, a tree node
     # @param sum, an integer
     # @return a boolean
@@ -34,3 +34,9 @@ class Solution:
         else:
             return self.hasPathSum(root.left, sum-root.val) or self.hasPathSum(root.right, sum-root.val)
 
+class Solution_backtracking:
+    # @param root, a tree node
+    # @param sum, an integer
+    # @return a boolean
+    def hasPathSum(self, root, sum):
+        pass
