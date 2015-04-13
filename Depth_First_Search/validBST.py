@@ -46,5 +46,8 @@ class Solution:
             if root.val >= max or root.val <= min:
                 return False
             ## if current val is valid, then check the left sub tree with updated value range, same to right
-            return validSubTree(root.left, root.val, max) and validSubTree(root.right,min,root.val)
-        return validSubTree(root, -2147483648, 2147483648)
+            return validSubTree(root.left, min, root.val) and validSubTree(root.right,root.val, max)
+        lower_bound = -float('inf')
+        upper_bound = float('inf')
+        return validSubTree(root, lower_bound, upper_bound)
+
