@@ -19,7 +19,11 @@ Given n = 3, there are a total of 5 unique BST's.
 
 那么这道题是使用动态规划来解决的。那么如何去求这个问题的状态转移方程呢？其实大部分动态规划的难点都是求状态转移方程。n=0时，为空树，
 那么dp[0]=1; n=1时，显然也是1，dp[1]=1；n=2时，dp[2]=2;
-对于n>2时，dp[n]=dp[0]*dp[n-1]+dp[1]*dp[n-2]+......+dp[n-1]*dp[0]；这不就是卡特兰数的定义吗？编程很容易实现。
+对于n>2时，一旦定下了root以后还剩下n-1个node可以分别分配在左右。（BST一旦tree structure定了，那么每个node的value只有一种分配方法）
+所以状态方程是：
+dp[n]=dp[0]*dp[n-1]+dp[1]*dp[n-2]+......+dp[n-1]*dp[0]；
+
+
 '''
 
 class Solution:
