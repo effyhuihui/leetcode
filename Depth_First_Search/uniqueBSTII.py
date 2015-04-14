@@ -30,9 +30,9 @@ class Solution:
                 return [None]
             res = []
             for rootval in range(start,end+1):
-                ## get a list of possible left sub trees given a root value
+                ## get a list of possible left sub trees roots given a root value
                 leftSubTree = dfs(start,rootval-1)
-                ## get a list of possible right sub trees given a root value
+                ## get a list of possible right sub trees roots given a root value
                 rightSubTree = dfs(rootval+1, end)
                 ## to get all combinations of left,right sub trees given a root value
                 for i in leftSubTree:
