@@ -27,15 +27,23 @@ Visually, the graph looks like the following:
 
 '''
 
-'''
-This is BFS
-'''
+
 class UndirectedGraphNode:
      def __init__(self, x):
          self.label = x
          self.neighbors = []
+'''
+This is BFS
+思路是：
+1.先copy一个node，只需要label即可，并把original node 放入nodes_queue。再update nodes_copied map
+所以可以保证queue里面的所有node都已经有了一个copy
+2.pop出queue里面一个node, 处理它的neighbors， neighbor 要么是已经create了，要么没有，所以针对两个情况分别处理
 
-class Solution:
+以上。
+undirected graph的表示方式很有意思，以{0,1,2#1,2#2,2}为例，0与1，2为邻，因为0和1关系已经出现过一次，所以在1的时候，0不作为neighbor
+点出现，这样就避免了重复。每一pair都只出现了一次：）
+'''
+class Solution_bfs:
     # @param node, a undirected graph node
     # @return a undirected graph node
     def cloneGraph(self, node):
@@ -76,28 +84,6 @@ class Solution_dfs:
         return dfs(node, {})
 
 
-class Solution_bfs:
-    # @param node, a undirected graph node
-    # @return a undirected graph node
-    # @BFS
-    def cloneGraph(self, node):
-        if node == None: return None
-        queue = []; map = {}
-        newhead = UndirectedGraphNode(node.label)
-        queue.append(node)
-        map[node] = newhead
-        while queue:
-            curr = queue.pop()
-            for neighbor in curr.neighbors:
-                if neighbor not in map:
-                    copy = UndirectedGraphNode(neighbor.label)
-                    map[curr].neighbors.append(copy)
-                    map[neighbor] = copy
-                    queue.append(neighbor)
-                else:
-                    # turn directed graph to undirected graph
-                    map[curr].neighbors.append(map[neighbor])
-        return newhead
 
 
 
