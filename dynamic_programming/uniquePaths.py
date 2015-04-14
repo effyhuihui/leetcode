@@ -31,8 +31,11 @@ class Solution:
         return ways[-1][-1]
 
     def uniquePaths_opt(self,m,n):
+        print m,n
         if m == 1 or n == 1:
+            print "yes"
             return 1
-        return self.uniquePaths_opt(m-1,n) + self.uniquePaths_opt(m,n-1)
+        else:
+            return self.uniquePaths_opt(m-1,n) + self.uniquePaths_opt(m,n-1)
 x = Solution()
 print x.uniquePaths_opt(23,12)
