@@ -29,13 +29,28 @@ class Solution:
             for j in range(1,m):
                 ways[j][i] = ways[j-1][i] + ways[j][i-1]
         return ways[-1][-1]
-
-    def uniquePaths_opt(self,m,n):
-        print m,n
+    ## wrong way -- infinite recursion....
+    def uniquePaths_wrong(self,m,n):
         if m == 1 or n == 1:
-            print "yes"
             return 1
         else:
             return self.uniquePaths_opt(m-1,n) + self.uniquePaths_opt(m,n-1)
+
+    def uniquePaths_opt(self,m,n):
+        ways_record = {}
+        def recursion(m,n):
+            if m == 1 or n == 1:
+                return 1
+            if (m,n) in ways_record:
+                ways = ways_record[(m,n)]
+            else:
+                ways = recursion(m-1,n) + recursion(m,n-1)
+                ways_record[(m,n)] = ways
+            return ways
+        return recursion(m,n)
+
+
+
+
 x = Solution()
 print x.uniquePaths_opt(23,12)
