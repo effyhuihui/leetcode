@@ -31,7 +31,7 @@ where the princess is imprisoned.
 '''
 
 '''
-这里的DP是BOTTOM UP, 和minimum path sum不一样，这里需要考虑中间的结果。
+这里的DP是BOTTOM UP, 和minimum path sum不一样，这里需要考虑中间的结果。这里考虑的方法是从最后的结果出发（因为结果有一个已知的边界值）
 dp[i][j]代表到目前这个格子为止血槽至少要多少才能走到最后一格
 其转移方程为 dp[row][col]=max(1,min(dp[row+1][col],dp[row][col+1])-dungeon[row][col])  空间复杂度和时间复杂度都为 O(mn).
 '''
