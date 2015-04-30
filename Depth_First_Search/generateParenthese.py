@@ -11,7 +11,8 @@ For example, given n = 3, a solution set is:
 
 
 
-class Solution:
+
+class Solution_dfs:
     # @param {integer} n
     # @return {string[]}
     def generateParenthesis(self, n):
@@ -33,5 +34,22 @@ class Solution:
 
         dfs('',[],0)
         return res
-x = Solution()
+
+
+x = Solution_dfs()
 print x.generateParenthesis(3)
+
+class Solution_recursion:
+    # @param an integer
+    # @return a list of string
+    def generateParenthesis(self, n):
+        if n == 0:
+            return [""]
+        res = []
+        for j in range(n):
+            left = self.generateParenthesis(j)
+            right = self.generateParenthesis(n-1-j)
+            for a in left:
+                for b in right:
+                    res.append('('+a+')'+b)
+        return res
