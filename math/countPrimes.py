@@ -1,8 +1,11 @@
 __author__ = 'effy'
+# -*- coding: utf-8 -*-
 '''
 Description:
 
 Count the number of prime numbers less than a non-negative number, n
+
+见埃拉托斯特尼筛法
 '''
 class Solution:
     # @param {integer} n
