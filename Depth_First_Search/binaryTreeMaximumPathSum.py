@@ -1,4 +1,5 @@
 __author__ = 'effy'
+# -*- coding: utf-8 -*-
 '''
 Given a binary tree, find the maximum path sum.
 
@@ -21,6 +22,12 @@ class TreeNode:
 class Solution:
     # @param root, a tree node
     # @return an integer
+    def __init__(self):
+        self.max = -10000000
+    '''
+    maxsum(root) returns root直的左枝，root直的右枝的最大值 注意，“直” 表示如果是左支，那么每一个child都是
+    parent的left child，右支同理
+    '''
     def maxsum(self, root):
         if root == None: return 0
         sum = root.val
@@ -33,12 +40,11 @@ class Solution:
             rmax = self.maxsum(root.right)
             if rmax > 0:
                 sum += rmax
-        if sum > Solution.max: Solution.max = sum
+        if sum > self.max: self.max = sum
         return max(root.val, max(root.val + lmax, root.val + rmax))
 
     def maxPathSum(self, root):
-        Solution.max = -10000000
         if root == None: return 0
         self.maxsum(root)
-        return Solution.max
+        return self.max
 
