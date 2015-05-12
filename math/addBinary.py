@@ -22,18 +22,11 @@ class Solution:
                 local_sum = int(a[i1]) + int(b[i2]) +1
             else:
                 local_sum = int(a[i1]) + int(b[i2])
-            if local_sum == 3:
+            if local_sum//2:
                 carry = True
-                global_sum = '1' + global_sum
-            elif local_sum == 2:
-                carry = True
-                global_sum = '0' + global_sum
-            elif local_sum == 1:
-                carry = False
-                global_sum = '1' + global_sum
             else:
                 carry = False
-                global_sum = '0' + global_sum
+            global_sum = str(local_sum%2)+global_sum
             i1 -= 1
             i2 -= 1
         while i1 >=0:
@@ -41,34 +34,27 @@ class Solution:
                 local_sum = int(a[i1])+1
             else:
                 local_sum = int(a[i1])
-            if local_sum == 2:
+            if local_sum//2:
                 carry = True
-                global_sum = '0' + global_sum
-            elif local_sum == 1:
-                carry = False
-                global_sum = '1' + global_sum
             else:
                 carry = False
-                global_sum = '0' + global_sum
+            global_sum = str(local_sum%2)+global_sum
             i1 -= 1
         while i2 >=0:
             if carry:
                 local_sum = int(b[i2])+1
             else:
                 local_sum = int(b[i2])
-            if local_sum == 2:
+            if local_sum//2:
                 carry = True
-                global_sum = '0' +global_sum
-            elif local_sum == 1:
-                carry = False
-                global_sum = '1' + global_sum
             else:
                 carry = False
-                global_sum = '0' + global_sum
+            global_sum = str(local_sum%2)+global_sum
             i2 -= 1
         if carry:
             global_sum = '1' + global_sum
         return global_sum
+
+
 x = Solution()
 print x.addBinary('0','0')
-
