@@ -21,9 +21,9 @@ class Solution:
     # @return {boolean}
     def isHappy(self, n):
         ## use a set to avoid loop, stop when first duplicate appears.
-        numSet = set()
-        while n != 1 and n not in numSet:
-            numSet.add(n)
+        numMap = {}
+        while n != 1 and n not in numMap:
+            numMap[n] = True
             sum = 0
             ## add the square sum from the last digit to the first digit one by one
             while n:
