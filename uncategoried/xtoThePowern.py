@@ -9,14 +9,14 @@ class Solution:
     # @param x, a float
     # @param n, a integer
     # @return a float
-    def pow(self, x, n):
+    def myPow(self, x, n):
         if n == 0:
             return 1.0
         elif n < 0:
-            return 1 / self.pow(x, -n)
+            return 1 / self.myPow(x, -n)
         elif n % 2:
-            return self.pow(x*x,n/2)*x
+            return self.myPow(x*x,n/2)*x
         else:
-            return self.pow(x*x,n/2)
+            return self.myPow(x*x,n/2)
 x = Solution()
 print x.myPow(1,9)
