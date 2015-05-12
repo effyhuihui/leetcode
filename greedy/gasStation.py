@@ -12,8 +12,13 @@ Thought:
 If the circuit is possible, i.e. ∑gas ≥ ∑cost. Then once computed the minimum extra gas needed for the circular route
 , the minimum extra gas if we start on the next position is the same but not counting the previous position.
 
-如果sum(gas)<sum(cost)的话，那么一定无解。diff是走完一站邮箱剩下的油，如果加上gas[i]也到不了下一站，
-那么继续将下一站设置为起点，然后再检查，是不是很巧妙呢？
+首先，如果sum(gas) >= sum(cost)的话，那么肯定有一个station是可以走完一个circle的，而如果sum(gas)<sum(cost)的话，那么一定无解。
+这里用diff表示走完一站邮箱剩下的油，如果加上gas[i]也到不了下一站，那么继续将i+1设置为起点，然后再检查。 为什么直接跳到i+1呢？很简单，
+因为要是从last start point走不到i+1, 那么在last start point与i+1之间的station都不可能走到i+1 -----因为在连贯的一条路线中任意一个station
+的起始值至少都是>=0的（因为diff>=0才会向前），而从任意一个station起始的话，diff只能为0，所以更不可能走到i+1！
+
+并且在check过sum(gas)与sum(cost)之后，如果sum(gas)>sum(cost)，那么必定有一个能完成circle的station，我们只要遍历一遍，一边遍历一边做
+“排除法”就好了，最后一个start point就是那个start station。
 '''
 
 class Solution:
