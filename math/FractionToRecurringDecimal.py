@@ -39,7 +39,7 @@ class Solution:
         denominator = abs(denominator)
         numList = []
         cnt = 0
-        loopDict = dict()
+        loopDict = {}
         loopStr = None
         while True:
             numList.append(str(numerator / denominator))
