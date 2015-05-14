@@ -34,25 +34,10 @@ isMatch("aab", "c*a*b") → true
 
 
 '''
+'''
+TLE
+'''
 class Solution_recursion:
-    # @return a boolean
-    def isMatch(self, s, p):
-        len_s,len_p = len(s), len(p)
-        def dfs(i,j):
-            if i == len_s:
-                return j == len_p
-            if p[j] != "." and p[j] != "*":
-               if s[i] != p[j]:
-                   return False
-               else:
-                   dfs(i+1,j+1)
-            elif p[j] == ".":
-                if j+1 == len_p or p[j+1] != "*":
-                    dfs(i+1,j+1)
-                else:
-                    pass
-
-class Solution:
     # @return a boolean
     def isMatch(self, s, p):
         if len(p)==0:
@@ -62,8 +47,11 @@ class Solution:
                 return False
             return self.isMatch(s[1:],p[1:])
         else:
+            ## The opposite condition of 'if' is
+            ## len(p) >=2 AND p[1] == '*'
             i=-1
             length=len(s)
+            ## p[0]=='.' or p[0]==s[i] this means current s[i] matches p[0:2]'s requirement
             while i<length and (i<0 or p[0]=='.' or p[0]==s[i]):
                 if self.isMatch(s[i+1:],p[2:]):
                     return True
@@ -71,36 +59,75 @@ class Solution:
             return False
 
 
+class Solution_dp:
+    def isMatch(self,s,p):
+        l_s, l_p = len(s), len(p)
+        ## dp[i][j] represent whether s[:i+1] and p[:j+1] can match
+        ## i.e. whether substring s with length i from start matches
+        ## substring p with length j from start
+        dp = [[False for i in range(l_p+1)] for j in range(l_s+1)]
+        ### border conditions, if s == '' and p=='', they matches
+        dp[0][0] = True
+        for i in range(1, l_p+1):
+            ## Notice that '*' will not appear alone, it always appear in pair.
+            ## So if current p[i-1] == '*', then dp[0][i] equals to dp[0][i-2],
+            ## because 'x*' can match empty string!!!!!!!
+            ## Also notice that dp[0][1] will always be False, because if p only have length of 1,
+            ## it will only be a character or '.' both require one character in s
+            if p[i-1] == '*':
+                if i >=2:
+                    dp[0][i] = dp[0][i-2]
+
+        for i in range(1,l_s+1):
+            for j in range(1,l_p+1):
+                ## if current p is '.', then s[i-1] definitely matches p[j-1]
+                ## so we only cares whether previous s[:i-1] matches p[:j-1], which is
+                ## dp[i-1][j-1]. Pay attention that dp[i][j] is whether s[:i] matches p[:j]
+                ## s[:i] is until s[i-1], p[:j] is until p[j-1]
+                if p[j-1]=='.':
+                    dp[i][j]=dp[i-1][j-1]
+                ## if current p is '*' then if one of three conditions occurs, then it is True
+                ## 1. dp[i][j-1] is True (meaning if * is one, it matches)
+                ## 2. dp[i][j-2] is True (since * can always be 0)
+                ## 3. dp[i-1][j] and (s[i-1]==p[j-2] or p[j-2]=='.') is True (meaning that only if
+                #          until s[i-2] it matches p until current char, ALONG WITH a. s current char matches
+                #          p char before '*'--which implies s[i-1]==s[i-2], * number plus one, OR p char
+                #          before current '*' is '.' -- in this case '*' only uses once)
+                elif p[j-1]=='*':
+                    dp[i][j]=dp[i][j-1] or dp[i][j-2] or (dp[i-1][j] and (s[i-1]==p[j-2] or p[j-2]=='.'))
+                ## if current p is regular character, then just matches the current one character
+                else:
+                    dp[i][j]=dp[i-1][j-1] and s[i-1]==p[j-1]
+        return dp[l_s][l_p]
 
 
-class Solution:
+
+###############################
+'''
+reduced 2d memory to 1d
+'''
+class Solution_other_dp:
     # @return a boolean
     def isMatch(self, s, p):
-        dp = {}
-        def dfs(i, j):
-            if (i,j) in dp:
-                return dp[(i,j)]
-            if j == len(p):
-                return i == len(s)
+        previousRow = [True]
+        for i in range(0, len(p)):
+            if p[i]=='*':
+                previousRow.append(previousRow[i-1])
+            else:
+                previousRow.append(False)
 
-            if j < len(p)-1 and p[j+1] == '*':
-                if dfs(i, j+2):
-                    dp[(i,j)] = True
-                    return True
-                for k in range(i, len(s)):
-                    if s[k] == p[j] or p[j] == '.':
-                        if dfs(k+1, j+2):
-                            dp[(i,j)] = True
-                            return True
-                    else:
-                        break
-            elif i < len(s) and (s[i] == p[j] or p[j] == '.'):
-                return dfs(i+1, j+1)
-
-            dp[(i,j)] = False
-            return False
-
-        return dfs(0, 0)
+        for letter in range(0,len(s)):
+            actualRow = [False];
+            for i in range(0, len(p)):
+                if p[i]=='*':
+                    temp = actualRow[i-1] or (previousRow[i+1] and (p[i-1]==s[letter] or p[i-1]=='.'))
+                elif p[i] == '.':
+                    temp = previousRow[i]
+                else:
+                    temp = previousRow[i] and p[i]==s[letter]
+                actualRow.append(temp)
+            previousRow = actualRow
+        return previousRow[len(p)]
 
 
 
