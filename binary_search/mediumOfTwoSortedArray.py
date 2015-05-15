@@ -74,6 +74,40 @@ class Solution:
             return (self.findKthSmallest(A, B, (lenA + lenB)/2) + self.findKthSmallest(A, B, (lenA + lenB)/2 + 1)) * 0.5
 
 
+class Solution_secondRound:
+    # @param {integer[]} nums1
+    # @param {integer[]} nums2
+    # @return {float}
+    def findMedianSortedArrays(self, A, B):
+        la, lb = len(A), len(B)
+        mid = (la+lb)//2
+        if (la+lb)%2:
+            isEven = False
+        else:
+            isEven = True
+        merged = []
+        if la == 0:
+            merged = B[:]
+        elif lb == 0:
+            merged = A[:]
+        else:
+            ia, ib =0 ,0
+            while ia < la and ib<lb:
+                if A[ia]<B[ib]:
+                    merged.append(A[ia])
+                    ia += 1
+                else:
+                    merged.append(B[ib])
+                    ib += 1
+            if ia < la:
+                merged += A[ia:]
+            if ib<lb:
+                merged += B[ib:]
+        if isEven:
+             return (merged[mid]+merged[mid-1]+0.0)/2
+        else:
+            return merged[mid]
+
 
 
 
