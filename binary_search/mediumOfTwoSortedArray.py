@@ -53,7 +53,8 @@ class Solution:
         :param k: Kth smallest number to be found
         :return: the kth smallest number
         '''
-        lenA = len(A); lenB = len(B)
+        lenA = len(A)
+        lenB = len(B)
         if lenA > lenB:
             return self.findKthSmallest(B, A, k)
         if lenA == 0:
