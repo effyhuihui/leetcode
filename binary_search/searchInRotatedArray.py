@@ -55,12 +55,12 @@ class Solution_secondround:
             mid = (start+end)//2
             if nums[mid] == target:
                 return mid
-            ## right side is ordered
-            if nums[mid] <= nums[l-1]:
+            ## right side of current array is ordered
+            if nums[mid] <= nums[end]:
                 if target < nums[mid]:
                     end = mid-1
                 else:
-                    if target <= nums[l-1]:
+                    if target <= nums[end]:
                         start = mid + 1
                     else:
                         end  = mid - 1
@@ -69,7 +69,7 @@ class Solution_secondround:
                 if target>nums[mid]:
                     start = mid + 1
                 else:
-                    if target >= nums[0]:
+                    if target >= nums[start]:
                         end = mid - 1
                     else:
                         start = mid + 1

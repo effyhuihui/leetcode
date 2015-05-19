@@ -46,3 +46,35 @@ class Solution:
                 end -= 1
         return False
 
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @param {integer} target
+    # @return {boolean}
+    def search(self, nums, target):
+        l = len(nums)
+        start, end = 0, l-1
+        while start <= end:
+            mid = (start+end)//2
+            if nums[mid] == target:
+                return True
+            ## right side is ordered and mid and end is not the same
+            if nums[mid] < nums[end]:
+                if target< nums[mid]:
+                    end = mid -1
+                else:
+                    if nums[end] >= target:
+                        start = mid+1
+                    else:
+                        end = mid -1
+            ## left side is ordered and start / mid is not the same
+            elif nums[mid] > nums[end]:
+                if target > nums[mid]:
+                    start  = mid +1
+                else:
+                    if target >= nums[start]:
+                        end = mid -1
+                    else:
+                        start = mid + 1
+            else:
+                end  -= 1
+        return False
