@@ -44,6 +44,37 @@ class Solution:
                     start = mid + 1
         return -1
 
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @param {integer} target
+    # @return {integer}
+    def search(self, nums, target):
+        l = len(nums)
+        start, end = 0, l-1
+        while start <= end:
+            mid = (start+end)//2
+            if nums[mid] == target:
+                return mid
+            ## right side is ordered
+            if nums[mid] <= nums[l-1]:
+                if target < nums[mid]:
+                    end = mid-1
+                else:
+                    if target <= nums[l-1]:
+                        start = mid + 1
+                    else:
+                        end  = mid - 1
+            ## left side is ordered
+            else:
+                if target>nums[mid]:
+                    start = mid + 1
+                else:
+                    if target >= nums[0]:
+                        end = mid - 1
+                    else:
+                        start = mid + 1
+        return -1
+
 a = Solution()
 print a.search([1,3],3)
 
