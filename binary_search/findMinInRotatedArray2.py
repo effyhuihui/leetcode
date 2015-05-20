@@ -44,6 +44,33 @@ class Solution:
                 if num[mid] == num[start]:
                     start += 1
         return mini
+
+
+
+
+class Solution_secondround:
+    # @param num, a list of integer
+    # @return an integer
+    def findMin(self, num):
+        l = len(num)
+        start,end = 0, l-1
+        mini = num[start]
+        while start<=end:
+            mid = (start+end)//2
+            if num[mid]<mini:
+                mini = num[mid]
+            if num[mid] < num[end]:
+                end = mid-1
+            elif num[mid]> num[end]:
+                start = mid+1
+            else:
+                if num[mid]==num[start]:
+                    start += 1
+                if num[mid] == num[end]:
+                    end -= 1
+        return mini
+
+
 a = Solution()
 print a.findMin([])
 
