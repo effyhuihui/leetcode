@@ -54,6 +54,44 @@ class Solution:
             return newHead
         else:
             return head
+
+
+
+'''
+every time if see rotate, use pivot or circular list
+rotate a LINKED LIST by kth:
+1. link the head and end of current linked list to make it a circle
+2. new head will be the (l-k)th element from the current list
+3. break the circle return new head
+'''
+class Solution_secondround:
+    # @param head, a ListNode
+    # @param k, an integer
+    # @return a ListNode
+
+    def rotateRight(self, head, k):
+        if head is None or k == 0:
+            return head
+        last_node = head
+        l = 1
+        while last_node.next:
+            l += 1
+            last_node = last_node.next
+        steps = l- k%l
+        if steps != 0:
+            ### make linked list a circle
+            last_node.next = head
+            prev_new_head = head
+            for i in range(steps-1):
+                prev_new_head = prev_new_head.next
+            new_head = prev_new_head.next
+            prev_new_head.next = None
+            return new_head
+        else:
+            return head
+
+
+
 a,b,c,d,e = ListNode(1), ListNode(2), ListNode(3), ListNode(4), ListNode(5)
 a.next, = b,
 x = Solution()
