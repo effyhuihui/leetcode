@@ -37,3 +37,33 @@ class Solution:
                 else:
                     return None
         return None
+
+
+
+class Solution_seoncdround:
+    # @param head, a ListNode
+    # @return a list node
+    def detectCycle(self, head):
+        if head == None:
+            return None
+        slow, fast = head, head.next
+        hasCycle = False
+        while fast:
+            if slow == fast:
+                hasCycle = True
+                break
+            slow = slow.next
+            fast = fast.next
+            if fast:
+                fast = fast.next
+        if not hasCycle:
+            return None
+        else:
+            ### draw something to confirm whether fast need to move one step forward!! :)
+            ## if you have a dummy node as start, then you might not need to advance fast one step
+            fast = fast.next
+            start = head
+            while fast != start:
+                fast = fast.next
+                start = start.next
+            return start
