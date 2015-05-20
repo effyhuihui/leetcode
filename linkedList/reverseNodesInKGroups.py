@@ -65,6 +65,47 @@ class Solution:
             start = end
         return dummy.next
 
+
+
+class Solution_secondround:
+    # @param head, a ListNode
+    # @param k, an integer
+    # @return a ListNode
+    def reverseKGroup(self, head, k):
+        if head == None or k == 1:
+            return head
+        def reverseLinkedList(head):
+            last = None
+            cur = head
+            while cur:
+                next = cur.next
+                cur.next = last
+                last = cur
+                cur = next
+            return last
+
+        dummy = ListNode(-1)
+        dummy.next = head
+        prev_last = dummy
+        start= head
+
+        while start:
+            end = start
+            for i in range(k-1):
+                end = end.next
+                if end == None:
+                    return dummy.next
+            nextStart = end.next
+            end.next = None
+            prev_last.next = reverseLinkedList(start)
+            start.next = nextStart
+            prev_last = start
+            start = nextStart
+        return dummy.next
+
+
+
+
 a,b,c,d,e = ListNode(1), ListNode(2),ListNode(3),ListNode(4), ListNode(5)
 a.next,b.next,c.next,d.next = b,c,d,e
 x = Solution()
