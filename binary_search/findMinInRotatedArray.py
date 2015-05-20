@@ -29,5 +29,26 @@ class Solution:
             else:
                 start = mid + 1
 
+
+
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @return {integer}
+    def findMin(self, nums):
+        l = len(nums)
+        start, end = 0, l-1
+        while start<=end:
+            mid = (start+end)//2
+            right,left = min(l-1,mid+1), max(0,mid-1)
+            if nums[right]-nums[mid]>=0 and nums[left]-nums[mid]>=0:
+                return nums[mid]
+            if nums[mid] <= nums[end]:
+                end = mid-1
+            else:
+                start = mid+1
+
+
+
+
 a = Solution()
 print a.findMin([2,1])
