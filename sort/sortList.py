@@ -44,6 +44,43 @@ class Solution:
         return dummy_head.next
 
 
+
+class Solution_secondround:
+    # @param head, a ListNode
+    # @return a ListNode
+    def sortList(self, head):
+        if head == None or head.next == None:
+            return head
+        slow, fast = head, head.next
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+            if fast.next:
+                fast = fast.next
+        second_head = slow.next
+        slow.next = None
+        pre = self.sortList(head)
+        post = self.sortList(second_head)
+        cur1, cur2 = pre, post
+        dummy = ListNode(0)
+        curnew = dummy
+        while cur1 and cur2:
+            if cur1.val < cur2.val:
+                curnew.next = cur1
+                cur1 = cur1.next
+            else:
+                curnew.next = cur2
+                cur2 = cur2.next
+            curnew = curnew.next
+        if cur1:
+            curnew.next = cur1
+        if cur2:
+            curnew.next = cur2
+        return dummy.next
+
+
+
+
 a = ListNode(10)
 b = ListNode(8)
 c = ListNode(6)
