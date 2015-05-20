@@ -30,3 +30,23 @@ class Solution:
             cur.next = cur2
         return dummy.next
 
+class Solution_secondround:
+    # @param two ListNodes
+    # @return a ListNode
+    def mergeTwoLists(self, l1, l2):
+        dummy = ListNode(0)
+        cur1,cur2,curnew = l1,l2,dummy
+        while cur1 and cur2:
+            if cur1.val < cur2.val:
+                curnew.next = cur1
+                curnew = cur1
+                cur1 = cur1.next
+            else:
+                curnew.next = cur2
+                curnew = cur2
+                cur2 = cur2.next
+        if cur1:
+            curnew.next = cur1
+        if cur2:
+            curnew.next = cur2
+        return dummy.next
