@@ -38,3 +38,27 @@ class Solution:
             else:
                 break
         return dummy.next
+
+
+class Solution_secondround:
+    # @param a ListNode
+    # @return a ListNode
+    def swapPairs(self, head):
+        if head == None:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        prev_last = dummy
+        left,right = head,head.next
+        while right:
+            next = right.next
+            prev_last.next = right
+            right.next = left
+            left.next = next
+            prev_last = left
+            left = next
+            if next == None:
+                break
+            else:
+                right = next.next
+        return dummy.next
