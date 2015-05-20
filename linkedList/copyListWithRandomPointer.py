@@ -45,3 +45,26 @@ class Solution:
             ## advance one node ahead
             current = current.next
         return new_head
+
+
+
+class Solution_secondround:
+    # @param head, a RandomListNode
+    # @return a RandomListNode
+    def copyRandomList(self, head):
+        if head == None:
+            return None
+        copy = {}
+        cur = head
+        while cur:
+            copy[cur] = RandomListNode(cur.label)
+            cur = cur.next
+        cur = head
+        while cur:
+            new = copy[cur]
+            if cur.next:
+                new.next = copy[cur.next]
+            if cur.random:
+                new.random = copy[cur.random]
+            cur = cur.next
+        return copy[head]
