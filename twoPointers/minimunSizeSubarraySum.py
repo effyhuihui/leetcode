@@ -28,6 +28,29 @@ class Solution:
                 cur_sum = sum(nums[i:j+1])
             j+=1
         return min_len
+
+
+
+class Solution_secondround:
+    # @param {integer} s
+    # @param {integer[]} nums
+    # @return {integer}
+    def minSubArrayLen(self, s, nums):
+        if sum(nums)<s:
+            return 0
+        start, end = 0,0
+        l = len(nums)
+        min_length = l
+        total = 0
+
+        while end<l:
+            total += nums[end]
+            while total>=s and start<=end:
+                min_length = min(min_length, end-start+1)
+                total-=nums[start]
+                start += 1
+            end+= 1
+        return min_length
 x = Solution()
 print x.minSubArrayLen(100,[])
 print x.minSubArrayLen(7,[2,3,1,2,4,3])
