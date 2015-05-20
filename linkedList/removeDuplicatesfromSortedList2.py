@@ -36,6 +36,40 @@ class Solution:
                 current = current.next
         return dummy.next
 
+
+
+class Solution_secondround:
+    # @param head, a ListNode
+    # @return a ListNode
+    def deleteDuplicates(self, head):
+        if not head:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        last_distinct = dummy
+        current = head.next
+        prev = head
+        while current:
+            while current and current.val == prev.val:
+                current = current.next
+            ## current hasn't been changed, meaning prev node is distinct
+            if current == prev.next:
+                last_distinct = prev
+                prev = current
+                current = current.next
+            ## otherwise, prev is not distinct, and current is now the node has different value
+            else:
+                last_distinct.next = current
+                prev = current
+                if current:
+                    current = current.next
+        return dummy.next
+
+
+
+
+
+
 a,b,c,d,e,f,g = ListNode(1), ListNode(1),ListNode(2),ListNode(2), ListNode(4),ListNode(4),ListNode(5)
 a.next, = b,
 x = Solution()
