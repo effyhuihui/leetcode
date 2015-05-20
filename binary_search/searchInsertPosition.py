@@ -26,7 +26,6 @@ class Solution:
         end = n-1
         mid = (start+end)/2
         while start < end:
-            print start,mid,end
             if A[mid] == target:
                 return mid
             elif A[mid] > target:
@@ -34,12 +33,30 @@ class Solution:
             else:
                 start = min(n-1,mid+1)
             mid = (start+end)/2
-            print start,mid,end
         if A[mid] >= target:
             return mid
         else :
             return mid+1
 
+
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @param {integer} target
+    # @return {integer}
+    def searchInsert(self, nums, target):
+        start, end = 0, len(nums)-1
+        while start<=end:
+            mid = (start+end)/2
+            if nums[mid] == target:
+                return mid
+            if nums[mid] < target:
+                start = mid +1
+            else:
+                end = mid -1
+        if nums[mid]>target:
+            return mid
+        else:
+            return mid+1
 
 a = Solution()
 print a.searchInsert([1,3],3)
