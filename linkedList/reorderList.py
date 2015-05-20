@@ -18,34 +18,6 @@ class ListNode:
 class Solution:
     # @param head, a ListNode
     # @return nothing
-    def reorderList_my_own(self, head):
-        '''
-        :param head: 1,2,3,4,5
-        :into 1,3,5
-               4,2
-        :return 1,4,3,2,5
-        '''
-        if not head or not head.next:
-            return head
-        slow, fast = head, head.next
-        last = None
-        while slow and fast:
-            slow.next = fast.next
-            slow = slow.next
-            fast.next = last
-            last = fast
-            if slow:
-                fast = slow.next
-        cur_old, cur_new = head, last
-        while cur_new and cur_old:
-            tmp = cur_old.next
-            cur_old.next = cur_new
-            next_cur_new = cur_new.next
-            cur_new.next = tmp
-            cur_old = tmp
-            cur_new = next_cur_new
-        return  head
-
     def reorderList(self, head):
         if not head or not head.next:
             return
@@ -77,6 +49,47 @@ class Solution:
             curA.next = curB
             curA = curB.next
             curB = next_cur_B
+
+
+
+class Solution_secondround:
+    # @param head, a ListNode
+    # @return nothing
+    def reorderList(self, head):
+        if head == None or head.next == None:
+            return
+        def reverse(head):
+            last = None
+            cur = head
+            while cur:
+                next = cur.next
+                cur.next = last
+                last = cur
+                cur = next
+            return last
+        slow, fast = head, head.next
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+            if fast.next:
+                fast = fast.next
+        ## now slow is the end ot first part,
+        second_head = slow.next
+        slow.next = None
+        reversed_second_head = reverse(second_head)
+        cur1, cur2 = head, reversed_second_head
+        while cur2 and cur1:
+            next_cur2 = cur2.next
+            next_cur1 = cur1.next
+            cur1.next = cur2
+            cur2.next = next_cur1
+            cur1 = next_cur1
+            cur2 = next_cur2
+
+
+
+
+
 
 x = Solution()
 a,b,c,d,e = ListNode(1), ListNode(2), ListNode(3), ListNode(4), ListNode(5)
