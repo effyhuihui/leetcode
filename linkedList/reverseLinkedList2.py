@@ -48,6 +48,37 @@ class Solution:
 
 
 
+
+class Solution_secondround:
+    # @param head, a ListNode
+    # @param m, an integer
+    # @param n, an integer
+    # @return a ListNode
+    def reverseBetween(self, head, m, n):
+        if m == n:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        prev_reverse_head,reverse_end = dummy, dummy
+        for i in range(m-1):
+            prev_reverse_head = prev_reverse_head.next
+        for i in range(n):
+            reverse_end = reverse_end.next
+        ## break the list and assign last and cur :)
+        last = reverse_end.next
+        cur = prev_reverse_head.next
+        prev_reverse_head.next = None
+        reverse_end.next = None
+        while cur:
+            next = cur.next
+            cur.next = last
+            last = cur
+            cur = next
+        prev_reverse_head.next = last
+        return dummy.next
+
+
+
 a,b,c,d,e = ListNode(1), ListNode(2),ListNode(3),ListNode(4), ListNode(5)
 a.next,b.next,c.next,d.next = b,c,d,e
 x = Solution()
