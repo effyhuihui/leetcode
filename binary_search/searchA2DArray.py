@@ -83,6 +83,26 @@ class Solution2:
         return False
 
 
+class Solution_secondRound:
+    def searchMatrix(self, matrix, target):
+        m, n =len(matrix), len(matrix[0])
+        def indexTransform(pos):
+            return pos//n, pos%n
+        l = m*n
+        start, end = 0, l-1
+        while start <= end:
+            mid = (start+end)/2
+            x,y = indexTransform(mid)
+            if matrix[x][y] == target:
+                return True
+            if matrix[x][y] > target:
+                end = mid -1
+            else:
+                start = mid + 1
+        return False
+
+
+
 a = Solution2()
 print a.searchMatrix([
   [1,   3,  5,  7],
