@@ -46,5 +46,27 @@ class Solution:
                 end = mid - 1
         return mid
 
+
+
+class Solution_secondround:
+    # @param num, a list of integer
+    # @return an integer
+    def findPeakElement(self, num):
+        l = len(num)
+        start, end = 0, l-1
+        while start<= end:
+            mid = (start+end)/2
+            left,right = max(0,mid-1), min(l-1, mid+1)
+            ## garautee a peak which is not a left most or right most element
+            if num[left]<num[mid]   and num[right]< num[mid]:
+                return mid
+            ## increasing order from left
+            if num[mid]>=num[left] and num[mid]<=num[right]:
+                start = mid+1
+            else:
+                end = mid-1
+        return mid
+
+
 a = Solution()
 print a.findPeakElement([5,4,3,2])
