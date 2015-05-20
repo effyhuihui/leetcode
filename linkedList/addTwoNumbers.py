@@ -39,3 +39,39 @@ class Solution:
                 l1 = l1.next; p = p.next
         if flag == 1: p.next = ListNode(1)
         return dummy.next
+
+
+
+class Solution_second:
+    # @param {ListNode} l1
+    # @param {ListNode} l2
+    # @return {ListNode}
+    def addTwoNumbers(self, l1, l2):
+        dummy = ListNode(0)
+        addOne = 0
+        cur1,cur2 = l1, l2
+        curnew = dummy
+        while cur1 and cur2:
+            total = cur2.val+cur1.val+addOne
+            addOne = total//10
+            new = ListNode(total%10)
+            curnew.next = new
+            curnew = new
+            cur1 = cur1.next
+            cur2 = cur2.next
+        while cur2:
+            total = cur2.val+addOne
+            new = ListNode(total%10)
+            curnew.next = new
+            addOne = total//10
+            curnew = new
+            cur2=cur2.next
+        while cur1:
+            total = cur1.val+addOne
+            new = ListNode(total%10)
+            curnew.next = new
+            addOne = total//10
+            curnew = new
+            cur1=cur1.next
+        if addOne:
+            curnew.next = ListNode(1)
