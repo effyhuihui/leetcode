@@ -133,6 +133,36 @@ print new.val
 
 
 
+class Solution_secondround:
+    def getIntersectionNode(self, headA, headB):
+        if headA == None or headB == None:
+            return None
+        endB = headB
+        while endB.next:
+            endB = endB.next
+        ## link endB to headA
+        endB.next = headA
+        slow, fast = headB, headB.next
+        hasIntersect = False
+        while fast:
+            if slow == fast:
+                hasIntersect = True
+                break
+            slow = slow.next
+            fast = fast.next
+            if fast:
+                fast = fast.next
+        if not hasIntersect:
+            endB.next = None
+            return None
+        else:
+            fast = fast.next
+            start = headB
+            while fast!= start:
+                fast = fast.next
+                start = start.next
+            endB.next = None
+            return start
 
 
 
