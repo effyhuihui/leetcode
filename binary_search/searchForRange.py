@@ -36,5 +36,32 @@ class Solution:
                 end += 1
             return [start+1, end-1]
 
+
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @param {integer} target
+    # @return {integer[]}
+    def searchRange(self, nums, target):
+        start, end = 0, len(nums)
+        while start <= end:
+            mid = (start+end)//2
+            if nums[mid] == target:
+                break
+            if nums[mid] < target:
+                start = mid + 1
+            else:
+                end = mid - 1
+        if start > end:
+            return [-1,-1]
+        mid = (start+end)//2
+        start, end = mid, mid
+        while nums[start] == target and start>=0:
+            start = start-1
+
+        while nums[end] == target and end <len(nums):
+            end += 1
+
+        return [start+1,end-1]
+
 a = Solution()
 print a.searchRange([5, 7, 7, 8, 8, 10],8)
