@@ -36,3 +36,26 @@ def solution(A,B):
                 start +=1
     return end-start+1
 print solution(4,17)
+
+
+def solution_second(nums):
+    def closetSqrt(x):
+        if x == 0:
+            return 0
+        start = 1
+        end = x
+        while start<=end:
+            mid = (start+end)//2
+            if mid*mid<=x and (mid+1)*(mid+1)>x:
+                return mid
+            elif mid*mid>x:
+                end = mid-1
+            else:
+                start = mid+1
+        return mid
+    a,b = nums[0], nums[1]
+    sqrta, sqrtb = closetSqrt(a), closetSqrt(b)
+    if sqrta*sqrta < a:
+        return sqrtb-sqrta
+    else:
+        return sqrtb-sqrta+1
