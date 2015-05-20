@@ -31,3 +31,21 @@ class Solution:
                 if fast:
                     fast = fast.next
         return False
+
+
+
+class Solution_secondround:
+    # @param head, a ListNode
+    # @return a boolean
+    def hasCycle(self, head):
+        if head == None:
+            return False
+        slow, fast = head, head.next
+        while fast:
+            if slow == fast:
+                return True
+            slow = slow.next
+            fast = fast.next
+            if fast:
+                fast = fast.next
+        return False
