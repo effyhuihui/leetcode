@@ -51,6 +51,24 @@ class Solution_dp:
                 grid[i][j] = max(1,min(grid[i+1][j], grid[i][j+1]) - dungeon[i][j])
         return grid[0][0]
 
+
+
+
+class Solution_secondround:
+    # @param dungeon, a list of lists of integers
+    # @return a integer
+    def calculateMinimumHP(self, dungeon):
+        m,n = len(dungeon), len(dungeon[0])
+        blood = [ [0 for i in range(n)] for j in range(m)]
+        blood[-1][-1] = max(1, 1-dungeon[-1][-1])
+        for i in range(m-2,-1,-1):
+            blood[i][n-1] = max(1,blood[i+1][n-1]-dungeon[i][n-1])
+        for i in range(n-2,-1,-1):
+            blood[m-1][i] = max(1, blood[m-1][i+1]-dungeon[m-1][i])
+        for i in range(m-2,-1,-1):
+            for j in range(n-2,-1,-1):
+                blood[i][j] = max(1, min(blood[i+1][j]-dungeon[i][j], blood[i][j+1]-dungeon[i][j]))
+        return blood[0][0]
 y = Solution_dp()
 print y.calculateMinimumHP([[-2,-3,3],[-5,-10,1],[10, 30,-5]])
 
