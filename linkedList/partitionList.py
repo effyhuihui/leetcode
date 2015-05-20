@@ -46,6 +46,38 @@ class Solution:
         return small_head.next
 
 
+'''
+having two separate lists and then combine them together
+'''
+class Solution_secondround:
+    # @param head, a ListNode
+    # @param x, an integer
+    # @return a ListNode
+    def partition(self, head, x):
+        if head == None or head.next == None:
+            return head
+        first_dummy = ListNode(0)
+        second_dummy = ListNode(0)
+        first_par_cur, second_par_cur = first_dummy,second_dummy
+        cur = head
+        while cur:
+            if cur.val < x:
+                first_par_cur.next = cur
+                first_par_cur = cur
+
+            else:
+                second_par_cur.next = cur
+                second_par_cur = cur
+            next = cur.next
+            cur.next = None
+            cur = next
+        first_par_cur.next = second_dummy.next
+        return first_dummy.next
+
+
+
+
+
 a = ListNode(2)
 b = ListNode(1)
 a.next = b
