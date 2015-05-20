@@ -32,6 +32,34 @@ class Solution:
             cur = prev.next
         return head
 
+
+
+class Solution_secondround:
+    # @param head, a ListNode
+    # @return a ListNode
+    def deleteDuplicates(self, head):
+        if head == None or head.next == None:
+            return head
+        prev = head
+        cur = head.next
+        while cur:
+            if cur.val != prev.val:
+                prev = cur
+                cur = cur.next
+            else:
+                while cur and cur.val == prev.val:
+                    cur = cur.next
+                prev.next = cur
+                prev = cur
+                if cur:
+                    cur = cur.next
+                else:
+                    break
+        return head
+
+
+
+
 a = LinkedList(1)
 b = LinkedList(2)
 a.next = b
