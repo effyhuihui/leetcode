@@ -65,6 +65,27 @@ class Solution_iterative:
             return False
         return True
 
+
+class Solution_secondround:
+    # @param root, a tree node
+    # @return a boolean
+    def isSymmetric(self, root):
+        if root == None or (root.left == None and root.right == None):
+            return True
+        def isMirror(rootleft, rootright):
+            if rootleft == None and rootright == None:
+                return True
+            if rootleft == None or rootright == None:
+                return False
+            if rootleft.val != rootright.val:
+                return False
+            return isMirror(rootleft.right, rootright.left) and isMirror(rootleft.left, rootright.right)
+
+        return isMirror(root.left,root.right)
+
+
+
+
 root,a,b,c,d,e = TreeNode(2),TreeNode(3),TreeNode(3),TreeNode(4),TreeNode(5),TreeNode(5)
 root.left,root.right, a.left,a.right,b.right = a,b,c,d,e
 x = Solution_iterative()
