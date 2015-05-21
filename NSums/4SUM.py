@@ -57,23 +57,27 @@ class Solution_TLE:
             res.append(tuple(new_num[i] for i in tup))
         return res
 
-class Solution_other_ppl:
+
+
+class Solution_secondround:
     # @return a list of lists of length 4, [[val1,val2,val3,val4]]
     def fourSum(self, num, target):
-        l, res, lookup = len(num), set(), {}
-        if l < 4: return []
-        new_num = sorted(num)
-        for i in range(l):
-            for j in range(i+1, l):
-                val = new_num[i]+new_num[j]
-                lookup[val] = lookup.get(val, []) + [(i,j)]
-        for i in range(l):
-            for j in range(i+1, l-2):
-                T = target-new_num[i]-new_num[j]
-                if T in lookup:
-                    for k in lookup[T]:
-                        if k[0] > j: res.add((new_num[i],new_num[j],new_num[k[0]],new_num[k[1]]))
-        return [list(i) for i in res]
+        res = set()
+        num.sort()
+        two_sum_dict = {}
+        for i in range(len(num)):
+            for j in range(i+1, len(num)):
+                two_sum_dict[num[i]+num[j]] = two_sum_dict.get(num[i]+num[j],[]) + [(i,j)]
+        for two_sum in two_sum_dict.keys():
+            rest = target-two_sum
+            for a in two_sum_dict.get(rest,[]):
+                for b in two_sum_dict[two_sum]:
+                    if len(set(a+b)) == 4:
+                        index = sorted(list(a+b))
+                        res.add((num[index[0]], num[index[1]], num[index[2]], num[index[3]]))
+        return list(res)
+
+
 
 x = Solution_TLE()
 print x.fourSum([1, 0, -1, 0, -2, 2],0)

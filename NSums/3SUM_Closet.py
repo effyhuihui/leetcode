@@ -43,7 +43,6 @@ class Solution_secondround:
                 if total == target:
                     return total
                 if abs(total-target) < abs(closet_sum-target):
-                    print total
                     closet_sum = total
                 if total>target:
                     end -= 1
