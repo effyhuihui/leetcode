@@ -51,3 +51,18 @@ class Solution:
         upper_bound = float('inf')
         return validSubTree(root, lower_bound, upper_bound)
 
+class Solution_second_round:
+    # @param root, a tree node
+    # @return a boolean
+    def isValidBST(self, root):
+        def validSubBST(root,smallest,biggest):
+            if root == None:
+                return True
+            if root.val <= smallest or root.val >= biggest:
+                return False
+            ## go to sub tree, the bound will change accordingly!!!!
+            ## go to left node, the biggest val(upper bound) changes to current root val,
+            ## go to the right node, the smallest val(lower bound) changes to current root val
+            return validSubBST(root.left,smallest, root.val) \
+                   and validSubBST(root.right, root.val,biggest)
+        return validSubBST(root,-float('inf'),float('inf'))
