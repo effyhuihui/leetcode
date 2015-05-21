@@ -24,7 +24,7 @@ class TreeNode:
 class Solution:
     # @return a list of tree node
     def generateTrees(self, n):
-        ## dfs returns a list of BST that have values ranging from start to end
+        ## dfs returns a list of root node of BST that have values ranging from start to end
         def dfs(start, end):
             if start > end:
                 return [None]
@@ -43,3 +43,21 @@ class Solution:
             return res
         return dfs(1,n)
 
+class Solution_secondround:
+    # @return a list of tree node
+    def generateTrees(self, n):
+        def dfs(start,end):
+            if start<end:
+                return [None]
+            res = []
+            for rootval in range(start,end+1):
+                leftrootlist = dfs(start,rootval-1)
+                rightrootlist = dfs(rootval+1,end)
+                for leftroot in leftrootlist:
+                    for rightroot in rightrootlist:
+                        root = TreeNode(rootval)
+                        root.left = leftroot
+                        root.right = rightroot
+                        res.append(root)
+            return res
+        return dfs(1,n)
