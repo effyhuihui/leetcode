@@ -38,6 +38,21 @@ class Solution:
                 for j in range(1, i+1):
                     dp[i] += dp[j-1] * dp[i-j]
             return dp[n]
+
+class Solution_secondround_dp:
+    # @return an integer
+    def numTrees(self, n):
+        dp = [1,1,2]
+        if n<=2:
+            return dp[n]
+        for i in range(3,n+1):
+            current = 0
+            for j in range(0,i):
+                current += dp[j]*dp[i-1-j]
+            dp.append(current)
+        return dp[-1]
+
+
 x = Solution()
 print x.numTrees(3)
 
