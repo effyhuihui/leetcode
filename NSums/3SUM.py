@@ -44,6 +44,32 @@ def threeSum(num):
 
 	return res
 
+
+class Solution_secondround:
+    # @return a list of lists of length 3, [[val1,val2,val3]]
+    def threeSum(self, num):
+        num.sort()
+        res = []
+        l = len(num)
+        for i in range(l):
+            ## check for duplicates!!!
+            if i>=1 and num[i] == num[i-1]:
+                continue
+            else:
+                target = -num[i]
+                start, end = i+1,l-1
+                while start<end:
+                    if num[start]+num[end] == target:
+                        res.append([num[i],num[start],num[end]])
+                        start += 1
+                        while num[start] == num[start-1] and start < end:
+                            start += 1
+                    elif num[start] + num[end] > target:
+                        end -= 1
+                    else:
+                        start +=1
+        return res
+
 x = threeSum([-1, 0, 1, 2, -1, -4])
 print x
 
