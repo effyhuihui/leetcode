@@ -46,6 +46,8 @@ class Solution:
 
 '''
 这个方法不改变树的形状 -- 思路和binarySearchTreeIterator类似
+这里有一个思路和技巧，就是把goToCurrentMostLeft这个method把所有node的left都加入到了stack里面。
+所以每次pop一个node的时候只需要care它右边的子树
 '''
 class Solution2:
     def inorderTraversal(self,root):
@@ -65,6 +67,22 @@ class Solution2:
             goToCurrentMostLeft(cur.right)
         return inOrder
 
+
+
+class Solution_secondroun_recursion:
+    # @param {TreeNode} root
+    # @return {integer[]}
+    def inorderTraversal(self, root):
+        if root == None:
+            return []
+        res = []
+        ## process left
+        res += self.inorderTraversal(root.left)
+        ## process root
+        res +=[root.val]
+        ## process right
+        res += self.inorderTraversal(root.right)
+        return res
 
 
 

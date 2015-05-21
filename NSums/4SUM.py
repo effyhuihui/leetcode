@@ -79,5 +79,5 @@ class Solution_secondround:
 
 
 
-x = Solution_TLE()
+x = Solution_secondround()
 print x.fourSum([1, 0, -1, 0, -2, 2],0)
