@@ -103,7 +103,20 @@ print a,b
 
 
 
-
+class Solution_secondround:
+    # @return a tuple, (index1, index2)
+    def twoSum(self, num, target):
+        index = [i for i in range(len(num))]
+        index.sort(key=lambda x: num[x])
+        start, end = 0, len(num)-1
+        while start < end:
+            if num[index[start]] + num[index[end]] == target:
+                return (min(index[start]+1,index[end]+1), max(index[start]+1,index[end]+1))
+            if num[index[start]] + num[index[end]] < target:
+                start += 1
+            else:
+                end -= 1
+        return False
 
 
 
