@@ -23,6 +23,25 @@ class Solution:
             ## check the left and right recursively
             return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
         return False
+
+class Solution_secondround:
+    # @param p, a tree node
+    # @param q, a tree node
+    # @return a boolean
+    def isSameTree(self, p, q):
+        if p == None and q == None:
+            return True
+        if p == None or q == None:
+            return False
+        if p.val != q.val:
+            return False
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right,q.right)
+
+
+
+
+
+
 a,b = TreeNode(1),TreeNode(1)
 a.left = b
 c,d, = TreeNode(1),TreeNode(1)
