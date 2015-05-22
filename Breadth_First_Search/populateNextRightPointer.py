@@ -68,6 +68,34 @@ class Solution:
                         cur.next = None
                     parent.append(cur)
 
+
+from collections import deque
+class Solution_secondround:
+    # @param root, a tree link node
+    # @return nothing
+    def connect(self, root):
+        if root == None:
+            return
+        parent = deque()
+        parent.append(root)
+        children = deque()
+        while parent or children:
+            while parent:
+                cur= parent.popleft()
+                if cur.left:
+                    children.append(cur.left)
+                if cur.right:
+                    children.append(cur.right)
+            while children:
+                cur = children.popleft()
+                if children:
+                    cur.next= children[0]
+                parent.append(cur)
+
+
+
+
+
 a,b,c,d,e,f,g = TreeLinkNode(1),TreeLinkNode(2),TreeLinkNode(3),TreeLinkNode(4),TreeLinkNode(5),TreeLinkNode(6),TreeLinkNode(7)
 a.left, a.right,b.left,b.right,c.left,c.right=b,c,d,e,f,g
 x = Solution()
