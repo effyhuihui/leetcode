@@ -25,6 +25,20 @@ class Solution:
         root.right = self.sortedArrayToBST(num[l//2+1:])
         return root
 
+
+class Solution_second:
+    # @param num, a list of integers
+    # @return a tree node
+    def sortedArrayToBST(self, num):
+        l = len(num)
+        if l == 0:
+            return None
+        rootval = num[l//2]
+        root = TreeNode(rootval)
+        root.left = self.sortedArrayToBST(num[:l//2])
+        root.right = self.sortedArrayToBST(num[l//2+1:])
+        return root
+
 a = [1,2,3,4,5,6,7]
 x = Solution()
 nodes = x.sortedArrayToBST(a)

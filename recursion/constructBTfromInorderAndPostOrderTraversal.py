@@ -30,3 +30,17 @@ class Solution:
         root.left = self.buildTree(postorder[mid:l-1], inorder[:mid])
         root.right = self.buildTree(postorder[:mid], inorder[mid+1:])
         return root
+
+class Solution_secondround:
+    # @param {integer[]} inorder
+    # @param {integer[]} postorder
+    # @return {TreeNode}
+    def buildTree(self, inorder, postorder):
+        if len(inorder) == 0:
+            return None
+        rootval = postorder[-1]
+        root = TreeNode(rootval)
+        root_index = inorder.index(rootval)
+        root.left = self.buildTree(inorder[:root_index],postorder[:root_index])
+        root.right = self.buildTree(inorder[root_index+1:], postorder[root_index:len(postorder)-1])
+        return root
