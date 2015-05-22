@@ -73,5 +73,5 @@ a.left = b
 a.right = c
 b.left = d
 b.right = e
-x = Solution2()
+x = Solution()
 print x.zigzagLevelOrder(a)
