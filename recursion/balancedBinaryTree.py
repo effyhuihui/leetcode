@@ -27,7 +27,7 @@ class Solution:
         return abs(left_height-right_height) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right)
 
 ## preserve the height for each node along the way
-class Solution_DP:
+class Solution_memorization:
     def __init__(self):
         self.heights = {}
 
