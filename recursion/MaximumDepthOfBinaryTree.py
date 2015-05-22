@@ -42,6 +42,17 @@ class Solution_recursion:
             return 0
         return  max(self.maxDepth(root.left)+1, self.maxDepth(root.right)+1)
 
+
+class Solution_secondround:
+    # @param root, a tree node
+    # @return an integer
+    def maxDepth(self, root):
+        if root == None:
+            return 0
+        return 1+max(self.maxDepth(root.left), self.maxDepth(root.right))
+
+
+
 a,b,c,d,e = TreeNode(1), TreeNode(1),TreeNode(1),TreeNode(1), TreeNode(1)
 a.left,a.right = b,c
 b.left = d
