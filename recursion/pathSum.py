@@ -34,9 +34,18 @@ class Solution_recursive:
         else:
             return self.hasPathSum(root.left, sum-root.val) or self.hasPathSum(root.right, sum-root.val)
 
-class Solution_backtracking:
+
+
+class Solution_secondround:
     # @param root, a tree node
     # @param sum, an integer
     # @return a boolean
     def hasPathSum(self, root, sum):
-        pass
+        if root == None:
+            return False
+        elif root.left==None and root.right==None:
+            return root.val == sum
+        else:
+            return self.hasPathSum(root.left, sum-root.val) or self.hasPathSum(root.right, sum-root.val)
+
+
