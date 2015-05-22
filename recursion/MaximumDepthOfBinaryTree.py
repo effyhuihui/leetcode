@@ -11,7 +11,7 @@ class TreeNode:
          self.left = None
          self.right = None
 
-class Solution_DFS:
+class Solution_stack:
     # @param root, a tree node
     # @return an integer
     def maxDepth(self, root):
