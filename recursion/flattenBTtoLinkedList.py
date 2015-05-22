@@ -120,4 +120,45 @@ class Solution:
             ## and then continue, current root = current.right
             self.flatten(root.right)
 
+'''
+first create an array of node in preorder traversal sequence, and then assign each node.
+left = None, right to the next node
+'''
+class Solution_secondround:
+    # @param root, a tree node
+    # @return nothing, do it in place
+    def flatten(self, root):
+        def preOrder(root):
+            res = []
+            if root == None:
+                return []
+            res.append(root)
+            res+= preOrder(root.left)
+            res+=preOrder(root.right)
+            return res
+        res = preOrder(root)
+        res += [None]
+        i = 0
+        while i<len(res)-1:
+            res[i].left = None
+            res[i].right = res[i+1]
+            i +=1
 
+
+
+class Solution_secondround_2:
+    # @param root, a tree node
+    # @return nothing, do it in place
+    def flatten(self, root):
+        def goToMostRight(cur):
+            while cur.right:
+                cur = cur.right
+            return cur
+        if root == None:
+            return
+        if root.left:
+            leftsubtreemostright = goToMostRight(root.left)
+            leftsubtreemostright.right = root.right
+            root.right = root.left
+            root.left = None
+        self.flatten(root.right)
