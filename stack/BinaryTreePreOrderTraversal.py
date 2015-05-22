@@ -51,6 +51,21 @@ class Solution:
                 stack.append(cur.left)
         return res
 
+
+class Solution:
+    # @param root, a tree node
+    # @return a list of integers
+    def preorderTraversal(self, root):
+        res = []
+        if root == None:
+            return []
+        res+= [root.val]
+        res += self.preorderTraversal(root.left)
+        res+= self.preorderTraversal(root.right)
+        return res
+
+
+
 root = TreeNode(1)
 a = TreeNode(2)
 b = TreeNode(3)
