@@ -47,3 +47,20 @@ class Solution_DP:
         return abs(left_height-right_height) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right)
 
 
+class Solution_secondround:
+    def __init__(self):
+        self.heights = {None:0}
+    def height(self,root):
+        if root in self.heights:
+            return self.heights[root]
+        h = max(self.height(root.left), self.height(root.right)) +1
+        self.heights[root] = h
+        return h
+    def isBalanced(self, root):
+        if root == None:
+            return True
+        leftroot = root.left
+        rightroot = root.right
+        return abs(self.height(leftroot)-self.height(rightroot))<=1 and self.isBalanced(leftroot) and self.isBalanced(rightroot)
+
+
