@@ -42,6 +42,28 @@ class Solution:
         if root==None: return []
         dfs(root, root.val, [root.val])
         return res
+
+
+class Solution_secondround:
+    # @param root, a tree node
+    # @param sum, an integer
+    # @return a list of lists of integers
+    def pathSum(self, root, sum):
+        res = []
+        def dfs(root,path,remain):
+            if root.left == None and root.right == None:
+                if remain == root.val:
+                    res.append(path+[root.val])
+            if root.left:
+                dfs(root.left, path+[root.val],remain-root.val)
+            if root.right:
+                dfs(root.right, path+[root.val], remain-root.val)
+        if root == None:
+            return res
+        dfs(root,[],sum)
+        return res
+
+
 x = Solution()
 print x.pathSum(None,1)
 
