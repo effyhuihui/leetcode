@@ -40,6 +40,30 @@ class Solution:
         numbers(root,0)
         print res
         return sum(res)
+
+
+class Solution_seondround:
+    # @param root, a tree node
+    # @return an integer
+    def sumNumbers(self, root):
+        res = []
+        def dfs(root, path_num):
+            if root == None:
+                res.append(path_num)
+            elif root.left == None and root.right == None:
+                res.append(path_num*10+root.val)
+            else:
+                if root.left:
+                    dfs(root.left, path_num*10+root.val)
+                if root.right:
+                    dfs(root.right, path_num*10+root.val)
+        if root == None:
+            return 0
+        dfs(root,0)
+        return sum(res)
+
+
+
 root, a, b = TreeNode(1),TreeNode(2),TreeNode(3)
 root.left, root.right = a, b
 x = Solution()
