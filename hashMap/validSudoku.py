@@ -114,5 +114,47 @@ class Solution_second:
                             word[board[i*3+q][j*3+k]] = True
         return True
 
+
+class Solution_secondround:
+    # @param {character[][]} board
+    # @return {void} Do not return anything, modify board in-place instead.
+    def solveSudoku(self, board):
+        for i in range(9):
+            board[i] = list(board[i])
+        def isValid(x,y):
+            tmp = board[x][y]
+            #check for col
+            for i in range(9):
+                if i != x and board[i][y] == tmp:
+                    return False
+            ## check for rows
+            for i in range(9):
+                if i != y and board[x][i] == tmp:
+                    return False
+            ## check for 3*3 board
+            box_i,box_j = x//3, y//3
+            for i in range(box_i*3, box_i*3+3):
+                for j in range(box_j*3, box_j*3+3):
+                    if i !=x and j !=y and board[i][j] == tmp:
+                        return False
+            ## all test passes
+            return True
+        def dfs(board):
+            for i in range(9):
+                for j in range(9):
+                    if board[i][j] == '.':
+                        for num in '123456789':
+                            board[i][j] = num
+                            if isValid(i,j) and self.solveSudoku(board):
+                                return True
+                            else:
+                                board[i][j] = '.'
+                        return False
+            return True
+        dfs(board)
+        for i in range(9):
+            board[i] = ''.join(board[i])
+
+
 x = Solution()
 x.isValidSudoku(	["....5..1.",".4.3.....",".....3..1","8......2.","..2.7....",".15......",".....2...",".2.9.....","..4......"])

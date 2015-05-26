@@ -24,3 +24,24 @@ class Solution:
                     p += x
             x += 1
         return sum(isPrime)
+
+
+
+
+class Solution_secondround:
+    # @param {integer} n
+    # @return {integer}
+    def countPrimes(self, n):
+        if n < 3:
+            return 0
+        isPrime = [True for i in range(n)]
+        isPrime[0], isPrime[1] = False, False
+        x = 2
+        while x*x<n:
+            if isPrime[x]:
+                np = x*x
+                while np < n:
+                    isPrime[np] = False
+                    np += x
+            x += 1
+        return sum(isPrime)
