@@ -32,3 +32,22 @@ class Solution:
                 n /= 10
             n = sum
         return n == 1
+
+
+
+class Solution_secondround:
+    # @param {integer} n
+    # @return {boolean}
+    def isHappy(self, n):
+        appeared = {}
+        sum = 0
+        while n not in appeared and n != 1:
+            appeared[n] = True
+            sum = 0
+            while n:
+                sum += (n%10)*(n%10)
+                n = n//10
+            n = sum
+        if n == 1:
+            return True
+        return False
