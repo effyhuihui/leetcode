@@ -49,5 +49,23 @@ class Solution2:
             else: dic.add(cur)
         return list(ans)
 
+
+
+class Solution_secondround:
+    # @param s, a string
+    # @return a list of strings
+    def findRepeatedDnaSequences(self, s):
+        appeared = {}
+        res = []
+        l = len(s)
+        for i in range(l-9):
+            cur_sequence = s[i:i+10]
+            if cur_sequence in appeared:
+                if appeared[cur_sequence] ==1:
+                    res.append(cur_sequence)
+                appeared[cur_sequence]+=1
+            else:
+                appeared[cur_sequence] = 1
+        return res
 x =  Solution2()
 print x.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT")
