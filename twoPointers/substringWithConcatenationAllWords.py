@@ -51,7 +51,9 @@ class Solution_not_efficient_but_easy_to_understand:
                 count+=1
             if count==wordNum: res.append(i)
         return res
-
+'''
+This is the fastest 98ms
+'''
 class Solution_effy:
     def findSubstring(self, S, L):
         n, l = len(L),len(L[0])
