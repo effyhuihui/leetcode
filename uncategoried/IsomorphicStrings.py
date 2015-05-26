@@ -32,6 +32,29 @@ class Solution:
                 return False
         return True
 
+class Solution_secondround:
+    # @param {string} s
+    # @param {string} t
+    # @return {boolean}
+    def isIsomorphic(self, s, t):
+        sTot = {}
+        tTos = {}
+        l = len(s)
+        for i in range(l):
+            s_char = s[i]
+            t_char = t[i]
+            if s_char in sTot and sTot[s_char] != t_char:
+                return False
+            else:
+                sTot[s_char] = t_char
+            if t_char in tTos and tTos[t_char] != s_char:
+                return False
+            else:
+                tTos[t_char] = s_char
+        return True
+
+
+
 x = Solution()
 print x.isIsomorphic("aa", "ab")  # should be False
 print x.isIsomorphic("ab", "aa")  # should be False
