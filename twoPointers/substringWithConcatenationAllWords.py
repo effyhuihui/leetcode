@@ -22,35 +22,6 @@ same as "longest substring without any repeat characters", two pointers and a "h
 如果不在字典中，则break出循环。有一个技巧是建立一个临时字典curr，用来统计S中那些在L中的单词的数量，必须和L中单词的数量相等，
 否则同样break。
 '''
-
-class Solution_not_efficient_but_easy_to_understand:
-    # @param S, a string
-    # @param L, a list of string
-    # @return a list of integer
-    def findSubstring(self, S, L):
-        words={}
-        wordNum=len(L)
-        for i in L:
-            words[i] = words.get(i,0)+1
-        wordLen=len(L[0])
-        res=[]
-        ## for i in range 0 to the last possible index, which is the len(s) - total len of all words
-        ## equals to len(S) - wordLen*wordNum+1
-        for i in range(len(S)+1-wordLen*wordNum):
-            curr={}
-            count=0
-            while count<wordNum:
-                word=S[i+count*wordLen:i+count*wordLen+wordLen]
-                if word not in words:
-                    break
-                if word not in curr:
-                    curr[word]=1
-                else:
-                    curr[word]+=1
-                if curr[word]>words[word]: break
-                count+=1
-            if count==wordNum: res.append(i)
-        return res
 '''
 This is the fastest 98ms
 '''
