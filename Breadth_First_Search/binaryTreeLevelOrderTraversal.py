@@ -72,7 +72,26 @@ class Solution_dfs:
 
 
 
-
+class Solution_bfs_secondround:
+    # @param root, a tree node
+    # @return a list of lists of integers
+    def levelOrder(self, root):
+        res  = []
+        if root == None:
+            return res
+        queue = deque()
+        queue.append(root)
+        while queue:
+            l = len(queue)
+            res.append([])
+            for i in range(l):
+                cur = queue.popleft()
+                res[-1].append(cur.val)
+                if cur.left:
+                    queue.append(cur.left)
+                if cur.right:
+                    queue.append(cur.right)
+        return res
 
 
 

@@ -51,7 +51,26 @@ class Solution:
         return res
 
 
-
+from collections import deque
+class Solution_secondround:
+    # @param root, a tree node
+    # @return a list of integers
+    def rightSideView(self, root):
+        res = []
+        if root == None:
+            return res
+        queue = deque()
+        queue.append(root)
+        while queue:
+            res.append(queue[-1].val)
+            l = len(queue)
+            for i in range(l):
+                cur = queue.popleft()
+                if cur.left:
+                    queue.append(cur.left)
+                if cur.right:
+                    queue.append(cur.right)
+        return res
 
 
 
