@@ -63,6 +63,29 @@ class Solution_effy:
                     curr[S[j+l:j+l*2]] -= 1
         return res
 
+class Solution_seoncdround:
+    def findSubstring(self, S, L):
+        L.sort()
+        l_word = len(L[0])
+        num_of_words= len(L)
+        word_map = {i:True for i in L}
+        inverted_map = {}
+        res = []
+        ## all starting indices that is valid in L
+        for i in range(len(S)):
+            cur = S[i:i+l_word]
+            if cur in word_map:
+                inverted_map[i] = cur
+        for i in range(len(S)-num_of_words*l_word+1):
+            all_words = []
+            for j in range(num_of_words):
+                if i+j*l_word in inverted_map:
+                    all_words.append(inverted_map[i+j*l_word])
+                else:
+                    break
+            if len(all_words) == num_of_words and sorted(all_words) ==L:
+                res.append(i)
+        return res
 
 
 x = Solution_effy()
