@@ -84,5 +84,35 @@ class Solution2:
 
         return True
 
+class Solution_second:
+    # @param board, a 9x9 2D array
+    # @return a boolean
+    def isValidSudoku(self, board):
+        for i in range(9):
+            word = {}
+            for j in range(9):
+                if board[i][j] != '.' and board[i][j] in word:
+                    return False
+                else:
+                    word[board[i][j]] = True
+        for j in range(9):
+            word = {}
+            for i in range(9):
+                if board[i][j] != '.' and board[i][j] in word:
+                    return False
+                else:
+                    word[board[i][j]] = True
+
+        for i in range(3):
+            for j in range(3):
+                word = {}
+                for q in range(3):
+                    for k in range(3):
+                        if board[i*3+q][j*3+k] != '.' and board[i*3+q][j*3+k] in word:
+                            return False
+                        else:
+                            word[board[i*3+q][j*3+k]] = True
+        return True
+
 x = Solution()
 x.isValidSudoku(	["....5..1.",".4.3.....",".....3..1","8......2.","..2.7....",".15......",".....2...",".2.9.....","..4......"])
