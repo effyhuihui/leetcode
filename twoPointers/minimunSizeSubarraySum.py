@@ -31,26 +31,29 @@ class Solution:
 
 
 
-class Solution_secondround:
+class Solution_secondround1:
     # @param {integer} s
     # @param {integer[]} nums
     # @return {integer}
     def minSubArrayLen(self, s, nums):
+        left,right =0,0
         if sum(nums)<s:
             return 0
-        start, end = 0,0
-        l = len(nums)
-        min_length = l
         total = 0
+        l = len(nums)
+        min_len = l
+        while right<l:
+            total += nums[right]
+            while total>=s and left<=right:
+                min_len = min(min_len, right-left+1)
+                total -= nums[left]
+                left += 1
+            right += 1
+        return min_len
 
-        while end<l:
-            total += nums[end]
-            while total>=s and start<=end:
-                min_length = min(min_length, end-start+1)
-                total-=nums[start]
-                start += 1
-            end+= 1
-        return min_length
+
+
+
 x = Solution()
 print x.minSubArrayLen(100,[])
 print x.minSubArrayLen(7,[2,3,1,2,4,3])
