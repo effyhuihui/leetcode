@@ -29,3 +29,25 @@ class Solution:
                 A[nextBlue] = 2
                 nextBlue -=1
         return A
+
+
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @return {void} Do not return anything, modify nums in-place instead.
+    def sortColors(self, nums):
+        nextred,nextblue = 0, len(nums)-1
+        current = 0
+        while current<=nextblue:
+            if nums[current] == 1:
+                pass
+                current += 1
+            elif nums[current] == 0:
+                nums[current] = nums[nextred]
+                nums[nextred] = 0
+                nextred += 1
+                current += 1
+            else:
+                nums[current] = nums[nextblue]
+                nums[nextblue] = 2
+                nextblue -= 1
+        print nums
