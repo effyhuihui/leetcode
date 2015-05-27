@@ -102,3 +102,32 @@ class MinStack_opt:
             return self.minStack[-1]
         else:
             return
+
+
+class MinStack_secondround:
+    # @param x, an integer
+    # @return an integer
+    def __init__(self):
+        self.min_stack = []
+        self.stack = []
+    def push(self, x):
+        self.stack.append(x)
+        if not self.min_stack or x <= self.min_stack[-1]:
+            self.min_stack.append(x)
+
+
+    # @return nothing
+    def pop(self):
+        cur = self.stack.pop()
+        if cur == self.min_stack[-1]:
+            self.min_stack.pop()
+
+
+    # @return an integer
+    def top(self):
+        return self.stack[-1]
+
+
+    # @return an integer
+    def getMin(self):
+        return self.min_stack[-1]
