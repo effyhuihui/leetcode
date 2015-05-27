@@ -16,14 +16,23 @@ class Solution:
         nextRed = 0
         nextBlue = N-1
         while i <= nextBlue:
+            ## 0 is swap with previous element,
+            ## previous element can only be 1, since
+            ## they are all proccessed already
             if A[i] == 0:
                 ## swap 0 and anything else
                 A[i] = A[nextRed]
                 A[nextRed] = 0
                 nextRed += 1
                 i += 1
+            ## if current val is 1,
+            ## move afterwards
             elif A[i] == 1:
                 i += 1
+            ## swap with elements that are not processed
+            ## is dangerous, we can not advance i because the
+            ## value swapped here could be 0,1,2.
+            ## need to stay in current i.
             else:
                 A[i] = A[nextBlue]
                 A[nextBlue] = 2
