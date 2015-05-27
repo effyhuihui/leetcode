@@ -33,5 +33,31 @@ class Solution:
             ## use max() in the outer level to avoid negative height
             total += max(0, (min(from_left[i], maximun) - A[i]))
         return total
+'''
+The previous solution is the optimization of the below one
+
+'''
+class Solution_secondround:
+    # @param A, a list of integers
+    # @return an integer
+    def trap(self, A):
+        l = len(A)
+        left_highest = [0]
+        for i in range(1,l):
+            left_highest.append(max(left_highest[-1],A[i-1]))
+        right_highest = [0]
+        for i in range(l-2,-1,-1):
+            right_highest.insert(0,max(right_highest[0],A[i+1]))
+        total_water = 0
+        #print left_highest, right_highest
+        for i in range(l):
+            min_bar = min(left_highest[i], right_highest[i])
+            if min_bar>A[i]:
+                local_water = 1*(min(left_highest[i],right_highest[i])-A[i])
+                total_water += local_water
+        return total_water
+
+
+
 a = Solution()
 print a.trap([0,1,0,2,1,0,1,3,2,1,2,1])
