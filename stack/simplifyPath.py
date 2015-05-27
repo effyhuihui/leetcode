@@ -26,6 +26,27 @@ class Solution:
 
         return '/'+'/'.join(st)
 
+
+class Solution_secondround:
+    # @param {string} path
+    # @return {string}
+    def simplifyPath(self, path):
+        dirs = path.split('/')
+        simple = []
+        for i in dirs:
+            if i =='..':
+                if simple:
+                    simple.pop()
+            elif i == '.' or i == '':
+                pass
+            else:
+                simple.append(i)
+        if not simple:
+            return '/'
+        return '/' + '/'.join(simple)
+
+
+
 a = Solution()
 print a.simplifyPath("/a/./b/../../c/")
 
