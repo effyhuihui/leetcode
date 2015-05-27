@@ -46,32 +46,37 @@ class Solution:
         return min_win
 
 
-class Solution1:
+class Solution_secondround:
     # @return a string
     def minWindow(self, S, T):
-        last_start,next_start = 0,0
-        min_win = S
-        ## how to check all characters in T appear?
-        ## check all values in char_map is less/equal to 0
-        all_appear = False
-        char_map = {}
+        target_l = len(T)
+        target_dict = {}
         for i in T:
-            char_map[i] = char_map.get(i,0)+1
-        for i in range(len(S)-len(T)+1):
-            cur = S[i]
-            if cur not in char_map:
-                last_start = next_start
-                count = min(len(T), count+1)
-            else:
-                char_map[cur] -= 1
-                if last_start == next_start:
-                    next_start = i
-                all_appear = all([i <= 0 for i in char_map.values()])
-                if all_appear:
-                    cur_win = S[last_start:i]
-                    if len(cur_win) < len(min_win): min_win = cur_win
-                    char_map[S[last_start]] += 1
-                    last_start = next_start
-        if not all_appear:
-            return ""
-        return min_win
+            target_dict[i] = target_dict.get(i,0)+1
+        start =0
+        l = len(S)
+        min_window = S
+        cur_word_map = {i:0 for i in T}
+        total_valid_char = 0
+        hasWindows = False
+        for i in range(l):
+            if S[i] in target_dict:
+                cur_word_map[S[i]] += 1
+                if cur_word_map[S[i]] <= target_dict[S[i]]:
+                    total_valid_char += 1
+            while total_valid_char == target_l:
+                hasWindows = True
+                ## assign min window
+                if i-start<len(min_window):
+                    min_window = S[start:i+1]
+                ## update cur_word_map
+                if S[start] in cur_word_map:
+                    cur_word_map[S[start]] -=1
+                    if cur_word_map[S[start]] < target_dict[S[start]]:
+                        total_valid_char -= 1
+                start += 1
+                print start,i,total_valid_char, cur_word_map
+        if hasWindows:
+            return min_window
+        else:
+            return ''
