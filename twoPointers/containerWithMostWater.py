@@ -15,6 +15,9 @@ Greedy algorithm
 移动一个单位距离，得到的解必定优于杯壁较长那边移动的情况。这样保证每次移动都得到的是局部最优解。
 
 greedy算法不一定能解决所有问题，比如largest histogram若用贪心算法结果就是错的。
+能用greedy算法的题目有一些signal，比如一般是求max min之类的极值，而且呢一般局部最优一般只跟当前状态有关（其余的状态不会对当前状态
+产生约束），这就是为什么largest rectangle不能用greedy而这道题却可以 --- 这里water container只于end start的长度和高度有关，
+而largesthistogram却不同，start到end中间的所有index都需要高于一个bar，才能算是一个完整的rectangle。
 '''
 class Solution:
     # @return an integer
