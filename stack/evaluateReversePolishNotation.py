@@ -36,5 +36,29 @@ class Solution:
         return int(stack[-1])
 
 
+class Solution_secondround:
+    # @param {string[]} tokens
+    # @return {integer}
+    def evalRPN(self, tokens):
+        num = []
+        for cur in tokens:
+            if cur in '+-*/':
+                num1 = int(num.pop())
+                num2 = int(num.pop())
+                if cur == '+':
+                    num.append(num1+num2)
+                elif cur == '-':
+                    num.append(num2-num1)
+                elif cur == '*':
+                    num.append(num1*num2*1.0)
+                else:
+                    if num1*num2 < 0:
+                        num.append(-((-num2)/num1))
+                    else:
+                        num.append(num2/num1)
+            else:
+                num.append(cur)
+        return int(num[-1])
+
 a = Solution()
 print a.evalRPN(["4", "13", "5", "/", "+"])
