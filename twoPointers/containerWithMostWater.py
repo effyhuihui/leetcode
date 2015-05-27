@@ -30,3 +30,17 @@ class Solution:
             max_area = max(area, max_area)
         return max_area
 
+
+class Solution_secondround:
+    # @return an integer
+    def maxArea(self, height):
+        start, end =0,len(height)-1
+        max_area = 0
+        while start<end:
+            local_max = (end-start)*min(height[start], height[end])
+            max_area = max(local_max, max_area)
+            if height[start]<height[end]:
+                start += 1
+            else:
+                end -= 1
+        return max_area
