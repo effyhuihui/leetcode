@@ -62,6 +62,38 @@ class Solution:
         return result
 
 
+class Solution_secondround:
+    # @param root, a tree node
+    # @return a list of lists of integers
+    def zigzagLevelOrder(self, root):
+        res = []
+        level = 0
+        if root == None:
+            return res
+        stack =[root]
+        while stack:
+            res.append([])
+            l = len(stack)
+            temp_stack = []
+            for i in range(l):
+                cur = stack.pop()
+                res[-1].append(cur.val)
+                if level%2:
+                    if cur.right:
+                        temp_stack.append(cur.right)
+                    if cur.left:
+                        temp_stack.append(cur.left)
+                else:
+                    if cur.left:
+                        temp_stack.append(cur.left)
+                    if cur.right:
+                        temp_stack.append(cur.right)
+            stack += temp_stack
+            level += 1
+        return res
+
+
+
 
 a = TreeNode(3)
 b = TreeNode(9)
