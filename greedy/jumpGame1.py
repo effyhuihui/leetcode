@@ -14,7 +14,7 @@ A = [2,3,1,1,4], return true.
 A = [3,2,1,0,4], return false.
 '''
 
-class Solution_greedy1:
+class Solution_greedy:
     # @param A, a list of integers
     # @return a boolean
     def canJump(self, A):
@@ -27,23 +27,20 @@ class Solution_greedy1:
                 return False
         return True
 
-'''
-用一个变量记录最大可到达的位置, 每次在这个位置之前找。
-'''
-class Solution_greedy2:
+
+x = Solution_greedy()
+print x.canJump([1,0,2])
+
+
+class Solution_secondround:
     # @param A, a list of integers
     # @return a boolean
     def canJump(self, A):
+        available_step = A[0]
         l = len(A)
-        canReach = 0
-        for i in range(l):
-            # if i > canReach, meaning it is impossible to reach from the beginning to
-            # the current i, definitely can not jump
-            if i <= canReach:
-                #canReach = max of( previous max reach index, current reachable index)
-                canReach = max(canReach, i + A[i])
-                if canReach >= l - 1:
-                    return True
-        return False
-x = Solution_greedy2()
-print x.canJump([1,0,2])
+        for i in range(1,l):
+            if available_step <=0 :
+                return False
+            else:
+                available_step = max(available_step-1,A[i])
+        return True
