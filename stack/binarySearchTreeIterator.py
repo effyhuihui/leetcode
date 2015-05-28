@@ -58,6 +58,27 @@ class BSTIterator:
             return v
 
 
+class BSTIterator_secondround:
+    # @param root, a binary search tree's root node
+    def __init__(self, root):
+        self.stack = []
+        self.refresh(root)
+
+    def refresh(self,root):
+        while root:
+            self.stack.append(root)
+            root = root.left
+
+    # @return a boolean, whether we have a next smallest number
+    def hasNext(self):
+        return self.stack != []
+
+    # @return an integer, the next smallest number
+    def next(self):
+        smallest = self.stack.pop()
+        self.refresh(smallest.right)
+        return smallest.val
+
 # Your BSTIterator will be called like this:
 # i, v = BSTIterator(root), []
 # while i.hasNext(): v.append(i.next())
