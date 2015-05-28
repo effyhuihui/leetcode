@@ -75,5 +75,41 @@ class Solution:
         else:
             return 1
 
+
+class Solution_secondround:
+    def largestNumber(self, num):
+        str_num = [str(i) for i in num]
+        def compare(a,b):
+            ab = ''.join([a,b])
+            ba = ''.join([b,a])
+            if int(ab) > int(ba):
+                return 1
+            else:
+                return 0
+        def mergeSort(num):
+            if len(num) == 1:
+                return num
+            pre = mergeSort(num[:len(num)/2])
+            post = mergeSort(num[len(num)/2:])
+            res = []
+            i,j = 0,0
+            while i<len(pre) and j<len(post):
+                if compare(pre[i],post[j]):
+                    res.append(pre[i])
+                    i += 1
+                else:
+                    res.append(post[j])
+                    j+=1
+            if i<len(pre):
+                res += pre[i:]
+            if j < len(post):
+                res += post[j:]
+            return res
+        res = mergeSort(str_num)
+        if res[0] == '0':
+            return '0'
+        return ''.join(res)
+
+
 a = Solution_bad()
 print a.largestNumber([121,12])
