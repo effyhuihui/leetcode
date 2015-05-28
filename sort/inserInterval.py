@@ -35,6 +35,50 @@ class Solution:
             res.append(merge)
             cur += 1
         return res
+'''
 
+from left merge to right
+'''
+class Solution_secondround:
+    # @param intervals, a list of Intervals
+    # @param newInterval, a Interval
+    # @return a list of Interval
+    def insert(self, intervals, newInterval):
+        intervals.append(newInterval)
+        intervals.sort(key=lambda x:x.start)
+        l = len(intervals)
+        res = []
+        cur = intervals[0]
+        for i in range(1,l):
+            if cur.end >= intervals[i].start:
+                cur = Interval(min(cur.start,intervals[i].start), max(cur.end, intervals[i].end))
+            else:
+                res.append(cur)
+                cur = intervals[i]
+        res.append(cur)
+        return res
 
+'''
+
+from right merge to left
+'''
+class Solution_secondround2:
+    # @param intervals, a list of Intervals
+    # @param newInterval, a Interval
+    # @return a list of Interval
+    def insert(self, intervals, newInterval):
+        intervals.append(newInterval)
+        intervals.sort(key=lambda x:x.start)
+        l = len(intervals)
+        res = []
+        for i in range(l-1,-1,-1):
+            cur = intervals[i]
+            if res == []:
+                res.append(cur)
+            else:
+                while res and cur.end >= res[-1].start:
+                    last = res.pop()
+                    cur = Interval(min(cur.start,last.start), max(cur.end, last.end))
+                res.append(cur)
+        return sorted(res, key=lambda x: x.start)
 
