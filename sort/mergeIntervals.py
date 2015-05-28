@@ -13,6 +13,13 @@ class Interval:
          self.start = s
          self.end = e
 
+
+'''
+it matters to merge from left to right or right to left
+after merge, it newly merged interval can not be inserted immediately, only insert
+when there is no further merge needed.
+'''
+
 class Solution:
     # @param intervals, a list of Interval
     # @return a list of Interval
@@ -54,6 +61,30 @@ class Solution2:
             res.append(merge)
             cur+=1
         return res
+
+
+class Solution_secondround:
+    # @param intervals, a list of Interval
+    # @return a list of Interval
+    def merge(self, intervals):
+        intervals.sort(key=lambda x: x.start)
+        stack = []
+        l = len(intervals)
+        for i in range(l-1,-1,-1):
+            cur_interval = intervals[i]
+            if not stack:
+                stack.append(cur_interval)
+            else:
+                ## merge conditions as follows
+                ## also, one merge might affect previous intervals.
+                ## e.g.[(1,10),(2,3),(4,5),(6,7),(8,9)]
+                while stack and cur_interval.end>=stack[-1].start:
+                    last = stack.pop()
+                    cur_interval = Interval(min(cur_interval.start,last.start),max(cur_interval.end, last.end))
+                stack.append(cur_interval)
+        return stack
+
+
 
 a = Interval(1,4)
 b = Interval(0,2)
