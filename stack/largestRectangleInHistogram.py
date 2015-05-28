@@ -47,10 +47,32 @@ class Solution1:
                 max_sqft=sqft
         return max_sqft
 
+class Solution_secondround:
+    # @param height, a list of integer
+    # @return an integer
+    # @good solution!
+    def largestRectangleArea(self, height):
+        max_area = 0
+        l = len(height)
+        for i in range(l):
+            left,right=i,i
+            cur_height = height[i]
+            while left>=0 and height[left]>=cur_height:
+                left -= 1
+            while right <l and height[right]>= cur_height:
+                right += 1
+            left += 1
+            right -= 1
+            local_max = (right-left+1)*cur_height
+            max_area = max(local_max,max_area)
+        return max_area
+
+
 '''
 http://www.cnblogs.com/zuoyuan/p/3783993.html
 重点看图解
-Actually, we can decrease the complexity by using stack to keep track of the height and start indexes.
+Actually, we can decrease the complexity by using stack to keep track of the height and
+start indexes.
 Compare the current height with previous one.
 
 Case 1: current > previous (top of height stack)
