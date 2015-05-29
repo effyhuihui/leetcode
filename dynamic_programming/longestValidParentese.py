@@ -67,6 +67,64 @@ class Solution:
                         maxlen = max(maxlen, i-stack[-1])
         return maxlen
 
-
 x = Solution()
 print x.longestValidParentheses("()()")
+
+'''
+most basic method -- brutal force method
+For each char in s as start, find the max length as valid parentheses
+'''
+class Solution_secondround_brutal_force:
+    # @param s, a string
+    # @return an integer
+    def longestValidParentheses(self, s):
+        max_len = 0
+        def validParentheses(s):
+            length = 0
+            stack = []
+            for i in range(len(s)):
+                if s[i]  == '(':
+                    stack.append(s[i])
+                else:
+                    if stack == []:
+                        return length
+                    else:
+                        stack.pop()
+                        length += 2
+            return length
+        for i in range(len(s)):
+            max_len = max(max_len, validParentheses(s[i:]))
+        return max_len
+
+
+class Solution_secondround:
+    # @param s, a string
+    # @return an integer
+    def longestValidParentheses(self, s):
+        stack = []
+        ## note that start needs to be one index prior to the actual beginning index of
+        ## valid parentheses
+        start = -1
+        max_len = 0
+        for i in range(len(s)):
+            if s[i] == "(":
+                stack.append(i)
+            else:
+                ## if the current stack is empty, the valid parentheses ends before index i
+                ## so the next starting point is index i (since i will be one prior to the
+                ## next valid parentheses substring, because a valid parentheses starts with'('
+                ## not a ')'  )
+                if stack == []:
+                    start = i
+                else:
+                    stack.pop()
+                    ## if stack is empty, case like ()(), it is safe to calculate length with i-start
+                    ## (note that variable start doesn't need to be reset, since until now it is still
+                    ## valid )
+                    if stack == []:
+                        max_len = max(max_len,i-start)
+                    ## if there is still left index, the partial length is i-stack[-1]
+                    ## case like ((), (())
+                    else:
+                        max_len = max(max_len,i-stack[-1])
+        return max_len
