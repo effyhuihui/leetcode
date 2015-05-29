@@ -38,3 +38,27 @@ class Solution:
             else:
                 diff += gas[i]-cost[i]
         return stationIndex
+
+
+class Solution_secondround:
+    # @param gas, a list of integers
+    # @param cost, a list of integers
+    # @return an integer
+    def canCompleteCircuit(self, gas, cost):
+        if sum(gas)<sum(cost):
+            return -1
+        l = len(gas)
+        start = 0
+        gas_left = 0
+        for i in range(l):
+            gas_left += gas[i]
+            ## if current point can not be start point, check for the next one
+            ## and reset gas_left to 0
+            if gas_left < cost[i]:
+                start = i+1
+                gas_left = 0
+            ## otherwise current start point still has the hope to reach the end
+            ## reduce gas_left with current cost
+            else:
+                gas_left -= cost[i]
+        return start
