@@ -136,9 +136,59 @@ class Solution_other_dp:
 
 
 
+class Solution_secondround_recursion:
+    def isMatch(self,s,p):
+        if len(p) == 0:
+            return len(s) == 0
+        elif len(p) == 1 or p[1] != '*':
+            if p[0] == '.' or p[0] == s[0]:
+                return self.isMatch(s[1:],p[1:])
+            else:
+                return False
+        ## len(p) >=2 and p[1] == '*'
+        else:
+            ## for both cases of 1.p[0] is a letter; 2 p[0] is '.'
+            ## condition 1 needs to always match p[0]
+            ## condition 2 matches any char.
+            i = -1
+            while i<len(s) and  (i<0 or s[i]==p[0] or p[0] =='.'):
+                if self.isMatch(s[i+1:], p[2:]):
+                    return True
+                i += 1
+            return False
 
+class Solution_secondround_dp:
+    def isMatch(self,s,p):
+        m,n = len(s),len(p)
+        ## dp[i][j] represents whether s[:i] and p[:j] matches
+        dp = [[False for i in range(n+1)] for j in range(m+1)]
+        dp[0][0] = True
+        ## s is empty, while p has length from 0 to n
+        ## it is always False if p has a length of 1 given s is empty
+        for i in range(2,n+1):
+            dp[0][i] = dp[0][i-2] and p[i-1] == '*'
+        for i in range(1,m+1):
+            for j in range(1,n+1):
+                ## if current p char is regular letter
+                if p[j-1] != '.' and p[j-1] != '*':
+                    dp[i][j] = dp[i-1][j-1] and p[j-1] == s[i-1]
+                ## if current p char is '.' then if has to be matching any last char in s
+                ## so it is the same as dp[i-1][j-1]
+                elif p[j-1] == '.':
+                    dp[i][j] = dp[i-1][j-1]
+                ## if p is *
+                else:
+                    ## a. Fix s length:
+                    ## 1. dp[i][j-2] means * is zero (regardless of what is the previous char)
+                    ## 2. dp[i][j-1] means * is 1
+                    ## b. reduce s length with 1, and see the last char in s
+                    ## 1. dp[i-1][j] and p[i-2] == s[i-1] means p[:j] matches until s[:i-1], and
+                    ##    the new char in s is the same as char before * in p (* is 2)
+                    ## 2. dp[i-1][j] and p[j-2] == '.' means p[:j] matches until s[:i-1], and
+                    ##    char before * is ., then is is ok to match any char in s
 
-
+                    dp[i][j] = dp[i][j-2] or dp[i][j-1] or (s[i-1] == p[j-2] and dp[i-1][j]) or \
+                               (dp[i-1][j] and p[j-2] == '.')
 
 
 
