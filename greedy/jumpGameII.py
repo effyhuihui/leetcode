@@ -28,17 +28,27 @@ class Solution_dp:
     # dp is time limited exceeded!
 
 
-class Solution_greedy:
+class Solution_secondround_greedy:
 # We use "last" to keep track of the maximum distance that has been reached
 # by using the minimum steps "ret", whereas "curr" is the maximum distance
 # that can be reached by using "ret+1" steps. Thus,curr = max(curr, i+A[i]) where 0 <= i <= last.
     def jump(self, A):
-        ret = 0
-        last = 0
-        curr = 0
-        for i in range(len(A)):
-            if i > last:
-                last = curr
-                ret += 1
-            curr = max(curr, i+A[i])
-        return ret
+        jumps = 0
+        position = 0
+        l = len(A)
+        if l <= 1:
+            return 0
+        while position < l:
+            if A[position]+position >= l-1:
+                return jumps+1
+            ## next_position is the next jump to point,
+            ## next max is the max steps next position can offer
+            next_max = position + A[position]
+            next_position = position
+            for i in range(position,position+A[position]+1):
+                if A[i]+i > next_max:
+                    next_position = i
+                    next_max = A[i]+i
+            position = next_position
+            jumps += 1
+        return jumps
