@@ -23,3 +23,14 @@ class Solution:
                 profits.append(prices[i]-current_low)
             current_low = prices[i]
         return sum(profits)
+
+class Solution_secondround:
+    # @param {integer[]} prices
+    # @return {integer}
+    def maxProfit(self, prices):
+        l = len(prices)
+        total_profit = 0
+        for i in range(1,l):
+            if prices[i]-prices[i-1]>0:
+                total_profit += prices[i]-prices[i-1]
+        return total_profit
