@@ -26,6 +26,25 @@ class Solution:
             for j in range(1,n):
                 min_sum[i][j] = min(min_sum[i-1][j], min_sum[i][j-1])+grid[i][j]
         return min_sum[-1][-1]
+
+
+class Solution_secondround:
+    # @param grid, a list of lists of integers
+    # @return an integer
+    def minPathSum(self, grid):
+        m,n = len(grid),len(grid[0])
+        min_sum = [ [0 for i in range(n)] for j in range(m)]
+        min_sum[0][0] = grid[0][0]
+        for i in range(1,m):
+            min_sum[i][0] = min_sum[i-1][0]+grid[i][0]
+        for i in range(1,n):
+            min_sum[0][i] = min_sum[0][i-1] + grid[0][i]
+        for i in range(1,m):
+            for j in range(1,n):
+                min_sum[i][j] = min(min_sum[i-1][j], min_sum[i][j-1])+grid[i][j]
+        return min_sum[-1][-1]
+
+
 x = Solution()
 a = [[1,3,5],[2,4,6],[1,2,3],[0,0,1]]
 print x.minPathSum(a)
