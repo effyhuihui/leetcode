@@ -8,7 +8,7 @@ For example, given the array [−2,1,−3,4,−1,2,1,−5,4],
 the contiguous subarray [4,−1,2,1] has the largest sum = 6.
 '''
 '''
-Let f(n) be the current max subarray, the transition equation is:
+Let f(n) be the current max subarray sum, the transition equation is:
        [A[n]] if sum(f(n-1)) <=0
 f(n) =
        [A[n]] + f(n-1)  else
@@ -26,5 +26,21 @@ class Solution:
             if current_sum > max:
                 max = current_sum
         return max
+
+
+class Solution_secondround:
+    # @param A, a list of integers
+    # @return an integer
+    def maxSubArray(self, A):
+        max_sum = -float('inf')
+        local_sum = 0
+        for i in range(len(A)):
+            if local_sum <0 :
+                local_sum = 0
+            local_sum += A[i]
+            max_sum = max(local_sum,max_sum)
+        return max_sum
+
+
 x = Solution()
 print x.maxSubArray([-2])
