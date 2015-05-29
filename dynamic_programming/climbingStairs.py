@@ -30,3 +30,28 @@ class Solution:
             two_prior = one_prior
             one_prior = current
         return current
+
+
+class Solution_secondround:
+    # @param n, an integer
+    # @return an integer
+    def climbStairs(self, n):
+        dp = [0 for i in range(n+1)]
+        dp[0] = 1
+        dp[1] = 1
+        for i in range(2,n+1):
+            dp[i] = dp[i-1]+dp[i-2]
+        return dp[-1]
+
+class Solution_secondround:
+    # @param n, an integer
+    # @return an integer
+    def climbStairs(self, n):
+        prev_one = 1
+        prev_two = 1
+        cur_ways = 1
+        for i in range(2,n+1):
+            cur_ways = prev_one + prev_two
+            prev_two = prev_one
+            prev_one = cur_ways
+        return cur_ways
