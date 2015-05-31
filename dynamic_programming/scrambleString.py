@@ -91,5 +91,24 @@ class Solution:
                         dp[i][j][k] = s1[j:j+i] == s2[k:k+i]
 
 
+
+class Solution_recursion_secondround:
+    # @param s1, a string
+    # @param s2, a string
+    # @return a boolean
+    def isScramble(self, s1, s2):
+        if s1 == s2:
+            return True
+        if len(s1) != len(s2):
+            return False
+        charlist1, charlist2 = sorted(list(s1)), sorted(list(s2))
+        if charlist1 != charlist2:
+            return False
+        for i in (1, len(s1)):
+            if (self.isScramble(s1[:i], s2[:i]) and self.isScramble(s1[i:], s2[i:]))\
+                    or (self.isScramble(s1[:i], s2[len(s2)-i:]) and self.isScramble(s1[i:], s2[:len(s2)-i])):
+                return True
+        return False
+
 x = Solution_recursion()
 print x.isScramble("abcdefghijklmnopq", "efghijklmnopqcadb")
