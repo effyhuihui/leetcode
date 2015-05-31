@@ -45,23 +45,23 @@ class Solution_dp:
         return dp[-1][-1]
 
 
-class Solution4:
+class Solution_recursion:
     # @return a boolean
     def isMatch(self, s, p):
         if not p or not s:
             return not s and not p
-
         if p[0] != '*':
             if p[0] == s[0] or p[0] == '?':
                 return self.isMatch(s[1:], p[1:])
             else:
                 return False
         else:
-            while len(s) > 0:
-                if self.isMatch(s, p[1:]):
+            i = 0
+            while i<=len(s):
+                if self.isMatch(s[i:], p[1:]):
                     return True
-                s = s[1:]
-            return self.isMatch(s, p[1:])
+                i+=1
+            return False
 
 
 class Solution_ac:
