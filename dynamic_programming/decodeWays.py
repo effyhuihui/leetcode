@@ -35,7 +35,41 @@ class Solution:
                 dp[i] += dp[i-2]
         return dp[-1]
 x = Solution()
-print x.numDecodings("0")
+print x.numDecodings("100")
+
+
+
+class Solution_recursion_secondround:
+    # @param s, a string
+    # @return an integer
+    def numDecodings(self, s):
+        l = len(s)
+        if l == 0 or int(s[0]) == 0:
+            return 0
+        res = 0
+        if s[0] != 0:
+            res += self.numDecodings(s[1:])
+        if 0<=int(s[:2])<=26:
+            res += self.numDecodings(s[2:])
+        return res
+
+
+
+class Solution_dp_secondround:
+    # @param s, a string
+    # @return an integer
+    def numDecodings(self, s):
+        l = len(s)
+        if l == 0 or int(s[0])==0:
+            return 0
+        dp = [0 for i in range(l+1)]
+        dp[0], dp[1] = 1, 1
+        for i in range(2,l+1):
+            if int(s[i-1])>0:
+                dp[i] += dp[i-1]
+            if int(s[i-2:i])<=26 and int(s[i-2:i])>=10:
+                dp[i] += dp[i-2]
+        return dp[-1]
 
 
 
