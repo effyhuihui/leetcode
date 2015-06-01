@@ -71,5 +71,27 @@ class Solution:
                 else:
                     dp[i][j] = dp[i-1][j]
         return dp[-1][-1]
+
+
+
+class Solution_secondround:
+    # @param S, a string
+    # @param T, a string
+    # @return an integer
+    def numDistinct(self, S, T):
+        ls, lt = len(S), len(T)
+        ways = [ [0 for i in range(lt+1)] for j in range(ls+1)]
+        ways[0][0] = 1
+        for i in range(1,ls+1):
+            ways[i][0] = 1
+        for i in range(1,ls+1):
+            for j in range(1,min(i+1,lt+1)):
+                if T[j-1] == S[i-1]:
+                    ## take the last char in S or not take last char in S
+                    ways[i][j] = ways[i-1][j] + ways[i-1][j-1]
+                else:
+                    ways[i][j] = ways[i-1][j]
+        return ways[-1][-1]
+
 x = Solution()
 print x.numDistinct("rabbbit", "rabbit")
