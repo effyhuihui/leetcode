@@ -22,3 +22,17 @@ class Solution:
             current_lowest = min(current_lowest,prices[i])
             maxProfit = max(maxProfit, prices[i]-current_lowest)
         return maxProfit
+
+
+class Solution_secondround:
+    # @param prices, a list of integer
+    # @return an integer
+    def maxProfit(self, prices):
+        if len(prices) == 0:
+            return 0
+        prev_min =prices[0]
+        max_profit = 0
+        for i in range(1,len(prices)):
+            prev_min = min(prices[i], prev_min)
+            max_profit = max(prices[i]-prev_min, max_profit)
+        return max_profit
