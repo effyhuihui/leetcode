@@ -51,6 +51,22 @@ class Solution_dp:
         return dp[-1]
 
 
+
+class Solution_recursion_secondround:
+    # @param s, a string
+    # @param wordDict, a set<string>
+    # @return a boolean
+    def wordBreak(self, s, wordDict):
+        if s == '':
+            return True
+        if s in wordDict:
+            return True
+        for i in range(1,len(s)+1):
+            if s[:i] in wordDict:
+                if self.wordBreak(s[i:], wordDict):
+                    return True
+        return False
+
 class Solution_secondround:
     # @param s, a string
     # @param wordDict, a set<string>
