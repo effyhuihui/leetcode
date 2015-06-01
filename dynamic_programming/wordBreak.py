@@ -51,20 +51,18 @@ class Solution_dp:
         return dp[-1]
 
 
-class Solution_from_online:
+class Solution_secondround:
     # @param s, a string
-    # @param dict, a set of string
+    # @param wordDict, a set<string>
     # @return a boolean
-    # @good coding!
-    def wordBreak(self, s, dict):
+    def wordBreak(self, s, wordDict):
         dp = [False for i in range(len(s)+1)]
         dp[0] = True
-        ## check whether s[:i] is word breakable
-        for i in range(1, len(s)+1):
-            ## see whether  s[:i] is breakable from index k
-            for k in range(i):
-                if dp[k] and s[k:i] in dict:
+        for i in range(1,len(s)+1):
+            for j in range(i):
+                if dp[j] and (s[j:i] in wordDict or s[j:i] == ''):
                     dp[i] = True
-        return dp[len(s)]
+                    break
+        return dp[-1]
 x = Solution_dp()
 print x.wordBreak("a",[])
