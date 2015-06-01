@@ -36,36 +36,6 @@ The concept is wrong, why? becasue it is not making too much difference if only 
 in dict, this is not the bottle neck
 
 '''
-class Solution_wrong_dp:
-    # @param s, a string
-    # @param wordDict, a set<string>
-    # @return a string[]
-    def wordBreak(self, s, wordDict):
-        res = []
-        l = len(s)
-        ## dp[i][j] represent whether s[i:j] is in wordDict
-        dp= [[0 for i in range(l+1)] for j in range(l+1)]
-        def dfs(i, path):
-            if dp[i][l] == 0:
-                if s[i:] in wordDict:
-                    dp[i][l] = True
-                else:
-                    dp[i][l] = False
-            if dp[i][l]:
-                path = path + " " + s[i:]
-                res.append(path.lstrip())
-            else:
-                for j in range(i+1, l+1):
-                    if dp[i][j] == 0:
-                        if s[i:j] in wordDict:
-                            dp[i][j] = True
-                        else:
-                            dp[i][j] = False
-                    if dp[i][j]:
-                        dfs(j, path+ " " + s[i:j])
-        dfs(0, '')
-        return res
-
 class Solution_dp:
     # @param s, a string
     # @param wordDict, a set<string>
@@ -82,16 +52,31 @@ class Solution_dp:
                 if dp[j] and s[i:j] in wordDict:
                     dp[i] = True
         def dfs(i,path):
-
             if dp[i]:
-                if i>=l: res.append(path.lstrip())
-                for j in range(i+1,l+1):
-                    if s[i:j] in wordDict:
-                        dfs(j,path+" "+s[i:j])
+                if i>=l:
+                    res.append(path.lstrip())
+                else:
+                    for j in range(i+1,l+1):
+                        if s[i:j] in wordDict:
+                            dfs(j,path+" "+s[i:j])
         dfs(0,'')
         return res
 
-
+class Solution_secondround:
+    # @param s, a string
+    # @param wordDict, a set<string>
+    # @return a string[]
+    def wordBreak(self, s, wordDict):
+        res = []
+        dp = [[] for i in range(len(s)+1)]
+        for i in range(1,len(s)+1):
+            for j in range(i):
+                if s[j:i] in wordDict and (j ==0 or s[j] !=[]):
+                    if j != 0:
+                        dp[i]+= [word + ' '+s[j:i] for word in dp[j]]
+                    else:
+                        dp[i]+=[s[j:i]]
+        return dp[-1]
 
 x = Solution_dp()
 print x.wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"])
