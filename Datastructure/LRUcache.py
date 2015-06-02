@@ -76,3 +76,67 @@ class LRUCache:
             node.prev = self.tail
             self.tail = node
 
+
+
+class DoublyLinkedNode:
+    def __init__(self,key, val):
+        self.key = key
+        self.val = val
+        self.next = None
+        self.prev = None
+
+
+
+
+'''
+secondround
+'''
+class LRUCache:
+    # @param capacity, an integer
+    def __init__(self, capacity):
+        self.head = DoublyLinkedNode(0,0)
+        self.end = DoublyLinkedNode(0,0)
+        self.head.next = self.end
+        self.end.prev = self.head
+        self.dict = {}
+        self.capacity = capacity
+        self.content = 0
+
+    def get(self,key):
+        if key in self.dict:
+            self.refresh(key)
+            return self.dict[key].val
+        else:
+            return -1
+
+    def set(self,key,val):
+        if key in self.dict:
+            self.refresh(key)
+            self.dict[key].val = val
+        else:
+            self.content += 1
+            if self.capacity < self.content:
+                oldLRU = self.head.next
+                newLRU = self.head.next.next
+                self.head.next = newLRU
+                newLRU.prev = self.head
+                self.content -= 1
+                del self.dict[oldLRU.head]
+            oldmostcurrent = self.end.prev
+            newmostcurrent = DoublyLinkedNode(key,val)
+            newmostcurrent.next = self.end
+            newmostcurrent.prev = oldmostcurrent
+            self.end.prev = newmostcurrent
+            oldmostcurrent.next = newmostcurrent
+            self.dict[key] =newmostcurrent
+
+    def refresh(self,key):
+        node = self.dict[key]
+        pre, post = node.prev, node.next
+        pre.next = post
+        post.prev = pre
+        last_most_currente = self.end.prev
+        self.end.prev = node
+        node.next = self.end
+        node.prev = last_most_currente
+        last_most_currente.next = node
