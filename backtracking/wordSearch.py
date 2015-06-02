@@ -24,7 +24,7 @@ thinking is easy, but two points here is really really important
 layer. if within search() you do not have if search():return True, then it will never return from
 inside to outside. Need to have a way to pass the innder result out.
 
-2. backtracking is neede here. within one recursive call(one dfs), we have one added matrix
+2. backtracking is needed here. within one recursive call(one dfs), we have one added matrix
 however, if the recursive call returns and ends without True. you have to set everyting back
 to False!!!!!!
 
@@ -78,6 +78,34 @@ class Solution:
                         return True
                     added[i][j] = False
         return False
+
+
+class Solution_secondround:
+    # @param {character[][]} board
+    # @param {string} word
+    # @return {boolean}
+    def exist(self, board, word):
+        m,n=len(board),len(board[0])
+        visited = [ [False for i in range(n)] for j in range(m)]
+        def dfs(i,j,visited, word_par):
+            if word_par == '':
+                return True
+            if (i < 0 or i >=m) or (j<0 or j>=n) or visited[i][j]:
+                return False
+            if board[i][j] == word_par[0]:
+                visited[i][j] = True
+                new_word = word_par[1:]
+                if dfs(i-1,j,visited, new_word) or dfs(i+1,j,visited,new_word) or dfs(i,j-1,visited,new_word) or dfs(i,j+1,visited, new_word):
+                    return True
+                visited[i][j] = False
+            return False
+        for i in range(m):
+            for j in range(n):
+                if dfs(i,j,visited,word):
+                    return True
+        return False
+
+
 
 x = Solution()
 print x.exist(['aa'], 'aaa')
