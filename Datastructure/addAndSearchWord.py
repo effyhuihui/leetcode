@@ -76,44 +76,35 @@ print wordDictionary.search(".a")
 secondround
 '''
 class TrieNode:
-    # Initialize your data structure here.
     def __init__(self):
         self.isWord = False
         self.children = {}
 
 
-class Trie:
-
+class WordDictionary:
     def __init__(self):
         self.root = TrieNode()
-
-    # @param {string} word
-    # @return {void}
-    # Inserts a word into the trie.
-    def insert(self, word):
-        level_parent = self.root
-        for i in word:
-            if i not in level_parent.children:
-                node = TrieNode()
-                level_parent.children[i] = node
-            level_parent = level_parent.children[i]
-        level_parent.isWord = True
-
+    def addWord(self,word):
+        cur = self.root
+        for letter in cur.children:
+            if letter not in word:
+                cur.children[letter] = TrieNode()
+            cur = cur.children[letter]
+        cur.isWord = True
 
     def search(self,word):
-        parent = self.root
-        for i in word:
-            if i not in parent.children:
-                return False
-            else:
-                parent = parent.children[i]
-        return parent.isWord
+        return self.dfs(word,0,self.root)
 
-    def startsWith(self,prefix):
-        parent = self.root
-        for i in prefix:
-            if i in parent.children:
-                parent = parent.children[i]
-            else:
-                return False
-        return True
+    def dfs(self,word, start, trienode):
+        if len(word) == start:
+            return trienode.isWord
+        if word[start] in trienode.children:
+            return self.dfs(word,start+1,trienode.children[word[start]])
+        elif word[start] == '.':
+            for child in trienode.children:
+                if self.dfs(word, start+1,trienode.children[child]):
+                    return True
+            return False
+        else:
+            return False
+
