@@ -21,10 +21,9 @@ class Solution_online:
     # @dfs time out
     # @dp is how many palindromes in the word
     def minCut(self, s):
-        dp = [0 for i in range(len(s)+1)]
+        dp = [len(s)-i for i in range(len(s)+1)]
         p = [[False for i in range(len(s))] for j in range(len(s))]
-        for i in range(len(s)+1):
-            dp[i] = len(s) - i
+
         for i in range(len(s)-1, -1, -1):
             for j in range(i, len(s)):
                 ##假设从i开始向后分割， 从i开始向后找j，如果p[i][j] 是一个palindrome，那么以i到j为第一个分割的字符的话
