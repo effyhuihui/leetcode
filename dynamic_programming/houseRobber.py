@@ -55,6 +55,20 @@ class Solution_optimized:
             one_before = current
         return current
 
-
+class Solution_secondround:
+    def rob(self, num):
+        l = len(num)
+        if l == 0:
+            return 0
+        if l == 1:
+            return num[0]
+        total_money = [0 for i in range(l)]
+        total_money[0] = num[0]
+        for i in range(1,l):
+            if i >=2:
+                total_money[i] = max(total_money[i-2]+num[i], total_money[i-1])
+            else:
+                total_money[i] = max(num[i],total_money[i-1])
+        return total_money[-1]
 x = Solution_optimized()
 print x.rob([1,1])
