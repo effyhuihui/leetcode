@@ -36,6 +36,10 @@ class Solution:
         def check(k,j,path):
             ## check whether in kth row, queen can be filed in jth spot
             for i in range(k):
+                ## abs(k-i) -- difference between rows
+                ## abs(path[i] - j) --- difference between cols
+                ## if abs(k-i) == abs(path[i]-j) then it is a square, if a queen moves diagonal, it will attack
+                ## another queen
                 if path[i] == j or abs(k-i)==abs(path[i]-j):
                     return False
             return True
@@ -56,6 +60,27 @@ class Solution:
         return final
 
 
+
+
+class Solution:
+    # @return a list of lists of string
+    def solveNQueens(self, n):
+        res = []
+        def check(j,k,path):
+            for i in range(len(path)):
+                if path[i] == j or abs(k-i) == abs(j-path[i]):
+                    return False
+            return True
+        def dfs(path):
+            l = len(path)
+            if l == n:
+                res.append(path)
+            else:
+                for i in range(n):
+                    if check(i,l,path):
+                        dfs(path+[i])
+        dfs([])
+        return res
 
 x = Solution()
 print x.solveNQueens(4)
