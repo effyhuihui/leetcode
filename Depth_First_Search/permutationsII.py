@@ -24,5 +24,25 @@ class Solution:
                         prev = list[i]
         dfs([],nums)
         return res
+
+
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @return {integer[][]}
+    def permuteUnique(self, nums):
+        nums.sort()
+        res = []
+        def dfs(path, candidates):
+            if not candidates:
+                res.append(path)
+            else:
+                prev = None
+                for i in range(len(candidates)):
+                    if candidates[i] != prev:
+                        dfs(path+[candidates[i]],candidates[:i]+candidates[i+1:])
+                        prev = candidates[i]
+        dfs([], nums)
+        return res
+    
 x = Solution()
 print x.permuteUnique([1,1,2])
