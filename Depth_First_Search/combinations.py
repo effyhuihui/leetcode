@@ -26,5 +26,23 @@ class Solution:
         res = []
         dfs([],1)
         return res
+
+
+class Solution_secondround:
+    # @param {integer} n
+    # @param {integer} k
+    # @return {integer[][]}
+    def combine(self, n, k):
+        res = []
+        def dfs(index,path):
+            if len(path) == k:
+                res.append(path)
+            else:
+                for i in range(index,n+1):
+                    dfs(i+1, path+[i])
+        dfs(1, [])
+        return res
+
+
 x = Solution()
 print x.combine(4,2)
