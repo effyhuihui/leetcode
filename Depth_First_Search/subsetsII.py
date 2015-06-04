@@ -33,6 +33,27 @@ class Solution:
                     prev = remain[i]
         dfs([],nums)
         return res
+
+
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @return {integer[][]}
+    def subsetsWithDup(self, nums):
+        nums.sort()
+        res = []
+        l = len(nums)
+        def dfs(index,path):
+            res.append(path)
+            prev = None
+            for i in range(index,l):
+                cur = nums[i]
+                if cur != prev:
+                    dfs(i+1, path+[cur])
+                    prev = cur
+        dfs(0,[])
+        return res
+
+
 x = Solution()
 print x.subsetsWithDup([1,2,2])
 
