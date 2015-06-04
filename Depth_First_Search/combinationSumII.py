@@ -67,5 +67,28 @@ class Solution:
 
         dfs([],0,target)
         return res
+
+
+
+class Solution_secondround:
+    # @param {integer[]} candidates
+    # @param {integer} target
+    # @return {integer[][]}
+    def combinationSum2(self, candidates, target):
+        candidates.sort()
+        l = len(candidates)
+        res = []
+        def dfs(index,remain,path):
+            if remain == 0:
+                res.append(path)
+            else:
+                prev = None
+                for i in range(index,l):
+                    val = candidates[i]
+                    if val != prev and val<=remain:
+                        dfs(i+1, remain-val, path+[val])
+                        prev = val
+        dfs(0,target,[])
+
 x = Solution()
 print x.combinationSum2([10,1,2,7,6,1,5], 8)
