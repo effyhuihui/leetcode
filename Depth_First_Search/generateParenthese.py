@@ -53,3 +53,22 @@ class Solution_recursion:
                 for b in right:
                     res.append('('+a+')'+b)
         return res
+
+
+
+class Solution_secondround:
+    # @param {integer} n
+    # @return {string[]}
+    def generateParenthesis(self, n):
+        res = []
+        if n == 0:
+            return [""]
+        if n == 1:
+            return ["()"]
+        for i in range(n):
+            leftParenthesis = self.generateParenthesis(i)
+            rightParenthesis =self.generateParenthesis(n-1-i)
+            for left in leftParenthesis:
+                for right in rightParenthesis:
+                    res.append('('+left+')' +right)
+        return res
