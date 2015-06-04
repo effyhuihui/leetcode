@@ -34,6 +34,29 @@ class Solution:
         dfs([],s)
         return res
 
+
+
+class Solution_secondround:
+    # @param {string} s
+    # @return {string[]}
+    def restoreIpAddresses(self, s):
+        res = []
+        l = len(s)
+        def dfs(index,path):
+            if len(path) == 4:
+                if index == l:
+                    res.append('.'.join(path))
+            elif index<l:
+                for i in range(min(3,l-index+1)):
+                    part = s[index:index+i+1]
+                    if i == 0:
+                        dfs(index+1, path+[part])
+                    else:
+                        if s[index] != '0' and int(part) <= 255:
+                            dfs(index+i+1, path+[part])
+        dfs(0,[])
+        return res
+
 x = Solution()
 print x.restoreIpAddresses("0000")
 
