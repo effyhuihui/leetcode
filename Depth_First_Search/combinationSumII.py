@@ -89,6 +89,7 @@ class Solution_secondround:
                         dfs(i+1, remain-val, path+[val])
                         prev = val
         dfs(0,target,[])
+        return res
 
 x = Solution()
 print x.combinationSum2([10,1,2,7,6,1,5], 8)

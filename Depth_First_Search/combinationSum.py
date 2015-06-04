@@ -33,3 +33,23 @@ class Solution:
         candidates.sort()
         dfs([],0,target)
         return res
+
+
+class Solution_secondround:
+    # @param {integer[]} candidates
+    # @param {integer} target
+    # @return {integer[][]}
+    def combinationSum(self, candidates, target):
+        candidates.sort()
+        l = len(candidates)
+        res = []
+        def dfs(index,remain,path):
+            if remain == 0:
+                res.append(path)
+            else:
+                for i in range(index,l):
+                    val = candidates[i]
+                    if  val<=remain:
+                        dfs(i, remain-val, path+[val])
+        dfs(0,target,[])
+        return res
