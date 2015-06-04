@@ -39,6 +39,31 @@ class Solution_dfs:
         dfs(s,[])
         return res
 
+
+
+class Solution_secondround:
+    # @param s, a string
+    # @return a list of lists of string
+    def partition(self, s):
+        res = []
+        l = len(s)
+        ## is_palindrome[i][j] represents from whether s[i:j+1] is a valid palindrom
+        is_palindrome=[ [False for i in range(l)] for j in range(l)]
+        for i in range(l):
+            for j in range(i+1):
+                is_palindrome[j][i] = s[i] == s[j] and ((i - j < 2 ) or is_palindrome[ j+ 1][i - 1])
+
+        def dfs(index,path):
+            print path, index
+            if index == l:
+                res.append(path)
+            else:
+                for i in range(index,l):
+                    if is_palindrome[index][i]:
+                        dfs(i+1, path+[s[index:i+1]])
+        dfs(0,[])
+        return res
+
 x = Solution_dfs()
 print x.partition("aab")
 
