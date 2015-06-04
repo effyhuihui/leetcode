@@ -33,6 +33,21 @@ class Solution:
         dfs([],nums)
         return res
 
+
+class Solution_secondround:
+    # @param {integer[]} nums
+    # @return {integer[][]}
+    def subsets(self, nums):
+        res = []
+        l = len(nums)
+        nums.sort()
+        def dfs(index,path):
+            res.append(path)
+            for i in range(index,l):
+                dfs(i+1,path+[nums[i]])
+        dfs(0,[])
+        return res
+
 x = Solution()
 print x.subsets([1,2,3])
 
