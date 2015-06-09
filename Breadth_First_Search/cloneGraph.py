@@ -86,6 +86,26 @@ class Solution_dfs:
 
 
 
+from collections import deque
+class Solution_secondround:
+    # @param node, a undirected graph node
+    # @return a undirected graph node
+    def cloneGraph(self, node):
+        cloned = {}
+        if not node:
+            return None
+        new_head = UndirectedGraphNode(node.label)
+        cloned[node] = new_head
+        queue = deque()
+        queue.append(node)
+        while queue:
+            cur = queue.popleft()
+            for neighbor in cur.neighbors:
+                if neighbor not in cloned:
+                    cloned[neighbor] = UndirectedGraphNode(neighbor.label)
+                    queue.append(neighbor)
+                cloned[cur].neighbors.append(cloned[neighbor])
+        return new_head
 
 
 
