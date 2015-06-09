@@ -85,12 +85,39 @@ class Solution_stack:
                 if not visited[i][j] and board[i][j] == "O":
                     board[i][j] = "X"
 
-x = Solution
+
+
+class Solution_secondround:
+    # @param board, a 9x9 2D array
+    # Capture all regions by modifying the input board in-place.
+    # Do not return any value.
+    def solve(self, board):
+        m, n = len(board), len(board[0])
+        visited = [ [False for i in range(n)] for j in range(m)]
+        def dfs(i,j):
+            if 0<=i<m and 0<=j<n and not visited[i][j] and board[i][j] == 'O':
+                visited[i][j]=True
+                dfs(i-1,j)
+                dfs(i+1,j)
+                dfs(i,j-1)
+                dfs(i,j+1)
+        for i in range(m):
+            dfs(i,0)
+            dfs(i,n-1)
+        for j in range(n):
+            dfs(0,j)
+            dfs(m-1,j)
+        for i in range(m):
+            for j in range(n):
+                if not visited[i][j] and board[i][j] == 'O':
+                    board[i][j] = 'X'
+
+x = Solution_secondround()
 A = ["XXXX","XXXX","XXXX","XOXX"]
 B =["X"]
 
 c = [list(i) for i in a]
-x = Solution()
+x = Solution_secondround()
 print x.solve(c)
 
 
