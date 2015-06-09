@@ -17,3 +17,5 @@ class Solution:
                 step=1
             tmp[index]+=s[i]
         return ''.join(tmp)
+x = Solution()
+print x.convert("PAYPALISHIRING", 3)

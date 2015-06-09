@@ -5,7 +5,7 @@ Write a function to find the longest common prefix string amongst an array of st
 超easy的呢：
 1.首先遍历一遍整个list找出最短的string(min_l) （因为longest prefix不可能超过最短的长度）
 2. sort一遍这个str list，这样的话第一个string和最后一个string是最最不同的
-3. 从头到min_l对比第0个和最后一个str， 找出这两个的common prefix即可
+3. 对比第0个和最后一个str[0:min_len]， 找出这两个的common prefix即可
 '''
 
 class Solution:
