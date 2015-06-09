@@ -80,3 +80,33 @@ a = ["11000",
 print x.numIslands(["010","101","010"])
 
 
+from collections import deque
+class Solution_bfs_secondround:
+    # @param grid, a list of list of characters
+    # @return an integer
+    def numIslands(self, grid):
+        if not grid:
+            return 0
+        m,n = len(grid), len(grid[0])
+        visited = [ [False for i in range(n)] for j in range(m)]
+        islands = 0
+        queue = deque()
+        def valid(i,j):
+            if 0<=i<m and 0<=j<n and grid[i][j] == '1' and not visited[i][j]:
+                return True
+            return False
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1' and not visited[i][j]:
+                    queue.append((i,j))
+                    islands += 1
+                    while queue:
+                        cur = queue.popleft()
+                        i,j = cur[0],cur[1]
+                        visited[i][j] = True
+                        if valid(i-1,j): queue.append((i-1,j))
+                        if valid(i+1,j): queue.append((i+1,j))
+                        if valid(i,j-1): queue.append((i,j-1))
+                        if valid(i,j+1): queue.append((i,j+1))
+        return islands
+
