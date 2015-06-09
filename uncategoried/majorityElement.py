@@ -37,16 +37,23 @@ way 2: Moore voting --> applies to finding the element that appears more than ha
 以上算法时间复杂度为O(n)，空间复杂度为O(1)
 http://blog.csdn.net/joylnwang/article/details/7081575
 '''
-def majorityElement(num):
-    majority, count = None, 0
-    for i in num:
-        if count == 0:
-            majority = i
-            count += 1
-        elif i == majority:
-            count += 1
-        else:
-            count -= 1
+class Solution:
+    # @param num, a list of integers
+    # @return an integer
+    def majorityElement(self, num):
+        idx, cnt = 0, 1
+
+        for i in xrange(1, len(num)):
+            if num[idx] == num[i]:
+                cnt += 1
+            else:
+                cnt -= 1
+                if cnt == 0:
+                    idx = i
+                    cnt = 1
+
+        return num[idx]
+
 num = [1,1,1,1,1,1,2,2,0]
 a = majorityElement(num)
 print a
