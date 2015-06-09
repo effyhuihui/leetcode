@@ -56,6 +56,46 @@ class Solution:
             level += 1
         return 0
 
+
+
+class Solution_secondround:
+    # @param start, a string
+    # @param end, a string
+    # @param dict, a set of string!!!dict is a set type!!!
+    # @return an integer
+    def ladderLength(self, beginWord, endWord, wordDict):
+        def editDistace(a,b):
+            dist = 0
+            for i in range(len(a)):
+                if a[i] != b[i]:
+                    dist += 1
+            return dist
+        wordDicts = list(wordDict)
+        oneEditDict = {}
+        for i in wordDicts+[beginWord]:
+            oneEditDict[i] = []
+            for j in wordDicts+[endWord]:
+                if i!=j and editDistace(i,j) == 1:
+                    oneEditDict[i] +=[j]
+        ladder = 1
+        visited = {}
+        cur = [beginWord]
+        while cur:
+            nextCur = []
+            ladder += 1
+            while cur:
+                word = cur.pop()
+                if word not in visited.keys():
+                    visited[word] = True
+                    for oneEdit in oneEditDict[word]:
+                        if oneEdit == endWord:
+                            return ladder
+                        elif oneEdit not in visited:
+                            nextCur.append(oneEdit)
+            cur = nextCur
+        return 0
+
+
 x = Solution()
 print x.oneLevelSeparation('hit','cog')
 print x.ladderLength('hit','cog',["hot","dot","dog","lot","log"])
