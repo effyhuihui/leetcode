@@ -57,7 +57,7 @@ class Solution:
         return 0
 
 
-
+from collections import deque
 class Solution_secondround:
     # @param start, a string
     # @param end, a string
@@ -79,29 +79,53 @@ class Solution_secondround:
                     oneEditDict[i] +=[j]
         ladder = 1
         visited = {}
-        cur = [beginWord]
+        cur = deque()
+        cur.append(beginWord)
         while cur:
-            nextCur = []
             ladder += 1
-            while cur:
-                word = cur.pop()
+            l = len(cur)
+            for i in range(l):
+                word = cur.popleft()
                 if word not in visited.keys():
                     visited[word] = True
                     for oneEdit in oneEditDict[word]:
                         if oneEdit == endWord:
                             return ladder
                         elif oneEdit not in visited:
-                            nextCur.append(oneEdit)
-            cur = nextCur
+                            cur.append(oneEdit)
         return 0
 
 
-x = Solution()
-print x.oneLevelSeparation('hit','cog')
+
+from collections import deque
+class Solution_thirdround:
+    # @param start, a string
+    # @param end, a string
+    # @param dict, a set of string!!!dict is a set type!!!
+    # @return an integer
+    def ladderLength(self, beginWord, endWord, wordDict):
+        queue = deque()
+        queue.append(beginWord)
+        wordDict.append(endWord)
+        visited = {}
+        ladder = 0
+        while queue:
+            l = len(queue)
+            ladder += 1
+            for i in range(l):
+                word = queue.popleft()
+                if word == endWord:
+                    return ladder
+                for k in range(len(word)):
+                    for j in 'abcdefghijklmnopqrstuvwxyz':
+                        candidate = word[:k] + j + word[k+1:]
+                        if candidate not in visited and candidate in wordDict:
+                            visited[candidate] = True
+                            queue.append(candidate)
+        return  0
+
+x = Solution_thirdround()
 print x.ladderLength('hit','cog',["hot","dot","dog","lot","log"])
-
-
-
 
 
 
