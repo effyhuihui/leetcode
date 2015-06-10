@@ -104,11 +104,11 @@ class Solution_bfs_secondround:
                     islands += 1
                     while queue:
                         cur = queue.popleft()
-                        i,j = cur[0],cur[1]
-                        if valid(i-1,j): queue.append((i-1,j))
-                        if valid(i+1,j): queue.append((i+1,j))
-                        if valid(i,j-1): queue.append((i,j-1))
-                        if valid(i,j+1): queue.append((i,j+1))
+                        p,q = cur[0],cur[1]
+                        if valid(p-1,q): queue.append((p-1,q))
+                        if valid(p+1,q): queue.append((p+1,q))
+                        if valid(p,q-1): queue.append((p,q-1))
+                        if valid(p,q+1): queue.append((p,q+1))
         return islands
 
 class Solution_dfs_secondround:
