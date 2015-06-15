@@ -30,3 +30,25 @@ class Solution_secondround:
                 prev = i
                 nums[i-total_duplicates] = nums[i]
         return l-total_duplicates
+
+class Solution_3rd:
+    # @param {integer[]} nums
+    # @return {integer}
+    def removeDuplicates(self, nums):
+        prev = None
+        l = len(nums)
+        total_duplicates_count = 0
+        local_occur = 1
+        for i in range(l):
+            if prev != nums[i]:
+                local_occur = 1
+                prev = nums[i]
+            else:
+                local_occur += 1
+                if local_occur > 2:
+                    total_duplicates_count += 1
+            nums[i-total_duplicates_count] = nums[i]
+        return l-total_duplicates_count
+x = Solution_3rd()
+print x.removeDuplicates([1,1,1,2,2,3,3,3,4,5,5,6,7,7,7])
+
