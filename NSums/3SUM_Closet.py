@@ -51,3 +51,28 @@ class Solution_secondround:
         return closet_sum
 a = threeSumClosest([1,1,1,0],-100)
 print a
+
+class Solution_3rd:
+    # @return an integer
+    def threeSumClosest(self, num, target):
+        closet_sum = num[0]+num[1]+num[2]
+        l = len(num)
+        num.sort()
+        for i in range(l):
+            start,end = i+1, l-1
+            while start<end and end< l:
+                current_sum = num[i] + num[start] + num[end]
+                print current_sum
+                if abs(target-closet_sum) > abs(current_sum-target):
+                    closet_sum = current_sum
+                    print closet_sum
+                if current_sum == target:
+                    return closet_sum
+                elif current_sum > target:
+                    end -= 1
+                else:
+                    start += 1
+        return closet_sum
+
+x = Solution_3rd()
+print x.threeSumClosest([0,0,0], 1)
