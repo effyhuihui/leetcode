@@ -24,3 +24,19 @@ class Solution_secondround:
                 nums[i-duplicates] = nums[i]
                 start = i
         return l-duplicates
+
+
+class Solution_3rd:
+    # @param {integer[]} nums
+    # @return {integer}
+    def removeDuplicates(self, nums):
+        prev = None
+        l = len(nums)
+        duplicate_count = 0
+        for i in range(l):
+            if nums[i] != prev:
+                prev = nums[i]
+                nums[i-duplicate_count] = nums[i]
+            else:
+                duplicate_count += 1
+        return l-duplicate_count
