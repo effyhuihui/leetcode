@@ -94,3 +94,27 @@ def threeSum_hash(num):
 	return res
 
 
+class Solution_3rd:
+    # @return a list of lists of length 3, [[val1,val2,val3]]
+    def threeSum(self, num):
+        num.sort()
+        res = []
+        l = len(num)
+        prev = None
+        for i in range(l-2):
+            if prev != num[i]:
+                prev = num[i]
+                target = -num[i]
+                start,end = i+1, l-1
+                while start<end and end <l:
+                    if num[start] + num[end] == target:
+                        res.append([num[i],num[start],num[end]])
+                        start += 1
+                        while start < end and num[start] == num[start-1]:
+                            start += 1
+                    elif num[start] + num[end] > target:
+                        end -= 1
+                    else:
+                        start += 1
+        return res
+
