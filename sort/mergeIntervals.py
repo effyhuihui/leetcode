@@ -85,6 +85,26 @@ class Solution_secondround:
         return stack
 
 
+class Solution_3rd:
+    # @param intervals, a list of Interval
+    # @return a list of Interval
+    def merge(self, intervals):
+        if not intervals:
+            return []
+        intervals.sort(key=lambda x: x.start)
+        cur_index = 1
+        cur_interval = intervals[0]
+        merged = []
+        while cur_index<len(intervals):
+            if intervals[cur_index].start<= cur_interval.end:
+                cur_interval = Interval(s=min(cur_interval.start, intervals[cur_index].start),
+                                        e=max(cur_interval.end,intervals[cur_index].end))
+            else:
+                merged.append(cur_interval)
+                cur_interval = intervals[cur_index]
+            cur_index += 1
+        merged.append(cur_interval)
+        return merged
 
 a = Interval(1,4)
 b = Interval(0,2)
