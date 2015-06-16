@@ -61,3 +61,22 @@ class Solution_secondround:
                         res.append(root)
             return res
         return dfs(1,n)
+
+class Solution_3rd:
+    # @return a list of tree node
+    def generateTrees(self, n):
+        def dfs(start,end):
+            res = []
+            if start > end:
+                return [None]
+            for i in range(start, end+1):
+                leftroot_list = dfs(start,i-1)
+                rightroot_list = dfs(i+1, end)
+                for left in leftroot_list:
+                    for right in rightroot_list:
+                        root = TreeNode(i)
+                        root.left = left
+                        root.right = right
+                        res.append(root)
+            return res
+        return dfs(1,n)
