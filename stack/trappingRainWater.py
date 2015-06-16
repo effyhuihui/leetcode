@@ -58,6 +58,21 @@ class Solution_secondround:
         return total_water
 
 
+class Solution_3rd:
+    # @param A, a list of integers
+    # @return an integer
+    def trap(self, A):
+        l = len(A)
+        total = 0
+        left_highest = [0]
+        right_highest = [0]
+        for i in range(1,l):
+            left_highest.append(max(A[i-1], left_highest[-1]))
+        for i in range(l-2,-1,-1):
+            right_highest.insert(0, max(A[i+1], right_highest[0]))
+        for i in range(l):
+            total += max(0, min(left_highest[i],right_highest[i])-A[i])
+        return total
 
 a = Solution()
 print a.trap([0,1,0,2,1,0,1,3,2,1,2,1])
