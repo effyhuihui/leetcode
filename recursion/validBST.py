@@ -66,3 +66,15 @@ class Solution_second_round:
             return validSubBST(root.left,smallest, root.val) \
                    and validSubBST(root.right, root.val,biggest)
         return validSubBST(root,-float('inf'),float('inf'))
+
+class Solution_3rd:
+    # @param root, a tree node
+    # @return a boolean
+    def isValidBST(self, root):
+        def checkvalid(root, minimum, maximum):
+            if not root:
+                return True
+            if root.val >= maximum or root.val <=minimum:
+                return False
+            return checkvalid(root.left,minimum, min(max,root.val)) and checkvalid(root.right, max(min,root.val), maximum)
+        return checkvalid(root,-float('inf'), float('inf'))
