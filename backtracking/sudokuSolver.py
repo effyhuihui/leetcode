@@ -54,34 +54,31 @@ class Solution:
 
 
 
-class Solution_secondround:
+class Solution_3rd:
     # @param {character[][]} board
     # @return {void} Do not return anything, modify board in-place instead.
     def solveSudoku(self, board):
+        def validmove(i,j):
+            for p in range(9):
+                if p!=j and board[i][p] == board[i][j]:
+                    return False
+            for q in range(9):
+                if q!=i and board[q][j] == board[i][j]:
+                    return False
+            for p in range(3*(i/3),3*(i/3)+3):
+                for q in range(3*(j/3), 3*(j/3)+3):
+                    if p!=i and q!=j and board[i][j] == board[p][q]:
+                        return False
+            return True
         def dfs(board):
             for i in range(9):
                 for j in range(9):
                     if board[i][j] == '.':
                         for num in '123456789':
                             board[i][j] = num
-                            if validMove(i,j) and dfs(board):
+                            if validmove(i,j) and dfs(board):
                                 return True
                             board[i][j] = '.'
-                        return False
-            return True
-
-        def validMove(i,j):
-            val = board[i][j]
-            for k in range(9):
-                if k!=i and board[k][j] == val:
-                    return False
-            for q in range(9):
-                if q!=j and board[i][q] == val:
-                    return False
-            square_i, square_j = i//3, j//3
-            for k in range(square_i*3,square_i*3+3):
-                for q in range(square_j*3,square_j*3+3):
-                    if k!=i and q!=j and board[k][q] == val:
                         return False
             return True
         dfs(board)
