@@ -74,3 +74,27 @@ class Solution_secondround:
             return 0
         maxSkewSum(root)
         return self.max_sum
+
+'''
+dfs() returns current max, only one sub line (root and its left or root and its right)
+and in the middle of dfs, we record the current max, which could be left+root+right
+'''
+class Solution_3rd:
+    # @param root, a tree node
+    # @return an integer
+    def __init__(self):
+        self.max_sum = -10000000
+    def maxPathSum(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            leftmax = dfs(root.left)
+            rightmax = dfs(root.right)
+            if leftmax > 0 and rightmax > 0:
+                current_max = root.val + leftmax+rightmax
+            else:
+                current_max = max(0,leftmax,rightmax) + root.val
+            self.max_sum = max(current_max, self.max_sum)
+            return max(root.val, root.val+max(leftmax,rightmax))
+        dfs(root)
+        return self.max_sum
