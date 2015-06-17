@@ -58,3 +58,28 @@ class Solution_secondround:
         for i in range(l):
             max_profit = max(pre_profit[i] + post_profit[i], max_profit)
         return max_profit
+
+
+
+
+class Solution_3rd:
+    # @param prices, a list of integer
+    # @return an integer
+    def maxProfit(self, prices):
+        if not prices:
+            return 0
+        pre_max, post_max = [0 for i in range(len(prices))], [0 for i in range(len(prices))]
+        current_min, max_profit = prices[0], 0
+        for i in range(1,len(prices)):
+            current_min = min(current_min, prices[i])
+            max_profit = max(max_profit, prices[i]-current_min)
+            pre_max[i] = max_profit
+        current_max, max_profit = prices[-1], 0
+        for i in range(len(prices)-2,-1,-1):
+            current_max = max(prices[i], current_max)
+            max_profit = current_max-prices[i]
+            post_max[i] = max_profit
+        global_max = 0
+        for i in range(len(pre_max)):
+            global_max = max(global_max, pre_max[i]+post_max[i])
+        return global_max
