@@ -75,7 +75,6 @@ class Solution_secondround:
                     if cur_word_map[S[start]] < target_dict[S[start]]:
                         total_valid_char -= 1
                 start += 1
-                print start,i,total_valid_char, cur_word_map
         if hasWindows:
             return min_window
         else:
