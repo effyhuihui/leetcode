@@ -128,3 +128,26 @@ class Solution_secondround:
                     else:
                         max_len = max(max_len,i-stack[-1])
         return max_len
+
+
+class Solution_3rd:
+    # @param s, a string
+    # @return an integer
+    def longestValidParentheses(self, s):
+        longest = 0
+        index_stack = []
+        local_length = 0
+        for i in range(len(s)):
+            if s[i] == ')':
+                if not index_stack:
+                    local_length = 0
+                else:
+                    prev=index_stack.pop()
+                    if not index_stack:
+                        local_length += i-prev+1
+                        longest = max(local_length, longest)
+                    else:
+                        longest = max(longest,i-index_stack[-1])
+            else:
+                index_stack.append(i)
+        return longest
