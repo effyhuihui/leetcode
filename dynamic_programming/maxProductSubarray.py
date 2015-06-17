@@ -46,6 +46,25 @@ class Solution_secondround:
         return maxProd
 
 
+
+class Solution_3rd:
+    # @param {integer[]} nums
+    # @return {integer}
+    def maxProduct(self, nums):
+        if len(nums) == 0:
+            return
+        if len(nums) == 1:
+            return nums[0]
+        negMax, posMax = 0, 0
+        global_max = 0
+        for i in nums:
+            if i < 0:
+                negMax, posMax = posMax, negMax
+            negMax = min(negMax*i, i)
+            posMax = max(posMax*i, i)
+            global_max = max(global_max, posMax)
+        return global_max
+
 x = Solution()
 print x.maxProduct([-4,-3,-2])
 
