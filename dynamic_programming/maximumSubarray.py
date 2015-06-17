@@ -43,18 +43,15 @@ class Solution_secondround:
 
 
 
-class Solution_thirdround:
+class Solution_3rd:
     # @param A, a list of integers
     # @return an integer
     def maxSubArray(self, A):
         max_sum = A[0]
-        l = len(A)
-        local_sum = 0
-        for i in range(l):
-            local_sum += A[i]
-            local_sum = max(local_sum,A[i])
-            max_sum = max(max_sum, local_sum)
-        return max_sum
-
+        local_max = 0
+        for i in range(len(A)):
+            local_max = max(A[i],local_max+A[i])
+            max_sum = max(max_sum, local_max)
+        return max
 x = Solution()
 print x.maxSubArray([-2])
