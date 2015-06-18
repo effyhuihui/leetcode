@@ -62,3 +62,26 @@ class Solution_secondround:
             else:
                 right = next.next
         return dummy.next
+
+
+
+class Solution_3rd:
+    # @param a ListNode
+    # @return a ListNode
+    def swapPairs(self, head):
+        dummyleft, dummyright = ListNode(0), ListNode(0)
+        dummyleft.next, dummyright.next = dummyright,head
+        if not head or not head.next:
+            return head
+        prev,left,right = dummyright, dummyleft, dummyright
+        while right.next and right.next.next:
+            left = left.next.next
+            right = right.next.next
+            prev.next = right
+            afterright = right.next
+            right.next =left
+            left.next = afterright
+            left = prev.next
+            right = left.next
+            prev = right
+        return dummyright.next
