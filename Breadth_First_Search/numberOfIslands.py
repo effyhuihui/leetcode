@@ -133,3 +133,32 @@ class Solution_dfs_secondround:
                     count += 1
                     dfs(i,j)
         return count
+
+from collections import deque
+class Solution_3rd:
+    # @param grid, a list of list of characters
+    # @return an integer
+    def numIslands(self, grid):
+        def validcomponents(i,j):
+            if i>=0 and i<m and j>=0 and j<n and grid[i][j] == '1' and not visited[i][j]:
+                visited[i][j] = True
+                return True
+            return False
+        m,n = len(grid), len(grid[0])
+        visited = [ [False for i in range(n)] for j in range(m)]
+        components = deque()
+        islands = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1' and not visited[i][j]:
+                    islands += 1
+                    visited[i][j] = True
+                    components.append((i,j))
+                    while components:
+                        cur = components.popleft()
+                        p,q = cur[0], cur[1]
+                        if validcomponents(p-1, q):components.append((p-1, q))
+                        if validcomponents(p+1, q):components.append((p+1, q))
+                        if validcomponents(p, q-1):components.append((p, q-1))
+                        if validcomponents(p, q+1):components.append((p,q+1))
+        return islands
