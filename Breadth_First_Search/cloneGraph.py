@@ -107,7 +107,25 @@ class Solution_secondround:
                 cloned[cur].neighbors.append(cloned[neighbor])
         return new_head
 
-
+from collections import deque
+class Solution_3rd:
+    # @param node, a undirected graph node
+    # @return a undirected graph node
+    def cloneGraph(self, node):
+        clone_node = UndirectedGraphNode(node.label)
+        clone_map = {node:clone_node}
+        processing = deque()
+        processing.append(node)
+        while processing:
+            cur = processing.popleft()
+            copy = clone_map[cur]
+            for neighbor in cur.neighbors:
+                if neighbor not in clone_map:
+                    new = UndirectedGraphNode(neighbor.label)
+                    clone_map[neighbor] = new
+                    processing.append(neighbor)
+                copy.neighbors.append(clone_map[neighbor])
+        return clone_map[node]
 
 
 
