@@ -42,7 +42,7 @@ class Solution:
 
 
 
-class Solution_second:
+class Solution:
     # @param {ListNode} l1
     # @param {ListNode} l2
     # @return {ListNode}
@@ -53,25 +53,22 @@ class Solution_second:
         curnew = dummy
         while cur1 and cur2:
             total = cur2.val+cur1.val+addOne
-            addOne = total//10
-            new = ListNode(total%10)
-            curnew.next = new
-            curnew = new
+            addOne = total/10
+            curnew.next = ListNode(total%10)
+            curnew = curnew.next
             cur1 = cur1.next
             cur2 = cur2.next
-        while cur2:
-            total = cur2.val+addOne
-            new = ListNode(total%10)
-            curnew.next = new
+        cur_remain = None
+        if cur1:
+            cur_remain = cur1
+        if cur2:
+            cur_remain = cur2
+        while cur_remain:
+            total = cur_remain.val+addOne
+            curnew.next = ListNode(total%10)
             addOne = total//10
-            curnew = new
-            cur2=cur2.next
-        while cur1:
-            total = cur1.val+addOne
-            new = ListNode(total%10)
-            curnew.next = new
-            addOne = total//10
-            curnew = new
-            cur1=cur1.next
+            curnew = curnew.next
+            cur_remain=cur_remain.next
         if addOne:
             curnew.next = ListNode(1)
+        return dummy.next
