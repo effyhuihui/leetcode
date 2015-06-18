@@ -40,4 +40,17 @@ class Solution:
 x = Solution()
 print x.longestCommonPrefix(['a'])
 
+class Solution:
+    # @return a string
+    def longestCommonPrefix(self, strs):
+        if not strs:
+            return ""
+        longest = strs[0]
+        for string in strs[1:]:
+            i = 0
+            while i < min(len(string), len(longest)) and string[i] == longest[i]:
+                i += 1
+            longest = longest[:i]
+        return longest
+
 

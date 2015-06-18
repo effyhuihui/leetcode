@@ -46,3 +46,18 @@ class Solution_secondround:
             prevNthFromLast = prevNthFromLast.next
         prevNthFromLast.next = prevNthFromLast.next.next
         return dummy.next
+
+class Solution_3rd:
+    # @return a ListNode
+    def removeNthFromEnd(self, head, n):
+        dummy = ListNode(0)
+        dummy.next = head
+        slow, fast = dummy, dummy
+        for i in range(n):
+            fast = fast.next
+        while fast.next:
+            fast=fast.next
+            slow=slow.next
+        slow.next= slow.next.next
+        return dummy.next
+
