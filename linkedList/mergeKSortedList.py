@@ -78,12 +78,11 @@ class Solution_secondround:
         while cur1 and cur2:
             if cur1.val < cur2.val:
                 curnew.next = cur1
-                curnew = cur1
                 cur1 = cur1.next
             else:
                 curnew.next = cur2
-                curnew = cur2
                 cur2 = cur2.next
+            curnew = curnew.next
         if cur1:
             curnew.next = cur1
         if cur2:
@@ -96,7 +95,5 @@ class Solution_secondround:
             return None
         elif l == 1:
             return lists[0]
-        elif l == 2:
-            return self.mergeTwoLists(lists[0],lists[1])
         else:
-            return self.mergeTwoLists(self.mergeKLists(lists[:l//2]), self.mergeKLists(lists[l//2:]))
+            return self.mergeTwoLists(self.mergeKLists(lists[:l/2]), self.mergeKLists(lists[l/2:]))
