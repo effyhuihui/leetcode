@@ -91,7 +91,32 @@ class Solution_secondround:
             return head
 
 
+class Solution_3rd:
+    # @param head, a ListNode
+    # @param k, an integer
+    # @return a ListNode
 
+    def rotateRight(self, head, k):
+        if not head or k ==0:
+            return head
+        l = 0
+        cur = head
+        while cur:
+            l += 1
+            cur = cur.next
+        newk = k%l
+        if newk == 0:
+            return head
+        slow,fast = head,head
+        for i in range(newk):
+            fast = fast.next
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+        newhead = slow.next
+        slow.next = None
+        fast.next = head
+        return newhead
 a,b,c,d,e = ListNode(1), ListNode(2), ListNode(3), ListNode(4), ListNode(5)
 a.next, = b,
 x = Solution()
