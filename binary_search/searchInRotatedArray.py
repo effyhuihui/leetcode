@@ -77,5 +77,28 @@ class Solution_secondround:
 
 a = Solution()
 print a.search([1,3],3)
-
-
+'''
+first determine whether right side of the mid is in order, then compare target within range
+'''
+class Solution_3rd:
+    # @param {integer[]} nums
+    # @param {integer} target
+    # @return {integer}
+    def search(self, nums, target):
+        l = len(nums)
+        start, end = 0,l-1
+        while start<=end:
+            mid = (start+end)/2
+            if nums[mid] == target:
+                return mid
+            if nums[mid] > nums[end]:
+                if target>=nums[start] and target<nums[mid]:
+                    end -= 1
+                else:
+                    start += 1
+            else:
+                if target <= nums[end] and target>nums[mid]:
+                    start+= 1
+                else:
+                    end -= 1
+        return -1
