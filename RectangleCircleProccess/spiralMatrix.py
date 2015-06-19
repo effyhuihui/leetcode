@@ -30,25 +30,20 @@ class Solution:
             '''
             ##  --> right
             for k in range(width):
-                print matrix[start_m][start_n+k]
                 res.append(matrix[start_m][start_n+k])
             ## --> down
             for k in range(1,height):
-                print matrix[start_m+k][start_n+width-1]
                 res.append(matrix[start_m+k][start_n+width-1])
             ## --> left
             if height > 1:
                 for k in range(1,width):
-                    print matrix[start_m+height-1][start_n+width-1-k]
                     res.append(matrix[start_m+height-1][start_n+width-1-k])
             ## --> up
             if width > 1:
                 for k in range(1,height-1):
-                    print matrix[start_m+height-1-k][start_n]
                     res.append(matrix[start_m+height-1-k][start_n])
         start_m,start_n =0,0
         while m >0 and n>0:
-            print m,n
             printCircle(start_m, start_n,n,m)
             start_m += 1
             start_n += 1
