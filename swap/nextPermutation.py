@@ -61,4 +61,21 @@ n = [2,5,4,3]
 x.nextPermutation(n)
 print n
 
+class Solution:
+    # @param num, a list of integer
+    # @return a list of integer
+    def nextPermutation(self, num):
+        k, l = -1, 0
+        for i in xrange(len(num) - 1):
+            if num[i] < num[i + 1]:
+                k = i
 
+        if k == -1:
+            return num[::-1]
+
+        for i in xrange(len(num)):
+            if num[i] > num[k]:
+                l = i
+
+        num[k], num[l] = num[l], num[k]
+        return num[:k + 1] + num[:k:-1]
