@@ -11,7 +11,7 @@ m and n will be at most 100.
 '''
 '''
 how many possible --- dp的标志。。。所以重点是找到状态转移方程。
-Let f(m,n) be the possible ways to get to (m,n)
+Let f(m,n) be the possible ways to get to (m,n) from (0,0)
 f(m,n) = f(m-1,n) + f(m,n-1)
 毫无优化的方法可以是maintain一个m*n的2d arrary， 优化过memory的方法
 可以用recursion 只需要maintain两个当前concern的variable
