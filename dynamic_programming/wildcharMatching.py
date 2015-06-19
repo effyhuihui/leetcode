@@ -64,28 +64,36 @@ class Solution_recursion:
             return False
 
 
-class Solution_ac:
-    # @param s, an input string
-    # @param p, a pattern string
-    # @return a boolean
+class Solution_recur_3rd:
     def isMatch(self, s, p):
-        p_ptr, s_ptr, last_s_ptr, last_p_ptr = 0, 0, -1, -1
-        while s_ptr < len(s):
-            if p_ptr < len(p) and (s[s_ptr] == p[p_ptr] or p[p_ptr] == '?'):
-                s_ptr += 1
-                p_ptr += 1
-            elif p_ptr < len(p) and p[p_ptr] == '*':
-                p_ptr += 1
-                last_s_ptr = s_ptr
-                last_p_ptr = p_ptr
-            elif last_p_ptr != -1:
-                last_s_ptr += 1
-                s_ptr = last_s_ptr
-                p_ptr = last_p_ptr
+        if len(s) == 0:
+            return len(p) == 0 or (len(p) == 1 and p[0]=='*')
+        if len(p) == 0:
+            return False
+        else:
+            if p[0] == '?' or (p[0] == s[0]):
+                return self.isMatch(s[1:], p[1:])
+            elif p[0] == '*':
+                for i in range(len(s)+1):
+                    if self.isMatch(s[:i],p[1:]):
+                        return True
+                return  False
             else:
                 return False
 
-        while p_ptr < len(p) and p[p_ptr] == '*':
-            p_ptr += 1
 
-        return p_ptr == len(p)
+class Solution_dp_3rd:
+    def isMatch(self, s, p):
+        m,n = len(s), len(p)
+        dp = [ [False for i in range(n+1)] for j in range(m+1)]
+        dp[0][0] = True
+        for i in range(1,n+1):
+            dp[0][i] = dp[0][i-1] and p[i-1] =='*'
+        for i in range(1,m+1):
+            for j in range(1,n+1):
+                if p[n-1] != '*':
+                    dp[i][j] = (p[n-1] == '?' or s[m-1] == p[n-1]) and  dp[i-1][j-1]
+                else:
+                    dp[i][j] =dp[i-1][j-1] or dp[i][j-1]
+        return dp[-1][-1]
+
