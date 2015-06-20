@@ -58,3 +58,25 @@ class Solution:
 
 x = Solution()
 print x.addBinary('0','0')
+
+
+
+class Solution:
+    # @param a, a string
+    # @param b, a string
+    # @return a string
+    def addBinary(self, a, b):
+        result, carry, val, len_a, len_b, i = "", 0, 0, len(a), len(b), 0
+        for i in range(max(len_a, len_b)):
+            val = carry
+            if i < len_a:
+                val += int(a[len_a-i-1])
+            if i < len_b:
+                val += int(b[len_b-i-1])
+            carry, val = val / 2, val % 2
+            result = str(val)+result
+        if carry == 1:
+            result = "1" + result
+        return result
+x = Solution()
+print x.addBinary('11','1')
