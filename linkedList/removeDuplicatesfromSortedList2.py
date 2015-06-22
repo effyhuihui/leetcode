@@ -37,37 +37,28 @@ class Solution:
         return dummy.next
 
 
-
-class Solution_secondround:
+class Solution_3rd:
     # @param head, a ListNode
     # @return a ListNode
     def deleteDuplicates(self, head):
-        if not head:
-            return head
-        dummy = ListNode(0)
+        dummy = ListNode(-1000)
         dummy.next = head
-        last_distinct = dummy
-        current = head.next
+        prev_non_dup = dummy
         prev = head
-        while current:
-            while current and current.val == prev.val:
-                current = current.next
-            ## current hasn't been changed, meaning prev node is distinct
-            if current == prev.next:
-                last_distinct = prev
-                prev = current
-                current = current.next
-            ## otherwise, prev is not distinct, and current is now the node has different value
+        while prev:
+            isDup = False
+            cur = prev.next
+            while cur and  cur.val == prev.val:
+                isDup = True
+                cur = cur.next
+            if not isDup:
+                prev_non_dup.next = prev
+                prev_non_dup = prev
+                prev = cur
             else:
-                last_distinct.next = current
-                prev = current
-                if current:
-                    current = current.next
+                prev = cur
+        prev_non_dup.next = prev
         return dummy.next
-
-
-
-
 
 
 a,b,c,d,e,f,g = ListNode(1), ListNode(1),ListNode(2),ListNode(2), ListNode(4),ListNode(4),ListNode(5)
