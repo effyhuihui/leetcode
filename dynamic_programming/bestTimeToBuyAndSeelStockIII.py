@@ -72,13 +72,11 @@ class Solution_3rd:
         current_min, max_profit = prices[0], 0
         for i in range(1,len(prices)):
             current_min = min(current_min, prices[i])
-            max_profit = max(max_profit, prices[i]-current_min)
-            pre_max[i] = max_profit
+            pre_max[i] =max(pre_max[i-1], prices[i]-current_min)
         current_max, max_profit = prices[-1], 0
         for i in range(len(prices)-2,-1,-1):
             current_max = max(prices[i], current_max)
-            max_profit = current_max-prices[i]
-            post_max[i] = max_profit
+            post_max[i] = max(post_max[i+1], current_max-prices[i])
         global_max = 0
         for i in range(len(pre_max)):
             global_max = max(global_max, pre_max[i]+post_max[i])
