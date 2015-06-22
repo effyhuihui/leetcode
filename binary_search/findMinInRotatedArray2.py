@@ -45,9 +45,6 @@ class Solution:
                     start += 1
         return mini
 
-
-
-
 class Solution_secondround:
     # @param num, a list of integer
     # @return an integer
@@ -70,6 +67,27 @@ class Solution_secondround:
                     end -= 1
         return mini
 
+
+
+class Solution_3rd:
+    # @param {integer[]} nums
+    # @return {integer}
+    def findMin(self, nums):
+        mini = nums[0]
+        l = len(nums)
+        start, end = 0, l-1
+        while start<=end:
+            mid = (start+end)/2
+            left, right = max(0,mid-1), min(l-1,mid+1)
+            if nums[mid] < mini:
+                mini = nums[mid]
+            if nums[mid] - nums[left] < 0 and nums[mid] - nums[right] < 0:
+                return nums[mid]
+            if nums[mid] <= nums[end]:
+                end -= 1
+            else:
+                start += 1
+        return mini
 
 a = Solution()
 print a.findMin([])
