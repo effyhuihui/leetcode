@@ -45,3 +45,19 @@ class Solution_secondround:
                     np += x
             x += 1
         return sum(isPrime)
+
+def countPrimes_TLE(n):
+    if n <2:
+        return 0
+    primes = [2]
+    def check(k):
+        for i in primes:
+            if k%i == 0:
+                return False
+        return True
+    for i in range(3,n):
+        if check(i):
+            primes.append(i)
+    return len(primes)
+
+
