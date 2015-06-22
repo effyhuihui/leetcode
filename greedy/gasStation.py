@@ -62,3 +62,20 @@ class Solution_secondround:
             else:
                 gas_left -= cost[i]
         return start
+
+
+class Solution_3rd:
+    # @param gas, a list of integers
+    # @param cost, a list of integers
+    # @return an integer
+    def canCompleteCircuit(self, gas, cost):
+        if sum(cost)>sum(gas):
+            return -1
+        remain_gas = 0
+        begin = 0
+        for i in range(1,len(gas)):
+            remain_gas = remain_gas + gas[i-1]-cost[i-1]
+            if remain_gas < 0:
+                begin = i
+                remain_gas = 0
+        return begin
