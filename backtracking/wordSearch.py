@@ -106,6 +106,30 @@ class Solution_secondround:
         return False
 
 
+class Solution_3rd:
+    # @param {character[][]} board
+    # @param {string} word
+    # @return {boolean}
+    def exist(self, board, word):
+        m,n = len(board), len(board[0])
+        visited  =  [ [False for i in range(n)] for j in range(m)]
+        l = len(word)
+        def dfs(i,j,index):
+            if index == l:
+                return True
+            letter = word[index]
+            if i >= 0 and i < m and j >= 0 and j<n and not visited[i][j] and board[i][j] == letter:
+                visited[i][j] = True
+                if  dfs(i-1,j, index+1) or dfs(i+1,j, index+1) or dfs(i,j-1,index+1) or dfs(i,j+1, index+1):
+                    return True
+                visited[i][j] = False
+                return False
+
+        for i in range(m):
+            for j in range(n):
+                if dfs(i,j,0):
+                    return True
+        return False
 
 x = Solution()
 print x.exist(['aa'], 'aaa')
