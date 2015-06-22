@@ -98,3 +98,19 @@ class Solution_3rd:
             return max(root.val, root.val+max(leftmax,rightmax))
         dfs(root)
         return self.max_sum
+
+class Solution:
+    # @param root, a tree node
+    # @return an integer
+    def __init__(self):
+        self.max_sum = -10000000
+    def maxPathSum(self, root):
+        def dfs(root):
+            if not root:
+                return 0
+            left_maxPathSum = dfs(root.left)
+            right_maxPathSum = dfs(root.right)
+            self.max_sum = max(self.max_sum, max(0,left_maxPathSum,right_maxPathSum,left_maxPathSum+right_maxPathSum)+root.val)
+            return max(root.val, max(left_maxPathSum,right_maxPathSum)+root.val)
+        dfs(root)
+        return self.max_sum
