@@ -51,6 +51,7 @@ class Solution_dp:
             for j in range(l,i,-1):
                 if dp[j] and s[i:j] in wordDict:
                     dp[i] = True
+                    break
         def dfs(i,path):
             if dp[i]:
                 if i>=l:
@@ -67,7 +68,6 @@ class Solution_secondround:
     # @param wordDict, a set<string>
     # @return a string[]
     def wordBreak(self, s, wordDict):
-        res = []
         dp = [[] for i in range(len(s)+1)]
         for i in range(1,len(s)+1):
             for j in range(i):
@@ -78,7 +78,7 @@ class Solution_secondround:
                         dp[i]+=[s[j:i]]
         return dp[-1]
 
-x = Solution_dp()
+x = Solution_secondround()
 print x.wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"])
 print x.wordBreak("aaaaaaa", ["aaaa","aa","a"])
 print x.wordBreak("ab", ["a", "b"])
