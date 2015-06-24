@@ -73,4 +73,23 @@ class Solution_secondround:
         return res
 
 
+from collections import deque
+class Solution:
+    def rightside(self,root):
+        res = []
+        q = deque()
+        if not root:
+            return res
+        q.append(root)
+        while q:
+            l = len(q)
+            for i in range(l):
+                cur = q.popleft()
+                if cur.left:
+                    q.append(cur.left)
+                if cur.right:
+                    q.append(cur.right)
+            if l:
+                res.append(cur.val)
+        return res
 
