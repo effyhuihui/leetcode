@@ -33,3 +33,4 @@ k = reverse(a)
 while k:
     print k.val
     k = k.next
+
