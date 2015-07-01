@@ -3,17 +3,42 @@ __author__ = 'effy'
 '''
 Product of word length which words that share no letters(all lower case)
 E.g {feed , see, stuck }: max product:
-5×4=20 Complexity?Follow up:optimal way to exit earlier in loop.
+5×4=20 Complexity?
+Follow up:optimal way to exit earlier in loop.
 '''
+def encode(s):
+    encoded = 0
+    for char in s:
+        encoded |= 1<<(ord(char)-ord('a'))
+    return encoded
+
+def no_overlap(s1,s2):
+    return (encode(s1) & encode(s2)) == 0
+
 def maxProduct(words):
-    clusters = []
-    i = 0
-    while words:
-        cur = words[0]
+    encode_array = []
+    for word in words:
+        encode_array.append(encode(word))
+    indices = range(len(words))
+    indices.sort(key=lambda i:len(words[i]))
+    max_len_product = 0
+    for i in range(len(words)):
+        index1 = indices[i]
+        for j in range(i+1,len(words)):
+            index2 = indices[j]
+            if no_overlap(encode_array[index1], encode_array[index2]):
+                max_len_product = max(max_len_product, len(words[index1])*len(words[index2]))
+                break
+    return max_len_product
+
+
+
+
 
 '''
 2. RLE run-length compression
 '''
+
 '''
 Encode: helll=> he3xl,
 decodeRequirements:
@@ -26,13 +51,15 @@ def decode(s):
     l = len(s)
     i = 0
     while i < l:
-        if s[i].isdigit:
-            count = ''
-            while i<l and s[i].isdigit:
-                count += s[i]
-            ##reaches 'x'
-            i += 1
-            res += s[i]*int(count)
+        if s[i] == 'x':
+            if i>0 and i<l-1 and s[i-1].isdigit and not s[i+1].isdigit:
+                if s[i-1] != 0:
+                    res.append(s[i+1]*int(s[i-1]))
+                elif s[i-1] == 0 and i-2>=0 and s[i-2].isdigit:
+                    res.append(s[i+1]*int(s[i-2:i]))
+                else:
+                    res.append()
+
         else:
             res += s[i]
         i += 1
@@ -50,7 +77,31 @@ E.g. {feed }, feed => false;{door }, deer =>true;{dare}, deer => false
 '''
 4. Poland operation list convert to tree
 E.g. {push 4, push 5, add, push 9, mul, sqrt} => tree: {sqrt,{mul,{9, add(4,5)}}}
+[4,5,add,9,mul,sqrt] => {sqrt,{mul, {9, add(4,5)}}}
 '''
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+def recover(array):
+    if len(array) == 3:
+        root = TreeNode(array[-1])
+        root.left = TreeNode(array[1])
+        root.right = TreeNode(array[0])
+        return root
+    else:
+        root = TreeNode(array[-1])
+        root.left = recover(array[-1])
+        return root
+
+
+
+
+
+
+
 '''
 5. Design Question: Get program running on data centers,
 try catch and scalability , cache followups
@@ -100,20 +151,25 @@ def quickSelect(nums,k):
 def splitString(s):
     ## strip the leading and trailing spaces and split by double quote
     split_by_quote = s.strip().split('"')
-    res = []
-    offset = 1
-    i = 0
     print split_by_quote
-    while i<len(split_by_quote):
-        next_i = i+offset
-        s = ''.join(split_by_quote[i:next_i])
-        res.append(s)
-        i = next_i
-        if offset == 1: offset = 2
-        else: offset = 1
-    return res
-#print splitString('dat ab"fghi"jk   wp"q msl"v')
-#print splitString('     axg"h   msdk"xlc  d"ber"hn')
+
+
+def splitStr(s):
+    s = s.strip()
+    start = 0
+    res = []
+    count_quote = 0
+    for i in range(len(s)):
+        if s[i] =='"':
+            count_quote += 1
+            if count_quote == 1:
+                res.append(s[start:i])
+                start = i+1
+            else:
+                count_quote = 0
+
+print splitString('dat ab"fghi"jk   wp"q msl"v')
+print splitString('     axg"h   msdk"xlc  d"ber"hn')
 
 '''
 find the kth largest/smallest element in an array (heap, quick select?)
@@ -158,6 +214,23 @@ def rearrange(s):
                     dfs(path+[remain_char[i]], remain_char[:i] + remain_char[i+1:])
     dfs([], chars)
     return res
+
+def rearrange2(s):
+    char_map = {}
+    for char in s:
+        char_map[char_map] = char_map.get(char,0) + 1
+    res = []
+    def dfs(path,char_map):
+        if not char_map:
+            res.append(path)
+        else:
+            for char in char_map:
+                if char != s[-1]:
+                    char_map[char] -= 1
+                    if char_map[char] == 0:
+                        del char_map[char]
+                    dfs(path + [char], char_map)
+    dfs([], char_map)
 print rearrange('AABB')
 
 '''
