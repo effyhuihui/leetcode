@@ -19,8 +19,10 @@ def maxProduct(words):
     encode_array = []
     for word in words:
         encode_array.append(encode(word))
+    ## associated array indices with words
     indices = range(len(words))
     indices.sort(key=lambda i:len(words[i]))
+    indices.reverse()
     max_len_product = 0
     for i in range(len(words)):
         index1 = indices[i]
@@ -33,11 +35,24 @@ def maxProduct(words):
 
 
 
-
-
 '''
-2. RLE run-length compression
+2. RLE run-length compression aaaaabbbccc ->a5b3c3
 '''
+def rle(s):
+    prev = s[0]
+    res = ''
+    count = 1
+    for i in range(1,len(s)):
+        if s[i] != prev:
+            res += prev + str(count)
+            count = 1
+            prev = s[i]
+        else:
+            count += 1
+    res+= prev+str(count)
+    return res
+print rle('aaaaabbbccc')
+
 
 '''
 Encode: helll=> he3xl,
@@ -66,15 +81,6 @@ def decode(s):
     return res
 
 '''
-
-3. Word abbreviation,
-e.g. Between=>b5n,friend=>f4d
-Follow-up: implement Bool checkduplicate(string [] dict, string word)
-E.g. {feed }, feed => false;{door }, deer =>true;{dare}, deer => false
-如果dict里有word 和input word的abbreviation 一样，则return true
-'''
-
-'''
 4. Poland operation list convert to tree
 E.g. {push 4, push 5, add, push 9, mul, sqrt} => tree: {sqrt,{mul,{9, add(4,5)}}}
 [4,5,add,9,mul,sqrt] => {sqrt,{mul, {9, add(4,5)}}}
@@ -95,12 +101,6 @@ def recover(array):
         root = TreeNode(array[-1])
         root.left = recover(array[-1])
         return root
-
-
-
-
-
-
 
 '''
 5. Design Question: Get program running on data centers,
@@ -148,28 +148,31 @@ def quickSelect(nums,k):
 输入：      axg"h   msdk"xlc  d"ber"hn   输出： [axg],  [h   msdkxlc],  [d],  [berhn]
 也就是说双引号是成对出现的，字符串最前面和最后面的空格是不计的，但是中间的空格是要计的，详见例子就能明白。
 '''
-def splitString(s):
-    ## strip the leading and trailing spaces and split by double quote
-    split_by_quote = s.strip().split('"')
-    print split_by_quote
-
 
 def splitStr(s):
     s = s.strip()
-    start = 0
     res = []
-    count_quote = 0
-    for i in range(len(s)):
-        if s[i] =='"':
-            count_quote += 1
-            if count_quote == 1:
-                res.append(s[start:i])
-                start = i+1
+    space_split = False
+    while s:
+        if not space_split:
+            first_quote = s.index('"')
+            res.append(s[:first_quote])
+            s = s[first_quote+1:]
+            s = s.strip()
+            space_split = True
+        else:
+            if ' ' in s:
+                second_quote = s.index('"')
             else:
-                count_quote = 0
+                second_quote = len(s)
+            string_end = s.index(' ')
+            res.append(s[:second_quote]+s[second_quote+1:string_end])
+            s = s[string_end:]
+            s.strip()
+            space_split = False
 
-print splitString('dat ab"fghi"jk   wp"q msl"v')
-print splitString('     axg"h   msdk"xlc  d"ber"hn')
+#print splitStr('dat ab"fghi"jk   wp"q msl"v')
+#print splitStr('     axg"h   msdk"xlc  d"ber"hn')
 
 '''
 find the kth largest/smallest element in an array (heap, quick select?)
@@ -178,6 +181,7 @@ find the kth largest/smallest element in an array (heap, quick select?)
 '''
 第二题，把一个任意的数组，调整成小大小大小大。。。。的形式。
 '''
+## brutal force O(nlgn)
 def zigzag(nums):
     nums.sort()
     l = len(nums)
@@ -195,6 +199,34 @@ def zigzag(nums):
     if i < len(small):
         res.append(small[i])
     return res
+
+## O(n) 三个三个看 012， 234， 456
+##小大小
+##   小大小
+##      小大..
+def zigzag_opt(nums):
+    if len(nums) <=1:
+        return nums
+    if len(nums) == 2:
+        if nums[0] > nums[1]:
+            nums[0], nums[1] = nums[1], nums[0]
+        return nums
+    l = len(nums)
+    for i in range(0,l,2):
+        print i
+        if i == l-1:
+            return nums
+        if i+2< l:
+            num1, num2, num3 = nums[i],nums[i+1],nums[i+2]
+            nums[i+1],nums[i] = max(num1, num2, num3), min(num1,num2,num3)
+            nums[i+2] = num1+num2+num3-nums[i]-nums[i+1]
+        else:
+            if nums[i] > nums[i+1]:
+                nums[i] ,nums[i+1] = nums[i+1], nums[i]
+    return nums
+print zigzag_opt([9,8,7,6,5,4,3])
+print zigzag_opt([1,2,3,4,5,6,7])
+
 
 
 '''
@@ -264,28 +296,27 @@ Continental divider
 0 1 2 2 4 3 2
 2 1 1 3 3 2 0
 0 3 3 3 2 3 3
-
-那么就要给出 第二行的4 （这有这点出发，能够找到连通道四个0的区域的一条非递增
-路线），当然也有可能找不到这样的点，或者找到多个点。
-
-一句话思路
-
-从原题矩阵中建立一个有向图，其中结点是矩阵中等高联通区域，而有向边连接的这些结点在矩阵中所代表的联通区域相邻，
-其方向是从底高度节点指向高高度结点；我们从低高度结点到高高度结点遍历整个有向图，并在遍历中不断地对汇入当前节点的海洋节点求并集；
-最后包括所有海洋节点的节点便是所求的节点。
-
-详细步骤
-
-建立所有有向图节点：通过遍历矩阵，我们可以找到所有的相邻的高度一样的区域。我们把每一个这样的区域组成一个有向图的节点，
-用这个区域的高度来标识这个节点的高度。要注意的是，我们要在原矩阵的每个元素上记录其所属的有向图节点，以便于下一步中建立有向边。
-这些有向图的节点里面还应包括一个bitset，以便第三步中进行对其能到达海洋求并集。给每一个高度为0 的有向图节点的bitset里面set一个unique 的bit。
-建立节点有向边: 再次遍历矩阵，这次注意所遍历元素的上下左右所有相邻元素。如果这些相邻元素和当前元素属于不同有向图的节点，则通过有向边连接他们，
-边的方向是由底高度节点指向高高度节点。在设置有向边的时候，要注意去除重复的边。
-遍历有向图：将有向图从底到顶遍历。遍历的时候，将前导节点的bitset 并入当前节点，如果当前节点的bitset中包括所有的海洋bits，
-那么当前节点就标记为成功节点。
-得出答案：再一次遍历原矩阵里面的所有元素，如果某个元素所属的有向图节点是成功节点，那么这个元素也就是属于所要找的点。
-
 '''
+def findPeak(board):
+    m,n = len(board), len(board[0])
+    visited = [[False for i in range(n)] for j in range(m)]
+    def dfs(i,j,height):
+        if i >= 0 and i < m and j >=0 and j<n and not visited[i][j] and board[i][j] >= height:
+            visited[i][j] = True
+            return max(dfs(i-1,j,board[i][j]), dfs(i+1,j, board[i][j]), dfs(i,j-1,board[i][j]), dfs(i,j+1,board[i][j]))
+        return height
+    peak = 0
+    for i in range(m):
+        for j in range(n):
+            if board[i][j] == 0:
+                cur_height = dfs(i,j,0)
+                peak = max(peak, cur_height)
+    return peak
+
+board = [ [0, 0, 0, 1, 2, 3, 0], [0, 1, 2, 2, 4, 3, 2], [2, 1, 1, 3, 3, 2, 0],
+          [0, 3, 3, 3, 2, 3, 3]]
+print findPeak(board)
+
 
 '''
 
@@ -312,3 +343,53 @@ cache design.
 def colorPerimeter(board,i,j):
     m,n = len(board), len(board[0])
 
+
+
+
+def recoverPath(adjacent, start,end):
+    visited = {key:False for key in adjacent}
+    res = []
+    def dfs(path, cur):
+        print cur, path
+        visited[cur] = True
+        if cur == end:
+            res.append(path)
+        else:
+            for neighbor in adjacent[cur]:
+                if not visited[neighbor]:
+                    visited[neighbor] = True
+                    dfs(path+[neighbor], neighbor)
+            visited[cur] = False
+            path = path[:-1]
+
+    dfs([start], start)
+    return res
+#print recoverPath({'A':['B'],'B':['C'], 'C':['D','F'], 'D':['E'], 'E':['B'], 'F':[]}, 'A', 'F')
+
+def recoverPath(start, end, path):
+    start_node = {}
+    for i in range(len(path)):
+        start_node[path[i][0]] = start_node.get(path[i][0], []) + [i]
+    edge_visited = [False for i in range(len(path))]
+    p = [start]
+    def dfs(cur):
+        print p, cur
+        if cur == end and all(edge_visited):
+            return True
+        else:
+            for e in start_node[cur]:
+                if not edge_visited[e]:
+                    edge_visited[e] = True
+                    p.append(path[e][1])
+                    if dfs(path[e][1]):
+                        return True
+                    edge_visited[e] = False
+                    p.pop()
+            return False
+    if dfs(start):
+        return p
+
+start = 'a'
+end = 'f'
+paths = [('b', 'c'), ('d', 'e'), ('a', 'b'), ('c', 'd'), ('e', 'b'), ('b', 'c'), ('c', 'f')]
+#print recoverPath('a','f', paths)
