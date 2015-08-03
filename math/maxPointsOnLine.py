@@ -59,3 +59,4 @@ class Solution_secondround:
                     line_map[slope] = line_map.get(slope,0)+1
             res = max(res, max(line_map.values())+same_point)
         return res
+

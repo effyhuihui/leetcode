@@ -12,37 +12,54 @@ def printMatrix(n):
 	print res
 printMatrix(3)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+'''
+2. Using OOP design a elevator
+'''
+'''
+3. spiral matrix.
+'''
+def spitalMatrix(board):
+	res = []
+	def printCircle(i,j,width,height):
+		for x in range(width):
+			res[-1].append(board[i+x][j])
+		for y in range(1,height):
+			res[-1].append(board[i][j+y])
+		if width > 1:
+			for x in range(1,width):
+				res[-1].append(board[i+width-1-x][j])
+		if height > 1:
+			for y in range(1,height-1):
+				res[-1].append(board[i][j+height-1-y])
+	m,n = len(board), len(board[0])
+	i,j = 0,0
+	while m > 0 and n > 0:
+		res.append([])
+		printCircle(i,j,m,n)
+		i+=1
+		j+=1
+		m-=2
+		n-=2
 
 
 '''
-2. Using OOP design a elevator
-3. write code to print the matrix from outside to inside.
-4. Given a list of words, find whether a new word is anagram of word in list.  
-5. Input a string and output the number of words (need to run   on coderpad)
+4. Given a list of words, find whether a new word is anagram of word in list. 
+'''
+def anagram(words,word):
+	word_map = {}
+	for i in range(len(words)):
+		char_list = sorted(list(i))
+		word_map[char_list] = word_map.get(char_list,[]) + [i]
+	return sorted(list(word)) in word_map
+
+'''
+5. Input a string and output the number of words
+'''
+def num_words(string):
+	return len(string.strip().split(' '))
+
+
+'''
 6. code challenge are on uber's github page 
 7. implement boggle game
 8. Design from scratch and talk about scaling, product, and   performance concerns.
@@ -67,9 +84,75 @@ lockerning, 返回能不能拆成dict里的词的不重合的组合。比如lock
 lockern->false.
 
 pinterst:
-1. given an array of words, find the longest and common substring between two words in the array(and what are the two words)  --- trie prefix tree
+1. given an array of words, find the longest and common substring between 
+two words in the array(and what are the two words)  --- suffix tree,trie prefix tree
 2. word break
 3.jump game
 '''
+
+def wordbreak_recur(s, words):
+	l = len(s)
+	def recur(index,words):
+		if not index == l:
+			return Tru
+		for i in range(index,l):
+			if s[index:i] in words and recur(i, words):
+				return True
+		return False
+
+def wordbreak_dp(s, words):
+	l = len(s)
+	canbreak = [False for i in range(l+1)]
+	canbreak[0] = True
+	for i in range(1,l+1):
+		for j in range(i):
+			if canbreak[j] and s[j:i] in words:
+				canbreak[i] = True
+				break
+	return canbreak[-1]
+
+def wordBreak(s, wordDict):
+    dp = [[] for i in range(len(s)+1)]
+    for i in range(1,len(s)+1):
+        for j in range(i):
+            if s[j:i] in wordDict and (j ==0 or s[j] !=[]):
+                if j != 0:
+                    dp[i]+= [word + ' '+s[j:i] for word in dp[j]]
+                else:
+                    dp[i]+=[s[j:i]]
+    return dp[-1]
+
+
+
+def REMatching(string, re):
+	m,n = len(string), len(re)
+	dp = [ [False for i in range(n+1)] for j in range(m+1)]
+	dp[0][0] = True
+	for i in range(2,n+1):
+		dp[0][i] = dp[0][i-2] and re[i-1] =='*'
+
+	for i in range(1,m):
+		for j in range(1,n):
+			if re[j-1] != '*' and re[j-1] != '.':
+				dp[i][j] = dp[i-1][j-1] and string[i-1] == re[j-1]
+			elif re[j-1] == '.':
+				dp[i][j] = dp[i-1][j-1]
+			else:
+				dp[i][j] = dp[i][j-2] or dp[i][j-1] or (dp[i-1][j-2] and (string[i-1] == p[j-2] or p[j-2] =='.'))
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
 
 

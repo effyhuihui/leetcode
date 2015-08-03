@@ -114,13 +114,12 @@ class LRUCache:
             self.refresh(key)
             self.dict[key].val = val
         else:
-            self.content += 1
-            if self.capacity < self.content:
-                oldLRU = self.head.next
-                newLRU = self.head.next.next
-                self.head.next = newLRU
-                newLRU.prev = self.head
-                self.content -= 1
+            self.capacity -= 1
+            if self.capacity < 0:
+                oldLRU = self.end.prev
+                oldLRU.prev.next = self.end
+                self.end.prev = oldLRU.prev
+                self.capacity += 1
                 del self.dict[oldLRU.head]
             oldmostcurrent = self.end.prev
             newmostcurrent = DoublyLinkedNode(key,val)
@@ -132,11 +131,14 @@ class LRUCache:
 
     def refresh(self,key):
         node = self.dict[key]
-        pre, post = node.prev, node.next
-        pre.next = post
-        post.prev = pre
-        last_most_currente = self.end.prev
-        self.end.prev = node
-        node.next = self.end
-        node.prev = last_most_currente
-        last_most_currente.next = node
+        if node == self.head.next:
+            pass
+        else:
+            pre, post = node.prev, node.next
+            pre.next = post
+            post.prev = pre
+            most_recent = self.head.next
+            self.head.next = node
+            most_recent.prev = node
+            node.next = most_recent
+            node.prev = self.head

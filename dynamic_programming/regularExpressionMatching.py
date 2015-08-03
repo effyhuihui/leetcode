@@ -187,8 +187,7 @@ class Solution_secondround_dp:
                     ## 2. dp[i-1][j] and p[j-2] == '.' means p[:j] matches until s[:i-1], and
                     ##    char before * is ., then is is ok to match any char in s
 
-                    dp[i][j] = dp[i][j-2] or dp[i][j-1] or (s[i-1] == p[j-2] and dp[i-1][j]) or \
-                               (dp[i-1][j] and p[j-2] == '.')
+                    dp[i][j] = dp[i][j-2] or dp[i][j-1] or (dp[i-1][j] and (s[i-1] == p[j-2]or p[j-2] == '.'))
 
 
 
