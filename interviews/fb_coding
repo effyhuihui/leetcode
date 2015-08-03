@@ -1,0 +1,270 @@
+Mark Roberts - Ninja - Coding
+
+QUESTION 1: Comparing two dates
+
+This is a good warm up question that appears super simple at first glance, but trips people up with unexpected complexity. In general a successful candidate shouldn't spend more than 10-15 minutes on this question, even if they implement both naive and advanced solutions. The signals the question provides:
+
+Does the candidate have a basic knowledge of coding (good for warm up on a phone screen)
+Can the candidate think through problems logically
+Is the candidate happy with ugly code that works
+
+Suppose you have two dates and you want to know which comes first. Well, obviously you first compare the year. If the years are the same, then compare the month. If they are the same, then compare the date. If the date is the same and there is time involved, you then compare the hours. If those are the same then compare the minutes. If those are the same, then compare the seconds. If those are the same, then compare the milliseconds. And so on.
+
+You could also convert the two dates into seconds or milliseconds from some reference date. An easy one is 1/1/00 00:00. Then compare the number for each. Or, you could convert the date into years and some change and compare those.
+
+You could also convert the dates into strings of the format "YYYYMMDDHHSS" and then compare them lexicographically.
+
+Common setup:
+
+   class DateObj(object):
+       def __init__(self, year, month, day, hour, minute, second, msec):
+           self.year = int(year)
+           self.month = int(month)
+           self.day = int(day)
+           self.hour = int(hour)
+           self.minute = int(minute)
+           self.second = int(second)
+           self.msec = int(msec)
+           self.ensure_valid()
+
+People often start with a solution that looks like this because it's the obvious one. It's also horribly ugly and makes for very unmaintainable code:
+
+def max_date__nested(d1, d2):
+  return max_year(d1,d2)
+
+def max_year(d1,d2):
+  if d1.year < d2.year:
+    return d1
+  elif d1.year > d2.year:
+    return d2
+  else:
+    return max_month(d1,d2)
+
+def max_month(d1,d2):
+  if d1.month < d2.month:
+    return d1
+  elif d1.month > d2.month:
+    return d2
+  else:
+    return max_day(d1, d2)
+.....
+
+This is a solid solution that shows an elegant solution to the problem:
+
+def max_date__loops(d1, d2):
+       d1_arr = [d1.year, d1.month, d1.day, ...]
+       d2_arr = [d2.year, d2.month, d2.day, ...]
+       return d1 if d1_arr > d2_arr else d2
+       
+
+
+       
+
+
+
+QUESTION 2: Tree PrintAllPath
+
+For a given a binary tree, print paths from root to all leaf nodes, one path per line. This is basically a depth-first-traversal with "seen-so-far" memory. For example:
+
+For tree:
+
+         A
+        / \
+       B   C
+      /   / \
+     D   E   F
+     
+
+The expected output is:
+
+ABD
+ACE
+ACF
+
+def printPath(root):
+  res = []
+  def dfs(root, path):
+    if root.left == None and root.right == None:
+      res.append(path+root.val)
+    else:
+      if root.left:
+        dfs(root.left, path+root.val)
+      if root.right:
+        dfs(root.right, path+root.val)
+  if not root:
+    return res
+  else:
+    dfs(root, '')
+    return res
+
+
+A few points to note:
+
+1. the ending condition. A node is a leaf only if both of its children are NULL.
+2. The list should be passed as a reference. Candidates sometimes decide to pass a cloned list into every recursive function call -- while this works, it incurs a large memory overhead for no good reason. See if you can encourage them to optimize memory if they pursue this route (they basically just need a pop call).
+
+
+
+QUESTION 3:
+
+A perfect square is an integer that is the product of an integer multiplied by itself. i.e. n**2 for any integer n. e.g. [0, 1, 4, 9, 16, 25 . . .].
+
+- Write a function that takes an integer and returns True if the integer is a perfect square, and False otherwise.
+import math
+def perfectSquare(n):
+  a = math.sqrt(n)
+  return a*a == n
+- Write the same function without using the square root function. What's the runtime of that solution (using big-oh notation)?
+def closetsqrt(n):
+  if n >= 0 and n <= 1:
+    return n
+  start,end = 0, n
+  while start<=end:
+    mid = (start+end)/2
+    if mid*mid <= n and (mid+1)*(mid+1) > n:
+      return mid
+    elif mid*mid < n:
+      start = mid + 1
+    else:
+      end = mid - 1
+- Improve the runtime of that function.
+- What's the best we could do? i.e. how do you think sqrt is implemented?
+
+Hint:
+
+A good candidate will write, in this order: O(n), O(sqrt(n)), O(log(n)) solutions, although it may take some leading to get them to realize that without recourse to numerical trickiness, this is basically a search problem over a sorted range, and therefore amenable to a modified binary search. Bonus points for numerical trickiness (e.g. Newton-Raphson, knowledge of Carmack's hack), but those things are totally not expected.
+
+
+
+
+Surbhi Jhavar - Ninja - Coding (looks for energetic)
+
+QUESTION 1: Determine if any 3 integers in an array sum to 0.
+
+Note: The following solutions assumes that repetitions (i.e. choosing the same array element more than once) are *allowed*, so the array [-5,1,10] contains a zero sum (-5-5+10) and so does [0] (0+0+0). The same qustion can be asked without allowing repetitions, with some modifications to the proposed solutions (especially sorted_ and hashtable_). Make sure the solutions you get respect whatever flavor you choose to ask.
+
+The brute force method is O(n^3), which is simply a triple for loop that consider all triples. I often give out this solution to candidates who seem stuck in order to unblock them:
+
+def brute_force2(arr):     
+    for i in range(0, len(arr)):         
+        for j in range (i, len(arr)):             
+            for k in range(j,len(arr)):                 
+                if ( (arr[i] + arr[j] + arr[k]) == 0):                   
+                        print arr[i], arr[j], arr[k]
+                        
+The next step is generally to reduce this by optimizing the inner loop. There is no need to do a linear scan to determine if the sum of the first 2 number exists in an array. The 2 most common approaches are to use a hashtable or binary search the array.
+
+
+def binarySearch(i,j, target):
+  start, end = i,j
+  while start<=end:
+    mid = (start+end)/2
+    if num[mid] == target:
+      return True
+    elif  num[mid] < target:
+      start = mid + 1
+    else:
+      start = mid-1
+  return False
+
+def 3sum(num):
+  num.sort()
+  l = len(num)
+  res = []
+  for i in range(l-2):
+    for j in range(i,l-1):
+      target = -(num[i]+num[j])
+      if binarySearch(i+2,l-1):
+        res.append([cur,next,target])
+  return res
+
+    
+
+
+
+class Solution:
+    # @return a list of lists of length 3, [[val1,val2,val3]]
+    def threeSum(self, num):
+        num.sort()
+        res = []
+        l = len(num)
+        prev = None
+        for i in range(l-2):
+            if prev != num[i]:
+                prev = num[i]
+                target = -num[i]
+                start,end = i+1, l-1
+                while start<end and end <l:
+                    if num[start] + num[end] == target:
+                        res.append([num[i],num[start],num[end]])
+                        start += 1
+                        while start < end and num[start] == num[start-1]:
+                            start += 1
+                    elif num[start] + num[end] > target:
+                        end -= 1
+                    else:
+                        start += 1
+        return res
+
+
+QUESTION 2: Mirror a binary tree
+
+Solve using recursion
+
+So the tree...
+       4
+      / \
+     2   5
+    / \
+   1   3
+ 
+ is changed to...
+       4
+      / \
+     5   2
+        / \
+       3   1
+
+
+def invertBT(root):
+  if not root:
+    return root
+  stack = [root]
+  while stack:
+    cur = stack.pop()
+    leftroot = cur.left
+    rightroot = cur.right
+    cur.left = rightroot
+    cur.right = leftroot
+    if leftroot:
+      stack.append(leftroot)
+    if rightroot:
+      stack.append(rightroot)
+  return root
+
+def recur(root):
+  if root == None:
+    return root
+  leftroot = recur(root.left)
+  rightroot = recur(root.right)
+  root.left = rightroot
+  root.right = leftroot
+  return root
+
+QUESTION 3: Iterate over a singly linked list backwards. Call print on each node.
+  
+1->2->3
+3->2->1
+  
+def printbackwards(a):
+  if not a:
+    return 
+  cur = a
+  stack = []
+  while cur:
+    stack.append(cur)
+  while stack:
+    c = stack.pop()
+    print c.val
+
+

@@ -1,0 +1,156 @@
+What FB can provide you? What are data engineer interests me?
+
+Interview Loop:
+Jul 23 10:15 AM - 10:30 AM PDT: Austin Bonner - Greet
+Jul 23 11:15 AM - 12:00 PM PDT: Tulasi Abbineni - SQL
+Jul 23 12:00 PM - 12:45 PM PDT: Mark Roberts - Ninja - Coding
+Jul 23 12:45 PM - 1:30 PM PDT: Austin Bonner - Lunch
+Jul 23 1:30 PM - 2:15 PM PDT: Raymond Dames - Pirate
+Jul 23 2:15 PM - 3:00 PM PDT: Surbhi Jhavar - Ninja - Coding
+
+
+
+
+Tulasi Abbineni - SQL
+
+Q1: Her work/projects experience, challenging situations, etc.
+Q2: How would she handle bad data?
+Q4: Given the example data sets from Q2, have asked how would she model a many-to-many relationship between two dimensions?
+Q5: How would she sort a list of number given a table.column in descending order with no 'order by' function being available?
+use sort in python script sort by key
+http://stackoverflow.com/questions/9357134/sort-results-without-use-of-order-by-clause
+
+
+
+
+
+Raymond Dames - Pirate(Algorithm, data modeling- how to deal with unstructure data, how to strip duplicates etc.)
+
+-- show me how to dedup a customer list for loading into a DW staging table
+   1. dedupe the data file --> loading into staging use replace into table set col1=, col2=,
+                           --> use python (preserve order, or not)
+   2. dedupe the existing data base --> use replace into table set col1=, col2=,
+
+
+-- How do I update a dimension based on your list, touching only rows that changed?
+  slowly changing dimensions, three types 1) overwrite the previous row 2) use a flag 
+  update table
+  set col1 =, col2=, col3=
+  where PK = 
+
+  update t1 left outer join t2 on t1.col1 = t2 = col1
+  set t2.col1=, t2.col2=, t2.col3=
+  where t2.d  is NULL
+
+-- How do I build an aggregate table/cube on the customer dimension age/state?
+  create table agg_dim (
+    col1 INTEGER NOT NULL,
+    col2 INTEGER NOT NULL,
+  )
+
+  INSERT INTO agg_dim (
+    col1,
+    col2,
+    )
+  SELECT a.col1, sum(b.col1)
+  FROM t1 a, t2 b
+  where a.t = b.t
+  group by a.col1
+  
+-- how do I load a conformed dimension using your table, touching only records that changed
+
+-- how do I build a structure to support a dynamic dropdown front-end on your dimension?
+    Ajax call to get one row, or maintain a metadata table only contains columns 
+
+-- describe your team's approach for the big data database evaluation
+-- how would you go about building a tool to try to optimize DW backend tables for use with existing front-end queries
+    since frontend queries are mostly fixed and are used frequently, indexing in database properly , use cache
+
+More data modeling questions:
+
+Q1: A current data pipeline has a fair number of transformation logic, aggregations and dependencies on multiple upstream source systems availability & timings. It was written have a 2 hr latency to surface data. The environment is Informatica Powercenter, spread across multiple cluster nodes. Define an appropriate architecture to rewrite the pipeline such that you can bring this down execution time by at least 50%. 
+
+Q2: We have a large set of datamarts which we are providing to end users of all ranges (analysts, data engineers, data scientists, business users) via numerous end points (Tableau, direct SQL queries, MicroStrategy, Argus, etc). If we wanted to develop a Data Obfuscation Engine to provide metrics/KPIs in a lightweight manner, how would you begin to scope this out from the back-end side of things? (We aren't concerned with the methods of pulling data, ie. we're not responsible for developing the API interface against this engine.)
+
+
+
+
+
+OTHER SQL PROBLEMS TO PRACTICE ON:
+
+1) Can you put together a set of tables to track students and courses in a small college?
+students             
+--------
+studentID
+studentName
+StudentInfo           student-course
+                      --------------
+courses                 studentID
+--------                courseID
+cousrseID
+courseName
+
+2) Write a SQL to get <courseid, coursename, #students enrolled> based on above data model.
+
+select c.courseid, c.coursename ,count(distinct(s.studentID))
+from course c, student_course s
+where c.courseID = s.courseID
+group by c.courseID, c.courseName
+
+3) Modify the SQL to get only list of courses that have greater than 10 students enrolled.
+
+select c.courseid, c.coursename, count(distinct(s.studentID))
+from course c, student_course s
+where c.courseID = s.courseID
+group by c.courseID, c.courseName
+having count(distinct(s.studentID)) > 10
+
+4) If we modify the student table to contain major and minor. And major and minor is contained in the types table. Write a SQL to get <major name, minor name, courseid, coursename, #students enrolled>
+
+students             
+--------
+studentID
+studentName
+major
+minor
+
+
+
+5) Given a table with <Salesperson, month, revenue amount>, write a SQL to list <Salesperson, month, revenue amount> where only the top salesperson for any given month is listed.
+
+table
+------------
+SalespersonID
+month
+revenue
+
+select b.salepersonID, a.month, a.revenue
+from
+(
+select month, max(revenue)
+from table 
+group by month
+) a, table b 
+where a.month = b.month and a.revenue=b.revenue
+
+6) find the highest grosser per dept from Employee(EmpID, DeptID, salary) using ANSI SQL.
+
+EmpID, DeptID, Salary
+
+001 1 5000
+002 2 3000
+003 1 7000
+004 2 6000
+005 3 1500
+006 1 7000
+
+select a.EmpID, a.DeptID, a.Salary
+from
+（select DeptID, max(Salary)
+from table
+group by DeptID
+）a, table b
+where a.DeptID=b.DeptID and a.Salary = b.Salary
+
+IN GENERAL...knowing the difference between an inner join, outer join, left join, etc. Group by queries, 'having' queries, using queries to pivot data from a table..
+
