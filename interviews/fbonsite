@@ -1,4 +1,3 @@
-What FB can provide you? What are data engineer interests me?
 
 Interview Loop:
 Jul 23 10:15 AM - 10:30 AM PDT: Austin Bonner - Greet
@@ -152,5 +151,5 @@ group by DeptID
 ）a, table b
 where a.DeptID=b.DeptID and a.Salary = b.Salary
 
-IN GENERAL...knowing the difference between an inner join, outer join, left join, etc. Group by queries, 'having' queries, using queries to pivot data from a table..
+
 
